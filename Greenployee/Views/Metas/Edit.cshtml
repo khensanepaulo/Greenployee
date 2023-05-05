@@ -1,0 +1,64 @@
+﻿@model Greenployee.Model.Meta
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Meta</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="dsRecompensa" class="control-label"></label>
+                <input asp-for="dsRecompensa" class="form-control" />
+                <span asp-validation-for="dsRecompensa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dtInicio" class="control-label"></label>
+                <input asp-for="dtInicio" class="form-control" />
+                <span asp-validation-for="dtInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dtFim" class="control-label"></label>
+                <input asp-for="dtFim" class="form-control" />
+                <span asp-validation-for="dtFim" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="vlMeta" class="control-label"></label>
+                <input asp-for="vlMeta" class="form-control" />
+                <span asp-validation-for="vlMeta" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="dtCadastro" class="control-label"></label>
+                <input asp-for="dtCadastro" class="form-control" />
+                <span asp-validation-for="dtCadastro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dtAtualizado" class="control-label"></label>
+                <input asp-for="dtAtualizado" class="form-control" />
+                <span asp-validation-for="dtAtualizado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dtExcluido" class="control-label"></label>
+                <input asp-for="dtExcluido" class="form-control" />
+                <span asp-validation-for="dtExcluido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

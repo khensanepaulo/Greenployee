@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Greenployee.Model.Meta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.dsRecompensa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dtInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dtFim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.vlMeta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dtCadastro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dtAtualizado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dtExcluido)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.dsRecompensa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dtInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dtFim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.vlMeta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dtCadastro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dtAtualizado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dtExcluido)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
