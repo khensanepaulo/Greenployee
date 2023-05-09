@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Greenployee.Model
+namespace Greenployee.MODELS.Model
 {
     public class Meta : BaseClass
-    { 
+    {
 
         public string dsRecompensa { get; set; } = string.Empty;
         public DateTime dtInicio { get; set; }

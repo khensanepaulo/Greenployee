@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Greenployee.Model
+namespace Greenployee.MODELS.Model
 {
-    public class Pessoa: BaseClass
+    public class Pessoa : BaseClass
     {
         [StringLength(60)]
         public string nmPessoa { get; set; } = string.Empty;
@@ -11,7 +11,7 @@ namespace Greenployee.Model
         public string nrCPF { get; set; } = string.Empty;
 
         [StringLength(15)]
-        public string nrRG { get; set;} = string.Empty;
+        public string nrRG { get; set; } = string.Empty;
 
         [StringLength(50)]
         public string dsEmail { get; set; } = string.Empty;
@@ -27,6 +27,6 @@ namespace Greenployee.Model
 
         public decimal flEntrega { get; set; }
         public DateTime dtAdmissao { get; set; }
-        
+
     }
 }

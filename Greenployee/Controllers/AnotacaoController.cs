@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Greenployee.MODELS.Data;
+using Greenployee.MODELS.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Greenployee.Data;
-using Greenployee.Model;
 
 namespace Greenployee.Controllers
 {
@@ -25,22 +20,22 @@ namespace Greenployee.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Anotacao>>> GetAnotacoes()
         {
-          if (_context.Anotacao == null)
+          if (_context.Anotacoes == null)
           {
               return NotFound();
           }
-            return await _context.Anotacao.ToListAsync();
+            return await _context.Anotacoes.ToListAsync();
         }
 
         // GET: api/Anotacao/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Anotacao>> GetAnotacao(int id)
         {
-          if (_context.Anotacao == null)
+          if (_context.Anotacoes == null)
           {
               return NotFound();
           }
-            var anotacao = await _context.Anotacao.FindAsync(id);
+            var anotacao = await _context.Anotacoes.FindAsync(id);
 
             if (anotacao == null)
             {
@@ -86,11 +81,11 @@ namespace Greenployee.Controllers
         [HttpPost]
         public async Task<ActionResult<Anotacao>> PostAnotacao(Anotacao anotacao)
         {
-          if (_context.Anotacao == null)
+          if (_context.Anotacoes == null)
           {
               return Problem("Entity set 'DataContext.Anotacao'  is null.");
           }
-            _context.Anotacao.Add(anotacao);
+            _context.Anotacoes.Add(anotacao);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAnotacao", new { id = anotacao.Id }, anotacao);
@@ -100,17 +95,17 @@ namespace Greenployee.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnotacao(int id)
         {
-            if (_context.Anotacao == null)
+            if (_context.Anotacoes == null)
             {
                 return NotFound();
             }
-            var anotacao = await _context.Anotacao.FindAsync(id);
+            var anotacao = await _context.Anotacoes.FindAsync(id);
             if (anotacao == null)
             {
                 return NotFound();
             }
 
-            _context.Anotacao.Remove(anotacao);
+            _context.Anotacoes.Remove(anotacao);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -118,7 +113,7 @@ namespace Greenployee.Controllers
 
         private bool AnotacaoExists(int id)
         {
-            return (_context.Anotacao?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Anotacoes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

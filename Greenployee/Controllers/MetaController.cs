@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Greenployee.MODELS.Data;
+using Greenployee.MODELS.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Greenployee.Data;
-using Greenployee.Model;
 
 namespace Greenployee.Controllers
 {
@@ -25,22 +25,22 @@ namespace Greenployee.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Meta>>> GetMetas()
         {
-          if (_context.Meta == null)
+          if (_context.Metas == null)
           {
               return NotFound();
           }
-            return await _context.Meta.ToListAsync();
+            return await _context.Metas.ToListAsync();
         }
 
         // GET: api/Metas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Meta>> GetByIdMeta(int id)
         {
-          if (_context.Meta == null)
+          if (_context.Metas == null)
           {
               return NotFound();
           }
-            var meta = await _context.Meta.FindAsync(id);
+            var meta = await _context.Metas.FindAsync(id);
 
             if (meta == null)
             {
@@ -86,11 +86,11 @@ namespace Greenployee.Controllers
         [HttpPost]
         public async Task<ActionResult<Meta>> PostMeta(Meta meta)
         {
-          if (_context.Meta == null)
+          if (_context.Metas == null)
           {
               return Problem("Entity set 'DataContext.Meta'  is null.");
           }
-            _context.Meta.Add(meta);
+            _context.Metas.Add(meta);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMeta", new { id = meta.Id }, meta);
@@ -100,17 +100,17 @@ namespace Greenployee.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMeta(int id)
         {
-            if (_context.Meta == null)
+            if (_context.Metas == null)
             {
                 return NotFound();
             }
-            var meta = await _context.Meta.FindAsync(id);
+            var meta = await _context.Metas.FindAsync(id);
             if (meta == null)
             {
                 return NotFound();
             }
 
-            _context.Meta.Remove(meta);
+            _context.Metas.Remove(meta);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -118,7 +118,7 @@ namespace Greenployee.Controllers
 
         private bool MetaExists(int id)
         {
-            return (_context.Meta?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Metas?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

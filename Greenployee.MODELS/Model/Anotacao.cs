@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Greenployee.Model
+namespace Greenployee.MODELS.Model
 {
-    public class Anotacao:BaseClass
+    public class Anotacao : BaseClass
     {
         public DateTime dtAnotacao { get; set; }
 
@@ -11,7 +11,7 @@ namespace Greenployee.Model
         public string dsMensagem { get; set; }
 
         [ForeignKey("Pessoa")]
-        public int idPessoa { get; set; }   
+        public int idPessoa { get; set; }
 
     }
 }

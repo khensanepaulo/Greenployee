@@ -1,4 +1,4 @@
-﻿namespace Greenployee.Model
+﻿namespace Greenployee.MODELS.Model
 {
     public class BaseClass
     {

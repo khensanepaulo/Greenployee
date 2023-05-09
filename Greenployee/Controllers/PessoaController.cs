@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Greenployee.Data;
+using Greenployee.CORE.Business;
+using Greenployee.MODELS.Model;
 using Greenployee.Model;
 
 namespace Greenployee.Controllers
@@ -14,111 +15,77 @@ namespace Greenployee.Controllers
     [ApiController]
     public class PessoaController : ControllerBase
     {
-        private readonly DataContext _context;
-
-        public PessoaController(DataContext context)
-        {
-            _context = context;
-        }
+        PessoaBusiness _psb = new PessoaBusiness();
 
         // GET: api/Pessoa
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pessoa>>> GetPessoas()
+        public List<Pessoa> GetListPessoas()
         {
-          if (_context.Pessoa == null)
-          {
-              return NotFound();
-          }
-            return await _context.Pessoa.ToListAsync();
+            try
+            {
+                return _psb.GetListPessoas();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Não foi possível listar as pessoas!");
+            }
         }
 
         // GET: api/Pessoa/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pessoa>> GetPessoa(int id)
+        public Pessoa GetPessoa(int id)
         {
-          if (_context.Pessoa == null)
-          {
-              return NotFound();
-          }
-            var pessoa = await _context.Pessoa.FindAsync(id);
-
-            if (pessoa == null)
-            {
-                return NotFound();
-            }
-
-            return pessoa;
-        }
-
-        // PUT: api/Pessoa/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPessoa(int id, Pessoa pessoa)
-        {
-            if (id != pessoa.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(pessoa).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                return _psb.GetPessoa(id);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!PessoaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw new Exception("Não foi possível encontrar a pessoa procurada!");
             }
-
-            return NoContent();
         }
 
         // POST: api/Pessoa
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Pessoa>> PostPessoa(Pessoa pessoa)
+        public Pessoa PostPessoa(Pessoa pessoa)
         {
-          if (_context.Pessoa == null)
-          {
-              return Problem("Entity set 'DataContext.Pessoa'  is null.");
-          }
-            _context.Pessoa.Add(pessoa);
-            await _context.SaveChangesAsync();
+            try
+            {
+                return _psb.SavePessoa(pessoa);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Não foi possível salvar a pessoa!");
+            }
+        }
 
-            return CreatedAtAction("GetPessoa", new { id = pessoa.Id }, pessoa);
+        // PUT: api/Pessoa/5
+        [HttpPut("{id}")]
+        public Pessoa PutPessoa(Pessoa pessoa)
+        {
+            try
+            {
+                return _psb.SavePessoa(pessoa);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Não foi possível editar a pessoa!");
+            }
         }
 
         // DELETE: api/Pessoa/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePessoa(int id)
+        public void DeletePessoa(int id)
         {
-            if (_context.Pessoa == null)
+            try
             {
-                return NotFound();
+                _psb.DeletePessoa(id);
             }
-            var pessoa = await _context.Pessoa.FindAsync(id);
-            if (pessoa == null)
+            catch (Exception)
             {
-                return NotFound();
+                throw new Exception("Não foi possível remover a pessoa!");
             }
-
-            _context.Pessoa.Remove(pessoa);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
-        private bool PessoaExists(int id)
-        {
-            return (_context.Pessoa?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
     }
 }

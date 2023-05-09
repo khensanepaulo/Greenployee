@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Greenployee.Data;
-using Greenployee.Model;
+using Greenployee.MODELS.Data;
+using Greenployee.MODELS.Model;
 
 namespace Greenployee.Controllers
 {
