@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Greenployee.CORE.Business;
 using Greenployee.MODELS.Model;
-using Greenployee.Model;
 
 namespace Greenployee.Controllers
 {

@@ -12,8 +12,9 @@ namespace Greenployee.CORE.Business
 {
     public class PessoaBusiness : DataContext
     {
-        private readonly DataContext db;
+        private readonly DataContext? db;
 
+        public PessoaBusiness() { }
         public PessoaBusiness(DataContext context)
         {
             db = context;

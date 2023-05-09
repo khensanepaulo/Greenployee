@@ -1,4 +1,4 @@
-using Greenployee.Data;
+using Greenployee.MODELS.Data;
 using Microsoft.EntityFrameworkCore;
 
 var myAllowEspecificOrigins = "myAllowEspecificOrigins";
