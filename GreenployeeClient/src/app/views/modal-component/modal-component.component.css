@@ -5,59 +5,11 @@ body{
     margin: 0;
 }
 
-.divisaotop{
-    display: flexbox;
-    width: 100%;
-    height: 18%;
-}
-
-.divisao{
-    display: inline-block;
-    align-items: center;
-    width: 100%;
-    height: 20%;
-}
-.divisaoMeio{
-    border-radius: 10px;
-    align-items: center;
-    width: 100%;
-    height: 36%;
-}
-
-.usuarioImg{
-    border: solid rgb(49, 104, 36) 1px;
-    display: flexbox;
-    align-items: center;
-    position: absolute;
-    width: 6vw;
-    height: 12vh;
-    margin-top: 3vh;
-    margin-left: 18%;
-    border-radius: 10px;
-    padding: 2px;
-}
-
-.usuarioMensagem{
-    display: flexbox;
-    position: absolute;
-    width: 12vw;
-    margin-top: 4vh;
-    margin-left: 25%;
-    font-family: 'Inter', sans-serif;;
-    
-}
-
 .gradiente{
     background: rgb(54,130,94);
     background: linear-gradient(209deg, rgba(54,130,94,1) 0%, rgba(71, 145, 111, 0.705) 29%, rgba(54,130,94,1) 100%);
 }
 
-.nextButton{
-    border: none;
-    width: 14vw;
-    height: 16vh;
-    border-radius: 12px;
-}
 .mt3{
     margin-top: 1vh;
 }
@@ -70,15 +22,6 @@ body{
     margin-left: 3vh;
 }
 
-.nextButton3{
-    border: none;
-    width: 13vw;
-    height: 14vh;
-    margin-top: 5vh;
-    margin-left: 4%;
-    border-radius: 12px;
-}
-
 .textoButton{
     color: white;
     font-family: 'Inter', sans-serif;
@@ -87,39 +30,9 @@ body{
     font-weight: lighter ;
 }
 
-.imagemAlinhamento{
-    position: absolute;
-    margin-top: 7vh;
-    margin-left: 6vw;
-    margin-right: 90vw;
-}
-
 .textoAlinhamento{
     margin-bottom: 18vh;
     margin-right: 5vw;
-}
-
-.nextButton3 .textoButton{
-    margin-right: 2vw;
-}
-
-.nextButton3{
-    text-align:justify;
-    border: none;
-    width: 13vw;
-    height: 12vh;
-    margin-top: 1vh;
-    margin-left: 18%;
-    border-radius: 12px;
-}
-
-.nextButton4{
-    border: none;
-    width: 14vw;
-    height: 16vh;
-    margin-top: 1vh;
-    margin-left: 4%;
-    border-radius: 12px;
 }
 
 .textoPadrao{
