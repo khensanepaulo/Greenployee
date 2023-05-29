@@ -6,6 +6,7 @@ import { LoginComponent } from './views/login/login.component';
 import { InicioComponent } from './views/inicio/inicio.component';
 import { RelatorioComponent } from './views/relatorio/relatorio.component';
 import { ModalComponentComponent } from './views/modal-component/modal-component.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { ModalComponentComponent } from './views/modal-component/modal-component
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule.forRoot([{ path: 'login', component: LoginComponent },
+    { path: 'inicio', component: InicioComponent },]),
   ],
   providers: [],
   bootstrap: [AppComponent]
