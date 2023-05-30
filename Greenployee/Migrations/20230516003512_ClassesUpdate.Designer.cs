@@ -4,6 +4,7 @@ using Greenployee.MODELS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Greenployee.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230516003512_ClassesUpdate")]
+    partial class ClassesUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,13 +41,13 @@ namespace Greenployee.API.Migrations
                     b.Property<DateTime>("dtAnotacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("dtAtualizado")
+                    b.Property<DateTime>("dtAtualizado")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("dtCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("dtExcluido")
+                    b.Property<DateTime>("dtExcluido")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("idPessoa")
@@ -68,13 +71,13 @@ namespace Greenployee.API.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime?>("dtAtualizado")
+                    b.Property<DateTime>("dtAtualizado")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("dtCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("dtExcluido")
+                    b.Property<DateTime>("dtExcluido")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("dtFim")
@@ -99,7 +102,7 @@ namespace Greenployee.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int?>("Funcionarioid")
+                    b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
 
                     b.Property<string>("dsEndereco")
@@ -112,13 +115,13 @@ namespace Greenployee.API.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime?>("dtAtualizado")
+                    b.Property<DateTime>("dtAtualizado")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("dtCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("dtExcluido")
+                    b.Property<DateTime>("dtExcluido")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("dtOrdem")
@@ -131,9 +134,6 @@ namespace Greenployee.API.Migrations
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
-
-                    b.Property<int>("idFuncionario")
-                        .HasColumnType("int");
 
                     b.Property<string>("nmCliente")
                         .IsRequired()
@@ -152,42 +152,9 @@ namespace Greenployee.API.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Funcionarioid");
+                    b.HasIndex("FuncionarioId");
 
                     b.ToTable("OrdensServicos");
-                });
-
-            modelBuilder.Entity("Greenployee.MODELS.Model.OrdemServicoItem", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<DateTime?>("dtAtualizado")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("dtCadastro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("dtExcluido")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("nmProduto")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("nrQuantidade")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("vlUnitario")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("OrdemServicoItens");
                 });
 
             modelBuilder.Entity("Greenployee.MODELS.Model.Pessoa", b =>
@@ -206,13 +173,13 @@ namespace Greenployee.API.Migrations
                     b.Property<DateTime>("dtAdmissao")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("dtAtualizado")
+                    b.Property<DateTime>("dtAtualizado")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("dtCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("dtExcluido")
+                    b.Property<DateTime>("dtExcluido")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("flEntrega")
@@ -256,70 +223,13 @@ namespace Greenployee.API.Migrations
                     b.ToTable("Pessoas");
                 });
 
-            modelBuilder.Entity("Greenployee.MODELS.Model.PessoaMeta", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<DateTime?>("dtAtualizado")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("dtCadastro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("dtExcluido")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.ToTable("PessoaMetas");
-                });
-
-            modelBuilder.Entity("Greenployee.MODELS.Model.Usuario", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<string>("dsLogin")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("dsSenha")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<DateTime?>("dtAtualizado")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("dtCadastro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("dtExcluido")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("tpAcesso")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Usuarios");
-                });
-
             modelBuilder.Entity("Greenployee.MODELS.Model.OrdemServico", b =>
                 {
                     b.HasOne("Greenployee.MODELS.Model.Pessoa", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("Funcionarioid");
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Funcionario");
                 });

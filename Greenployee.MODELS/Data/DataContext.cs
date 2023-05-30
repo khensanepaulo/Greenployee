@@ -3,16 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Greenployee.MODELS.Data
 {
-    public class DataContext:DbContext
+    public class DataContext : DbContext
     {
-
-        public DataContext() { }
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<Pessoa>? Pessoas { get; set; }
-        public DbSet<OrdemServico> OrdensServicos { get; set; }
-        public DbSet<Anotacao>? Anotacoes { get; set; }
-        public DbSet<Meta>? Metas { get; set; }
+        public virtual DbSet<Anotacao> Anotacoes { get; set; }
+        public virtual DbSet<Meta> Metas { get; set; }
+        public virtual DbSet<OrdemServico> OrdensServicos { get; set; }
+        public virtual DbSet<OrdemServicoItem> OrdemServicoItens { get; set; }
+        public virtual DbSet<Pessoa> Pessoas { get; set; }
+        public virtual DbSet<PessoaMeta> PessoaMetas { get; set; }
+        public virtual DbSet<Usuario> Usuarios { get; set; }
 
     }
 }

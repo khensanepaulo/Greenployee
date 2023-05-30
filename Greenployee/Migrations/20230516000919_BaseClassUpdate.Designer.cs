@@ -9,29 +9,29 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Greenployee.Migrations
+namespace Greenployee.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230410234342_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230516000919_BaseClassUpdate")]
+    partial class BaseClassUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Greenployee.Model.Anotacao", b =>
+            modelBuilder.Entity("Greenployee.MODELS.Model.Anotacao", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("dsMensagem")
                         .IsRequired()
@@ -53,18 +53,56 @@ namespace Greenployee.Migrations
                     b.Property<int>("idPessoa")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.ToTable("Anotacao");
+                    b.ToTable("Anotacoes");
                 });
 
-            modelBuilder.Entity("Greenployee.Model.OrdemServico", b =>
+            modelBuilder.Entity("Greenployee.MODELS.Model.Meta", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("dsRecompensa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("dtAtualizado")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dtCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dtExcluido")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dtFim")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dtInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("vlMeta")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Metas");
+                });
+
+            modelBuilder.Entity("Greenployee.MODELS.Model.OrdemServico", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int?>("Funcionarioid")
+                        .HasColumnType("int");
 
                     b.Property<string>("dsEndereco")
                         .IsRequired()
@@ -114,18 +152,20 @@ namespace Greenployee.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
+
+                    b.HasIndex("Funcionarioid");
 
                     b.ToTable("OrdensServicos");
                 });
 
-            modelBuilder.Entity("Greenployee.Model.Pessoa", b =>
+            modelBuilder.Entity("Greenployee.MODELS.Model.Pessoa", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("dsEmail")
                         .IsRequired()
@@ -177,9 +217,18 @@ namespace Greenployee.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.ToTable("Pessoa");
+                    b.ToTable("Pessoas");
+                });
+
+            modelBuilder.Entity("Greenployee.MODELS.Model.OrdemServico", b =>
+                {
+                    b.HasOne("Greenployee.MODELS.Model.Pessoa", "Funcionario")
+                        .WithMany()
+                        .HasForeignKey("Funcionarioid");
+
+                    b.Navigation("Funcionario");
                 });
 #pragma warning restore 612, 618
         }

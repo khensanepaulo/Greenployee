@@ -26,7 +26,10 @@ namespace Greenployee.MODELS.Model
         public string nrPIS { get; set; } = string.Empty;
 
         public decimal flEntrega { get; set; }
+
         public DateTime dtAdmissao { get; set; }
+
+        public int idUsuario { get; set; }
 
     }
 }

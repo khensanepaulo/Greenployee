@@ -1,12 +1,17 @@
-﻿namespace Greenployee.MODELS.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Greenployee.MODELS.Model
 {
     public class BaseClass
     {
 
-        public int Id { get; set; }
+        public int id { get; set; }
+
         public DateTime dtCadastro { get; set; }
-        public DateTime dtAtualizado { get; set; }
-        public DateTime dtExcluido { get; set; }
+
+        public DateTime? dtAtualizado { get; set; }
+        
+        public DateTime? dtExcluido { get; set; }
 
     }
 }

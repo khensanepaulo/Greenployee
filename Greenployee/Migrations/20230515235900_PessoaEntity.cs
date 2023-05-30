@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Greenployee.Migrations
+namespace Greenployee.API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class PessoaEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Anotacao",
+                name: "Anotacoes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -26,35 +26,30 @@ namespace Greenployee.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Anotacao", x => x.Id);
+                    table.PrimaryKey("PK_Anotacoes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrdensServicos",
+                name: "Metas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nrOrdem = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    nmCliente = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    nrTelefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    flSituacao = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    dsFormaPagamento = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    dsEndereco = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    flEntrega = table.Column<bool>(type: "bit", nullable: false),
-                    dtOrdem = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    idFuncionario = table.Column<int>(type: "int", nullable: false),
+                    dsRecompensa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    dtInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    dtFim = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    vlMeta = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     dtCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     dtAtualizado = table.Column<DateTime>(type: "datetime2", nullable: false),
                     dtExcluido = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrdensServicos", x => x.Id);
+                    table.PrimaryKey("PK_Metas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pessoa",
+                name: "Pessoas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -74,21 +69,59 @@ namespace Greenployee.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pessoa", x => x.Id);
+                    table.PrimaryKey("PK_Pessoas", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "OrdensServicos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nrOrdem = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    nmCliente = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    nrTelefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    flSituacao = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    dsFormaPagamento = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    dsEndereco = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    flEntrega = table.Column<bool>(type: "bit", nullable: false),
+                    dtOrdem = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    idFuncionario = table.Column<int>(type: "int", nullable: false),
+                    FuncionarioId = table.Column<int>(type: "int", nullable: true),
+                    dtCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    dtAtualizado = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    dtExcluido = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrdensServicos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrdensServicos_Pessoas_FuncionarioId",
+                        column: x => x.FuncionarioId,
+                        principalTable: "Pessoas",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrdensServicos_FuncionarioId",
+                table: "OrdensServicos",
+                column: "FuncionarioId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Anotacao");
+                name: "Anotacoes");
+
+            migrationBuilder.DropTable(
+                name: "Metas");
 
             migrationBuilder.DropTable(
                 name: "OrdensServicos");
 
             migrationBuilder.DropTable(
-                name: "Pessoa");
+                name: "Pessoas");
         }
     }
 }

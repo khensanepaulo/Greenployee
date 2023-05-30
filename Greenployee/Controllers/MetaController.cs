@@ -2,123 +2,101 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Greenployee.MODELS.Data;
-using Greenployee.MODELS.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Greenployee.CORE.Business;
+using Greenployee.MODELS.Model;
+using Greenployee.MODELS.Data;
+using System.Web.Http.Results;
 
 namespace Greenployee.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MetasController : ControllerBase
+    public class MetaController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IMetaBusiness _business;
 
-        public MetasController(DataContext context)
+        public MetaController(IMetaBusiness metaBusiness)
         {
-            _context = context;
+            _business = metaBusiness;
         }
 
-        // GET: api/Metas
+        // GET: api/Meta
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Meta>>> GetMetas()
+        public async Task<ActionResult<IEnumerable<Meta>>> FindAll()
         {
-          if (_context.Metas == null)
-          {
-              return NotFound();
-          }
-            return await _context.Metas.ToListAsync();
-        }
-
-        // GET: api/Metas/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Meta>> GetByIdMeta(int id)
-        {
-          if (_context.Metas == null)
-          {
-              return NotFound();
-          }
-            var meta = await _context.Metas.FindAsync(id);
-
-            if (meta == null)
-            {
-                return NotFound();
-            }
-
-            return meta;
-        }
-
-        // PUT: api/Metas/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMeta(int id, Meta meta)
-        {
-            if (id != meta.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(meta).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                var result = await _business.FindAll();
+                if (result == null) return BadRequest("Não foi possível listar as metas!");
+                return Ok(result);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception exception)
             {
-                if (!MetaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw exception;
             }
-
-            return NoContent();
         }
 
-        // POST: api/Metas
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Meta>> FindById(int id)
+        {
+            try
+            {
+                Meta result = await _business.FindById(id);
+                if (result == null) return NotFound("Não foi possível encontrar a meta!");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         [HttpPost]
-        public async Task<ActionResult<Meta>> PostMeta(Meta meta)
+        public async Task<ActionResult<Meta>> Insert(Meta meta)
         {
-          if (_context.Metas == null)
-          {
-              return Problem("Entity set 'DataContext.Meta'  is null.");
-          }
-            _context.Metas.Add(meta);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetMeta", new { id = meta.Id }, meta);
+            try
+            {
+                Meta result = await _business.Insert(meta);
+                if (result == null) return BadRequest("Não foi possível inserir a meta!");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
         }
 
-        // DELETE: api/Metas/5
+        [HttpPut]
+        public async Task<ActionResult<Meta>> Update(Meta meta)
+        {
+            try
+            {
+                Meta result = await _business.Update(meta);
+                if (result == null) return BadRequest("Não foi possível atualizar a meta!");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMeta(int id)
+        public async Task<ActionResult<Meta>> Delete(int id)
         {
-            if (_context.Metas == null)
+            try
             {
-                return NotFound();
+                var status = await _business.Delete(id);
+                if (!status) return BadRequest("Não foi possível deletar a meta!");
+                return Ok(status);
             }
-            var meta = await _context.Metas.FindAsync(id);
-            if (meta == null)
-            {
-                return NotFound();
+            catch (Exception exception) 
+            { 
+                throw exception; 
             }
-
-            _context.Metas.Remove(meta);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool MetaExists(int id)
-        {
-            return (_context.Metas?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

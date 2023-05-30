@@ -1,4 +1,5 @@
-﻿using Greenployee.MODELS.Data;
+﻿using Greenployee.CORE.Business;
+using Greenployee.MODELS.Data;
 using Greenployee.MODELS.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,111 +10,87 @@ namespace Greenployee.Controllers
     [ApiController]
     public class AnotacaoController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IAnotacaoBusiness _business;
 
-        public AnotacaoController(DataContext context)
+        public AnotacaoController(IAnotacaoBusiness anotacaoBusiness)
         {
-            _context = context;
+            _business = anotacaoBusiness;
         }
 
-        // GET: api/Anotacao
+        // GET: api/Meta
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Anotacao>>> GetAnotacoes()
+        public async Task<ActionResult<IEnumerable<Anotacao>>> FindAll()
         {
-          if (_context.Anotacoes == null)
-          {
-              return NotFound();
-          }
-            return await _context.Anotacoes.ToListAsync();
-        }
-
-        // GET: api/Anotacao/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Anotacao>> GetAnotacao(int id)
-        {
-          if (_context.Anotacoes == null)
-          {
-              return NotFound();
-          }
-            var anotacao = await _context.Anotacoes.FindAsync(id);
-
-            if (anotacao == null)
-            {
-                return NotFound();
-            }
-
-            return anotacao;
-        }
-
-        // PUT: api/Anotacao/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAnotacao(int id, Anotacao anotacao)
-        {
-            if (id != anotacao.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(anotacao).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                var result = await _business.FindAll();
+                if (result == null) return BadRequest("Não foi possível listar as anotações!");
+                return Ok(result);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception exception)
             {
-                if (!AnotacaoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw exception;
             }
-
-            return NoContent();
         }
 
-        // POST: api/Anotacao
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Anotacao>> FindById(int id)
+        {
+            try
+            {
+                Anotacao result = await _business.FindById(id);
+                if (result == null) return NotFound("Não foi possível encontrar a anotação!");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         [HttpPost]
-        public async Task<ActionResult<Anotacao>> PostAnotacao(Anotacao anotacao)
+        public async Task<ActionResult<Anotacao>> Insert(Anotacao anotacao)
         {
-          if (_context.Anotacoes == null)
-          {
-              return Problem("Entity set 'DataContext.Anotacao'  is null.");
-          }
-            _context.Anotacoes.Add(anotacao);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAnotacao", new { id = anotacao.Id }, anotacao);
+            try
+            {
+                Anotacao result = await _business.Insert(anotacao);
+                if (result == null) return BadRequest("Não foi possível inserir a anotação!");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
         }
 
-        // DELETE: api/Anotacao/5
+        [HttpPut]
+        public async Task<ActionResult<Anotacao>> Update(Anotacao anotacao)
+        {
+            try
+            {
+                Anotacao result = await _business.Update(anotacao);
+                if (result == null) return BadRequest("Não foi possível atualizar a anotação!");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAnotacao(int id)
+        public async Task<ActionResult<Anotacao>> Delete(int id)
         {
-            if (_context.Anotacoes == null)
+            try
             {
-                return NotFound();
+                var status = await _business.Delete(id);
+                if (!status) return BadRequest("Não foi possível deletar a anotação!");
+                return Ok(status);
             }
-            var anotacao = await _context.Anotacoes.FindAsync(id);
-            if (anotacao == null)
+            catch (Exception exception)
             {
-                return NotFound();
+                throw exception;
             }
-
-            _context.Anotacoes.Remove(anotacao);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool AnotacaoExists(int id)
-        {
-            return (_context.Anotacoes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

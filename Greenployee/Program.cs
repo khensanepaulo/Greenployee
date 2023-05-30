@@ -1,3 +1,4 @@
+using Greenployee.CORE.Business;
 using Greenployee.MODELS.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,8 +15,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Greenployee.API"));
 });
+
+builder.Services.AddScoped<IAnotacaoBusiness, AnotacaoBusiness>();
+builder.Services.AddScoped<IMetaBusiness, MetaBusiness>();
+builder.Services.AddScoped<IOrdemServicoBusiness, OrdemServicoBusiness>();
 
 builder.Services.AddCors(options =>
 {

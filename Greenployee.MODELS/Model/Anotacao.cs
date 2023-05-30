@@ -5,12 +5,11 @@ namespace Greenployee.MODELS.Model
 {
     public class Anotacao : BaseClass
     {
-        public DateTime dtAnotacao { get; set; }
-
-        [StringLength(100)]
+        [StringLength(255)]
         public string dsMensagem { get; set; }
 
-        [ForeignKey("Pessoa")]
+        public bool flConcluido  { get; set; }
+
         public int idPessoa { get; set; }
 
     }

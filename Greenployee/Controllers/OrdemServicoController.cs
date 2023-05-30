@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Greenployee.MODELS.Data;
 using Greenployee.MODELS.Model;
+using Greenployee.CORE.Business;
 
 namespace Greenployee.Controllers
 {
@@ -14,111 +15,87 @@ namespace Greenployee.Controllers
     [ApiController]
     public class OrdemServicoController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IOrdemServicoBusiness _business;
 
-        public OrdemServicoController(DataContext context)
+        public OrdemServicoController(IOrdemServicoBusiness ordemServicoBusiness)
         {
-            _context = context;
+            _business = ordemServicoBusiness;
         }
 
-        // GET: api/OrdemServico
+        // GET: api/Meta
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrdemServico>>> GetOrdensServicos()
+        public async Task<ActionResult<IEnumerable<OrdemServico>>> FindAll()
         {
-          if (_context.OrdensServicos == null)
-          {
-              return NotFound();
-          }
-            return await _context.OrdensServicos.ToListAsync();
-        }
-
-        // GET: api/OrdemServico/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<OrdemServico>> GetOrdemServico(int id)
-        {
-          if (_context.OrdensServicos == null)
-          {
-              return NotFound();
-          }
-            var ordemServico = await _context.OrdensServicos.FindAsync(id);
-
-            if (ordemServico == null)
-            {
-                return NotFound();
-            }
-
-            return ordemServico;
-        }
-
-        // PUT: api/OrdemServico/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrdemServico(int id, OrdemServico ordemServico)
-        {
-            if (id != ordemServico.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(ordemServico).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                var result = await _business.FindAll();
+                if (result == null) return BadRequest("Não foi possível listar as ordens de serviço!");
+                return Ok(result);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception exception)
             {
-                if (!OrdemServicoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw exception;
             }
-
-            return NoContent();
         }
 
-        // POST: api/OrdemServico
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpGet("{id}")]
+        public async Task<ActionResult<OrdemServico>> FindById(int id)
+        {
+            try
+            {
+                OrdemServico result = await _business.FindById(id);
+                if (result == null) return NotFound("Não foi possível encontrar a ordem de serviço!");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         [HttpPost]
-        public async Task<ActionResult<OrdemServico>> PostOrdemServico(OrdemServico ordemServico)
+        public async Task<ActionResult<OrdemServico>> Insert(OrdemServico ordemServico)
         {
-          if (_context.OrdensServicos == null)
-          {
-              return Problem("Entity set 'DataContext.OrdensServicos'  is null.");
-          }
-            _context.OrdensServicos.Add(ordemServico);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrdemServico", new { id = ordemServico.Id }, ordemServico);
+            try
+            {
+                OrdemServico result = await _business.Insert(ordemServico);
+                if (result == null) return BadRequest("Não foi possível inserir a ordem de serviço!");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
         }
 
-        // DELETE: api/OrdemServico/5
+        [HttpPut]
+        public async Task<ActionResult<OrdemServico>> Update(OrdemServico ordemServico)
+        {
+            try
+            {
+                OrdemServico result = await _business.Update(ordemServico);
+                if (result == null) return BadRequest("Não foi possível atualizar a ordem de serviço!");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrdemServico(int id)
+        public async Task<ActionResult<OrdemServico>> Delete(int id)
         {
-            if (_context.OrdensServicos == null)
+            try
             {
-                return NotFound();
+                var status = await _business.Delete(id);
+                if (!status) return BadRequest("Não foi possível deletar a ordem de serviço!");
+                return Ok(status);
             }
-            var ordemServico = await _context.OrdensServicos.FindAsync(id);
-            if (ordemServico == null)
+            catch (Exception exception)
             {
-                return NotFound();
+                throw exception;
             }
-
-            _context.OrdensServicos.Remove(ordemServico);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool OrdemServicoExists(int id)
-        {
-            return (_context.OrdensServicos?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
