@@ -14,6 +14,20 @@ export class InicioComponent {
     { id: 4, nome: 'Item 3', valor: 300 },
     { id: 5, nome: 'Item 3', valor: 300 },
     { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
+    { id: 6, nome: 'Item 3', valor: 300 },
     // ...
   ];
  

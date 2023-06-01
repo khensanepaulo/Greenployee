@@ -135,6 +135,54 @@ body{
     box-shadow: #18211B80;
 }
 
+.trCor{
+    background: rgba(35, 55, 46, 0.42);
+    backdrop-filter: blur(2.5px);
+    /* Note: backdrop-filter has minimal browser support */
+    border-radius: 20px;
+}
+
+/* Lista/Tabela */
+
+.table-divider {
+    margin-top: 1vh;
+    margin-left: 2vh;
+    height: 2px;
+    width: 93%; /* Largura igual à tabela */
+    background: rgba(18, 18, 18, 0.42);
+    border-radius: 3px;
+    transform: matrix(1, 0, 0, -1, 0, 0);
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 10px; /* Espaçamento vertical entre as linhas */
+ }
+  th,
+  td {
+    padding: 10px;
+  }
+
+.tdRadiusLeft{
+    border-top-left-radius: 9px;
+    border-bottom-left-radius: 9px;
+}
+
+.tdRadiusRight{
+    border-top-right-radius: 9px;
+    border-bottom-right-radius: 9px;
+}
+
+.textoTituloTabela{
+    font-family: 'Inter', sans-serif; 
+    font-style: normal; 
+    font-size: 18px; 
+    font-weight: lighter ;
+    color: white;
+}
+
+  
+
 .inputCinza:focus { 
     outline: none !important;
     border-color: #838383c0;
