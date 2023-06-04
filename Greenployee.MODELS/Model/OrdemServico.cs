@@ -29,5 +29,10 @@ namespace Greenployee.MODELS.Model
         public int idFuncionario { get; set; }
 
         public virtual Pessoa? Funcionario { get; set; }
+
+        public static implicit operator OrdemServico(Pessoa v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -12,25 +12,25 @@ namespace Greenployee.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PessoaController : ControllerBase
+    public class PessoaMetaController : ControllerBase
     {
 
-        private readonly IOPessoaBusiness _business;
+        private readonly IOPessoaMetaBusiness _business;
 
 
-        public PessoaController(IOPessoaBusiness pessoaBusiness)
+        public PessoaMetaController(IOPessoaMetaBusiness pessoaMetaBusiness)
         {
-            _business = pessoaBusiness;
+            _business = pessoaMetaBusiness;
         }
 
         // GET: api/Meta
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pessoa>>> FindAll()
+        public async Task<ActionResult<IEnumerable<PessoaMeta>>> FindAll()
         {
             try
             {
                 var result = await _business.FindAll();
-                if (result == null) return BadRequest("Não foi possível listar as Pessoas!");
+                if (result == null) return BadRequest("Não foi possível listar as metas referente a esse funcionario!");
                 return Ok(result);
             }
             catch (Exception exception)
@@ -40,12 +40,12 @@ namespace Greenployee.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pessoa>> FindById(int id)
+        public async Task<ActionResult<PessoaMeta>> FindById(int id)
         {
             try
             {
-                Pessoa result = await _business.FindById(id);
-                if (result == null) return NotFound("Não foi possível encontrar a Pessoa!");
+                PessoaMeta result = await _business.FindById(id);
+                if (result == null) return NotFound("Não foi possível as metas referente a esse funcionario");
                 return Ok(result);
             }
             catch (Exception exception)
@@ -55,12 +55,12 @@ namespace Greenployee.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Pessoa>> Insert(Pessoa pessoa)
+        public async Task<ActionResult<PessoaMeta>> Insert(PessoaMeta pessoaMeta)
         {
             try
             {
-                Pessoa result = await _business.Insert(pessoa);
-                if (result == null) return BadRequest("Não foi possível inserir pessoa!");
+                PessoaMeta result = await _business.Insert(pessoaMeta);
+                if (result == null) return BadRequest("Não foi possível inserir as metas referente a esse funcionario!");
                 return Ok(result);
             }
             catch (Exception exception)
@@ -70,11 +70,11 @@ namespace Greenployee.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Pessoa>> Update(Pessoa pessoa)
+        public async Task<ActionResult<PessoaMeta>> Update(PessoaMeta pessoaMeta)
         {
             try
             {
-                Pessoa result = await _business.Update(pessoa);
+                PessoaMeta result = await _business.Update(pessoaMeta);
                 if (result == null) return BadRequest("Não foi possível atualizar os dados referentes a Pessoa!");
                 return Ok(result);
             }
@@ -85,7 +85,7 @@ namespace Greenployee.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Pessoa>> Delete(int id)
+        public async Task<ActionResult<PessoaMeta>> Delete(int id)
         {
             try
             {

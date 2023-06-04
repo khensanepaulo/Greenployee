@@ -11,5 +11,10 @@ namespace Greenployee.MODELS.Model
         int idPessoa { get; set; }
 
         int idMeta { get; set; }
+
+        public static implicit operator PessoaMeta(Pessoa v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
