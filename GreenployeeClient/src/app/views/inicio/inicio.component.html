@@ -42,7 +42,7 @@
             <div class="row gradiente" style="text-align:center; border-radius: 10px; width: 95%;">
                 <div class="row">
                     <div class="col-lg-2 mt3 textoTituloTabela">
-                        <img src="../../../assets/images/icones/hoje.png" alt="..." style="height: 100%; width: 40%;">
+                        <img src="../../../assets/images/icones/hoje.png" alt="..." style="">
                         Hoje
                     </div>
                     <div class="table-divider col-lg-12"></div>
@@ -52,7 +52,7 @@
                     <table class="table table-borderless table-hover ">
                         <tbody>
                             <tr *ngFor="let item of listaFake" class="trCor">
-                               <td class="align-middle text-left tdRadiusLeft">
+                                <td class="align-middle text-left tdRadiusLeft">
                                     {{ item.nome }}
                                 </td>
                                 <td class="align-middle text-left tdRadiusRight">
@@ -86,14 +86,16 @@
             <div class="row">
                 <div class="row">
                     <div class="col-lg-2 mt3">
-                        <img src="../../../assets/images/icones/comissao.png" alt="..." style="height: 70%; width: 40%;">
+                        <img src="../../../assets/images/icones/comissao.png" alt="..."
+                            style="height: 70%; width: 40%;">
                     </div>
                     <div class="col-lg-2 mt3 textoTituloTabela">
                         <p class="">Comissao</p>
-                    </div>    
+                    </div>
                 </div>
                 <div class="table-divider col-lg-12"></div>
-                <div class="table-responsive d-flex justify-content-center mt3" style="max-height: 400px; overflow-y: scroll; width: 40vw;">
+                <div class="table-responsive d-flex justify-content-center mt3"
+                    style="max-height: 380px; overflow-y: scroll; width: 40vw;">
                     <table class="table table-borderless table-hover">
                         <tbody>
                             <tr *ngFor="let item of listaFake" class="trCor" style="border-radius: 30px;">
