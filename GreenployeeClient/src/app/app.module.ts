@@ -20,7 +20,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot([{ path: 'login', component: LoginComponent },
+    RouterModule.forRoot([{ path: '', component: LoginComponent },
     { path: 'inicio', component: InicioComponent },]),
   ],
   providers: [],
