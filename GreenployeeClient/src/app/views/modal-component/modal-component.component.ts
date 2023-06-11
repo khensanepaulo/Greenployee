@@ -10,6 +10,16 @@ export class ModalComponentComponent {
   quantidade: number = 0;
   flEntrega: boolean = false;
 
+  
+
+  cadastrarAnotacao(){
+
+
+
+
+
+  }
+
   adicionarItem() {
     // Lógica para adicionar o item
 
