@@ -1,5 +1,6 @@
 using Greenployee.CORE.Business;
 using Greenployee.MODELS.Data;
+using Greenployee.MODELS.Model;
 using Microsoft.EntityFrameworkCore;
 
 var myAllowEspecificOrigins = "myAllowEspecificOrigins";
@@ -21,6 +22,10 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddScoped<IAnotacaoBusiness, AnotacaoBusiness>();
 builder.Services.AddScoped<IMetaBusiness, MetaBusiness>();
 builder.Services.AddScoped<IOrdemServicoBusiness, OrdemServicoBusiness>();
+builder.Services.AddScoped<IMetaBusiness, MetaBusiness>();
+builder.Services.AddScoped<IOrdemServicoItemBusiness, OrdemServicoItemBusiness>();
+builder.Services.AddScoped<IPessoaBusiness, PessoaBusiness>();
+builder.Services.AddScoped<IPessoaMetaBusiness, PessoaMetaBusiness>();
 
 builder.Services.AddCors(options =>
 {

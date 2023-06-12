@@ -15,10 +15,10 @@ namespace Greenployee.Controllers
     public class PessoaController : ControllerBase
     {
 
-        private readonly IOPessoaBusiness _business;
+        private readonly IPessoaBusiness _business;
 
 
-        public PessoaController(IOPessoaBusiness pessoaBusiness)
+        public PessoaController(IPessoaBusiness pessoaBusiness)
         {
             _business = pessoaBusiness;
         }

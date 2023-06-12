@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Greenployee.CORE.Business
 {
-    public interface IOPessoaMetaBusiness
+    public interface IPessoaMetaBusiness
     {
         Task<IEnumerable<PessoaMeta>> FindAll();
         Task<PessoaMeta> FindById(int id);
@@ -13,7 +13,7 @@ namespace Greenployee.CORE.Business
         Task<bool> Delete(int id);
     }
 
-    public class  PessoaMetaBusiness : IOPessoaMetaBusiness
+    public class  PessoaMetaBusiness : IPessoaMetaBusiness
     {
         private readonly DataContext db;
 
