@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RelatorioComponent } from './relatorio.component';
+import { ModalRelatorioComponent } from './modal-relatorio.component';
 
-describe('RelatorioComponent', () => {
-  let component: RelatorioComponent;
-  let fixture: ComponentFixture<RelatorioComponent>;
+describe('ModalRelatorioComponent', () => {
+  let component: ModalRelatorioComponent;
+  let fixture: ComponentFixture<ModalRelatorioComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RelatorioComponent ]
+      declarations: [ ModalRelatorioComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RelatorioComponent);
+    fixture = TestBed.createComponent(ModalRelatorioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

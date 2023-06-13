@@ -6,7 +6,7 @@ export class AnotacaoClient {
 
   constructor() {
     this.axiosClient = axios.create({
-      baseURL: 'http://localhost:5001/api/Anotacao',
+      baseURL: 'http://localhost:5001/greenployeedb/Anotacoes',
       headers: {'Content-type' : 'application/json'}
     });
   }
@@ -38,6 +38,15 @@ export class AnotacaoClient {
   public async desativar(anotacao: Anotacao): Promise<void> {
     try {
       await this.axiosClient.put(`/desativar/${anotacao.id}`, anotacao);
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+
+  public async listarAnotacoes(): Promise<Anotacao[]> {
+    try {
+      const response = await this.axiosClient.get<Anotacao[]>('/');
+      return response.data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }

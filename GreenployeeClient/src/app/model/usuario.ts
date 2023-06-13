@@ -2,7 +2,6 @@ import { BaseClass } from "./baseClass";
 
 export class Usuario extends BaseClass {
 
-    dsLogin! : string
-    dsSenha! : string
-    tpAcesso! : string
+    dsLogin! : string;
+    dsSenha! : string;
 }
