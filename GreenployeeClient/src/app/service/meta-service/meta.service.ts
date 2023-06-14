@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosInstance } from "axios";
-
 import { Meta } from 'src/app/model/meta';
 
 @Injectable({

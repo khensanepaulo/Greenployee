@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MetaClient } from 'src/app/client/meta.client';
 import { Meta } from 'src/app/model/meta';
 import { MetaService } from 'src/app/service/meta-service/meta.service';
 
@@ -22,8 +21,6 @@ export class ModalMetaComponent {
   public addMeta(): void {
     this.metaService.cadastrar(this.meta);
   }
-
-
 
    listarMetas(): void {
   this.metaService.findAll()
