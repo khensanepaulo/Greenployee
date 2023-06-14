@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Greenployee.MODELS.Model
 {
@@ -8,31 +10,28 @@ namespace Greenployee.MODELS.Model
         public string nrOrdem { get; set; } = string.Empty;
 
         [StringLength(60)]
-        public string nmCliente { get; set; } = string.Empty;
+        public string? nmCliente { get; set; } = string.Empty;
 
         [StringLength(20)]
-        public string nrTelefone { get; set; } = string.Empty;
+        public string? nrTelefone { get; set; } = string.Empty;
 
         [StringLength(15)]
-        public string flSituacao { get; set; } = string.Empty;
+        public string? flSituacao { get; set; } = string.Empty;
 
         [StringLength(15)]
-        public string dsFormaPagamento { get; set; } = string.Empty;
+        public string? dsFormaPagamento { get; set; } = string.Empty;
 
         [StringLength(100)]
-        public string dsEndereco { get; set; } = string.Empty;
+        public string? dsEndereco { get; set; } = string.Empty;
 
-        public bool flEntrega { get; set; }
+        public bool flEntrega { get; set; } = false;
 
-        public DateTime dtOrdem { get; set; }
+        public decimal? vlTotal { get; set; }
 
-        public int idFuncionario { get; set; }
-
+        [ForeignKey("idFuncionario")]
         public virtual Pessoa? Funcionario { get; set; }
 
-        public static implicit operator OrdemServico(Pessoa v)
-        {
-            throw new NotImplementedException();
-        }
+        //public ICollection<OrdemServicoItem>? OrdemServicoItens { get; set; } = new List<OrdemServicoItem>();
+
     }
 }

@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Greenployee.CORE.Business;
+﻿using Greenployee.CORE.Business;
 using Greenployee.MODELS.Model;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Greenployee.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PessoaController : ControllerBase
     {
 
-        private readonly IOPessoaBusiness _business;
+        private readonly IPessoaBusiness _business;
 
 
-        public PessoaController(IOPessoaBusiness pessoaBusiness)
+        public PessoaController(IPessoaBusiness pessoaBusiness)
         {
             _business = pessoaBusiness;
         }
@@ -75,7 +71,7 @@ namespace Greenployee.Controllers
             try
             {
                 Pessoa result = await _business.Update(pessoa);
-                if (result == null) return BadRequest("Não foi possível atualizar os dados referentes a Pessoa!");
+                if (result == null) return BadRequest("Não foi possível atualizar os dados referentes a pessoa!");
                 return Ok(result);
             }
             catch (Exception exception)

@@ -1,11 +1,11 @@
 ﻿using Greenployee.CORE.Business;
-using Greenployee.MODELS.Data;
 using Greenployee.MODELS.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Greenployee.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AnotacaoController : ControllerBase

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Greenployee.CORE.Business
 {
-    public interface IOPessoaBusiness
+    public interface IPessoaBusiness
     {
         Task<IEnumerable<Pessoa>> FindAll();
         Task<Pessoa> FindById(int id);
@@ -13,7 +13,7 @@ namespace Greenployee.CORE.Business
         Task<bool> Delete(int id);
     }
 
-    public class PessoaBusiness : IOPessoaBusiness
+    public class PessoaBusiness : IPessoaBusiness
     {
         private readonly DataContext db;
 
@@ -24,7 +24,7 @@ namespace Greenployee.CORE.Business
 
         public async Task<IEnumerable<Pessoa>> FindAll()
         {
-            IEnumerable<Pessoa> list = (IEnumerable<Pessoa>)await db.Pessoas.Where(x => x.dtExcluido == null).ToListAsync();
+            IEnumerable<Pessoa> list = await db.Pessoas.Where(x => x.dtExcluido == null).ToListAsync();
             return list;
         }
 

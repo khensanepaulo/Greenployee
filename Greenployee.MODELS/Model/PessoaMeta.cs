@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,11 @@ namespace Greenployee.MODELS.Model
 {
     public class PessoaMeta : BaseClass
     {
-        int idPessoa { get; set; }
+        [ForeignKey("idPessoa")]
+        public virtual Pessoa Pessoa { get; set; }
 
-        int idMeta { get; set; }
+        [ForeignKey("idMeta")]
+        public virtual Meta Meta { get; set; }
 
-        public static implicit operator PessoaMeta(Pessoa v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

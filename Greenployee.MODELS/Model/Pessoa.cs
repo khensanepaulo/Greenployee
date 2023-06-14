@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Greenployee.MODELS.Model
 {
@@ -23,13 +24,12 @@ namespace Greenployee.MODELS.Model
         public string flSituacao { get; set; } = string.Empty;
 
         [StringLength(15)]
-        public string nrPIS { get; set; } = string.Empty;
+        public string? nrPIS { get; set; } = string.Empty;
 
-        public decimal flEntrega { get; set; }
+        public DateTime? dtAdmissao { get; set; }
 
-        public DateTime dtAdmissao { get; set; }
-
-        public int idUsuario { get; set; }
+        [ForeignKey("idUsuario")]
+        public virtual Usuario? Usuario { get; set; }
 
     }
 }

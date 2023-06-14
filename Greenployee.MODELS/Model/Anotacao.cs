@@ -8,9 +8,10 @@ namespace Greenployee.MODELS.Model
         [StringLength(255)]
         public string dsMensagem { get; set; }
 
-        public bool flConcluido  { get; set; }
+        public bool? flConcluido  { get; set; }
 
-        public int idPessoa { get; set; }
+        [ForeignKey("idPessoa")]
+        public virtual Pessoa Pessoa { get; set; }
 
     }
 }
