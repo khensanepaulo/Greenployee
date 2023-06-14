@@ -6,13 +6,13 @@ import { LoginComponent } from './views/login/login.component';
 import { InicioComponent } from './views/inicio/inicio.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MetaModalComponent } from './views/meta-modal/meta-modal.component';
 import { ModalAnotacaoComponent } from './views/modal-anotacao/modal-anotacao.component';
 import { ModalRelatorioComponent } from './views/modal-relatorio/modal-relatorio.component';
 import { ModalFuncionarioComponent } from './views/modal-funcionario/modal-funcionario.component';
 import { ModalNovaOrdemComponent } from './views/modal-nova-ordem/modal-nova-ordem.component';
 import { ModalOrdemServicoComponent } from './views/modal-ordem-servico/modal-ordem-servico.component';
-
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { ModalMetaComponent } from './views/modal-meta/modal-meta.component';
 
 
 @NgModule({
@@ -20,17 +20,18 @@ import { ModalOrdemServicoComponent } from './views/modal-ordem-servico/modal-or
     AppComponent,
     LoginComponent,
     InicioComponent,
-    MetaModalComponent,
     ModalAnotacaoComponent,
     ModalRelatorioComponent,
     ModalFuncionarioComponent,
     ModalNovaOrdemComponent,
     ModalOrdemServicoComponent,
+    ModalMetaComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    HttpClientModule,
     RouterModule.forRoot([{ path: '', component: LoginComponent },
     { path: 'inicio', component: InicioComponent },]),
   ],

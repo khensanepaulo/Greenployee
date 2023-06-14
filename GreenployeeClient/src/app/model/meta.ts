@@ -4,6 +4,6 @@ export class Meta extends BaseClass {
 
     dsRecompensa! : string;
     dtInicio! : Date;
-    dtFIm! : Date;
+    dtFim! : Date;
     vlMeta! : number;
 }

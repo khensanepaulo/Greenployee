@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AnotacaoClient } from 'src/app/client/anotacao.client';
 import { Anotacao } from 'src/app/model/anotacao';
+import { AnotacaoService } from 'src/app/service/anotacao-service/anotacao.service';
 
 @Component({
   selector: 'app-modal-anotacao',
@@ -11,43 +12,18 @@ export class ModalAnotacaoComponent {
 
   public anotacao! : Anotacao;
   public anotacaoClient!: AnotacaoClient;
-  public anotacaoList: Anotacao[] = [];
 
-  constructor(){}
+  constructor(private anotacaoService: AnotacaoService){}
   
   ngOnInit(): void {
     this.anotacao = new Anotacao();
     this.anotacaoClient = new AnotacaoClient();
-    this.carregarAnotacao();
   }
   
   public addAnotacao(): void {
-    console.log(this.anotacao);
-    this.anotacaoClient.cadastrar(this.anotacao);
+
+    this.anotacaoService.cadastrar(this.anotacao);
   }
 
-  public carregarAnotacao(): void {
-    const id = 1;
-    console.log("nome" + this.anotacao.dsMensagem);
-    this.anotacaoClient
-      .findById(this.anotacao.id)
-      .then((value) => {
-        this.anotacao = value;
-        console.log("anotacao" + value);
-        this.listarAnotacao(); // Chamada da função listarAnotacao() aqui
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    }
 
-  listarAnotacao(): void {
-    this.anotacaoClient.listarAnotacoes()
-      .then((anotacoes: Anotacao[]) => {
-        this.anotacaoList = anotacoes;
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
-    }
 }
