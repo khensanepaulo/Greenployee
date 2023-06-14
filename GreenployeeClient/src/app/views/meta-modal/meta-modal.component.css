@@ -35,6 +35,52 @@ body{
     margin-right: 5vw;
 }
 
+/* Lista/Tabela */
+
+.table-divider {
+  margin-top: 1vh;
+  margin-left: 2vh;
+  height: 2px;
+  width: 93%; /* Largura igual à tabela */
+  background: rgba(18, 18, 18, 0.42);
+  border-radius: 3px;
+  transform: matrix(1, 0, 0, -1, 0, 0);
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 10px; /* Espaçamento vertical entre as linhas */
+}
+.colorTd {
+  background: #A7AFAB;
+  backdrop-filter: blur(2.5px);
+  padding-bottom: 0px;
+}
+
+.tdRadiusLeft{
+  border-top-left-radius: 9px;
+  border-bottom-left-radius: 9px;
+}
+
+.tdRadiusRight{
+  border-top-right-radius: 9px;
+  border-bottom-right-radius: 9px;
+}
+
+.textoTituloTabela{
+  font-family: 'Inter', sans-serif; 
+  font-style: normal; 
+  font-size: 18px; 
+  font-weight: lighter ;
+  color: white;
+}
+
+.colorData{
+  color: rgb(48, 48, 48);
+  font-weight: 500;
+}
+
+
 .textoPadrao{
     font-family: 'Inter', sans-serif; 
     font-style: normal; 

@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap');
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.gradiente{
+    background: rgb(54,130,94);
+    background: linear-gradient(209deg, rgba(54,130,94,1) 0%, rgba(71, 145, 111, 0.705) 29%, rgba(54,130,94,1) 100%);
+}
+
+.mt3{
+    margin-top: 1vh;
+}
+
+.mr3{
+    margin-right: 3vh;
+}
+
+.ml3{
+    margin-left: 3vh;
+}
+
+.textoButton{
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 22px;
+    font-weight: lighter ;
+}
+
+.textoAlinhamento{
+    margin-bottom: 18vh;
+    margin-right: 5vw;
+}
+
+/* Lista/Tabela */
+
+.table-divider {
+  margin-top: 1vh;
+  margin-left: 2vh;
+  height: 2px;
+  width: 93%; /* Largura igual à tabela */
+  background: rgba(18, 18, 18, 0.42);
+  border-radius: 3px;
+  transform: matrix(1, 0, 0, -1, 0, 0);
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 10px; /* Espaçamento vertical entre as linhas */
+}
+.colorTd {
+  background: #A7AFAB;
+  backdrop-filter: blur(2.5px);
+  padding-bottom: 0px;
+}
+
+.tdRadiusLeft{
+  border-top-left-radius: 9px;
+  border-bottom-left-radius: 9px;
+}
+
+.tdRadiusRight{
+  border-top-right-radius: 9px;
+  border-bottom-right-radius: 9px;
+}
+
+.textoTituloTabela{
+  font-family: 'Inter', sans-serif; 
+  font-style: normal; 
+  font-size: 18px; 
+  font-weight: lighter ;
+  color: white;
+}
+
+.colorData{
+  color: rgb(48, 48, 48);
+  font-weight: 500;
+}
+
+
+.textoPadrao{
+    font-family: 'Inter', sans-serif; 
+    font-style: normal; 
+    font-size: 22px; 
+    font-weight: lighter ;
+}
+
+.inputCinza{
+    background-color: #A7AFAB;
+    color: #18211B80;
+    box-shadow: #18211B80;
+}
+
+.inputCinza:focus { 
+    outline: none !important;
+    border-color: #838383c0;
+    box-shadow: 0 0 4px #3a3a3ace;
+ }
+
+
+ /* width */
+.table-responsive::-webkit-scrollbar {
+    width: 30px;
+  }
+    
+    /* Track */
+  .table-responsive::-webkit-scrollbar-track {
+    background: #A7AFAB;
+    border-radius: 10px;
+  }
+    
+    /* Handle */
+  .table-responsive::-webkit-scrollbar-thumb {
+    background: #929794;
+    border-radius: 10px;
+    box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.10);
+  }
+    
+    /* Handle on hover */
+  .table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #a8a6a0;
+  }

@@ -17,12 +17,12 @@
         <div style="padding: 30%;">
             <h1 style=" margin-left:40%;">Login</h1>
             <div class="col-lg-12" style="width: 400px; ">
-                <input type="text" placeholder="email" class="col-lg-12"
+                <input [(ngModel)]="usuario.dsLogin" type="text" placeholder="email" class="col-lg-12"
                     style="background-color:#EFFCF5 ; border-top: #EFFCF5; border-left: #EFFCF5; border-right: #EFFCF5;  margin-top: 10%;" />
-                <input type="text" placeholder="senha" class="col-lg-12"
+                <input [(ngModel)]="usuario.dsSenha" type="text" placeholder="senha" class="col-lg-12"
                     style="background-color:#EFFCF5 ; border-top: #EFFCF5; border-left: #EFFCF5; border-right: #EFFCF5; margin-top: 16%;" />
-                <button class="btn btn-success" type="button" style="width: 200px; margin-top: 20%; margin-left: 25%;"
-                    routerLink="/inicio">Entrar</button>
+                <button (click)="addLogin()" class="btn btn-success" type="button" style="width: 200px; margin-top: 20%; margin-left: 25%;"
+                   >Entrar</button>
                 <p style="margin-left: 30%; color: #4F8E71;">Esqueceu sua senha?</p>
             </div>
         </div>

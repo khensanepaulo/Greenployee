@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InicioComponent } from './inicio.component';
 
-describe('InicioComponent', () => {
-  let component: InicioComponent;
-  let fixture: ComponentFixture<InicioComponent>;
+import { ModalAnotacaoComponent } from './modal-anotacao.component';
+
+describe('ModalAnotacaoComponent', () => {
+  let component: ModalAnotacaoComponent;
+  let fixture: ComponentFixture<ModalAnotacaoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InicioComponent ]
+      declarations: [ ModalAnotacaoComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(InicioComponent);
+    fixture = TestBed.createComponent(ModalAnotacaoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

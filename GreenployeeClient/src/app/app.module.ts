@@ -4,9 +4,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './views/login/login.component';
 import { InicioComponent } from './views/inicio/inicio.component';
-import { RelatorioComponent } from './views/relatorio/relatorio.component';
-import { ModalComponentComponent } from './views/modal-component/modal-component.component';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MetaModalComponent } from './views/meta-modal/meta-modal.component';
+import { ModalAnotacaoComponent } from './views/modal-anotacao/modal-anotacao.component';
+import { ModalRelatorioComponent } from './views/modal-relatorio/modal-relatorio.component';
+import { ModalFuncionarioComponent } from './views/modal-funcionario/modal-funcionario.component';
+import { ModalNovaOrdemComponent } from './views/modal-nova-ordem/modal-nova-ordem.component';
+import { ModalOrdemServicoComponent } from './views/modal-ordem-servico/modal-ordem-servico.component';
+
 
 
 @NgModule({
@@ -14,13 +20,18 @@ import { RouterModule } from '@angular/router';
     AppComponent,
     LoginComponent,
     InicioComponent,
-    RelatorioComponent,
-    ModalComponentComponent,
+    MetaModalComponent,
+    ModalAnotacaoComponent,
+    ModalRelatorioComponent,
+    ModalFuncionarioComponent,
+    ModalNovaOrdemComponent,
+    ModalOrdemServicoComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
-    RouterModule.forRoot([{ path: 'login', component: LoginComponent },
+    RouterModule.forRoot([{ path: '', component: LoginComponent },
     { path: 'inicio', component: InicioComponent },]),
   ],
   providers: [],

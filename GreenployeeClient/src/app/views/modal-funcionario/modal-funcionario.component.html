@@ -1,0 +1,64 @@
+<!-- Funcionários - modal -->
+<div class="modal modal-xl" id="funcionario">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #C9D7D0;">
+                <h4 class="modal-title textoPadrao">Funcionários</h4>
+                <div style="background-color: #C9D7D0;">
+                    <button type="button" class="btn gradiente" style="color:white">Cadastrar</button>
+                </div>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="background-color: #C9D7D0;">
+                <div class="row">
+
+                    <table class="table-borderless table-hover ">
+                        <thead>
+                            <tr style="background-color: #C9D7D0 !important;" class="trCor col-lg-12">
+                                <th class="col-lg-2">
+                                    <strong style="margin-left: 4vw;">Nome</strong>
+                                </th>
+                                <th class="text-center col-lg-3">
+                                    <strong style="margin-right: 1vw;">Ordens Vinculadas</strong>
+                                </th>
+                                <th class="text-center col-lg-3">
+                                    <strong style="margin-right: 2vw;">Metas Concluidas</strong>
+                                </th>
+                                <th class="text-center col-lg-2">
+                                    <strong style="margin-right: 3vw;">Data de Contratação</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="table-responsive d-flex justify-content-center mt3"
+                        style="max-height: 380px; overflow-y: scroll;">
+                        <table class="table table-borderless table-hover ">
+                            <tbody>
+                                <tr *ngFor="" class="trCor col-lg-12">
+                                    <td class="text-center tdRadiusLeft  col-lg-2 colorTd">
+                                        <!-- {{ item.nome }} -->
+                                    </td>
+                                    <td class="text-center col-lg-3 colorTd">
+                                        <!-- {{ item.valor }} -->
+                                    </td>
+                                    <td class="text-center col-lg-3 colorTd">
+                                        <!-- {{ item.valor }} -->
+                                    </td>
+                                    <td class="text-center tdRadiusRight col-lg-2 colorTd">
+                                        <!-- <p class="colorData">{{ item.nome }}</p> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer" style="background-color: #C9D7D0;">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn gradiente" style="color:white">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
