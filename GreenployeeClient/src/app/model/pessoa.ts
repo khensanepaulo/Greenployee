@@ -10,7 +10,6 @@ export class Pessoa extends BaseClass {
     nrTelefone!: string;
     flSituacao!: string;
     nrPIS!: string;
-    flEntrega!: number;
     dtAdmissao!: Date;
     usuario!: Usuario;
 

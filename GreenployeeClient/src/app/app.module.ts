@@ -13,6 +13,7 @@ import { ModalNovaOrdemComponent } from './views/modal-nova-ordem/modal-nova-ord
 import { ModalOrdemServicoComponent } from './views/modal-ordem-servico/modal-ordem-servico.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { ModalMetaComponent } from './views/modal-meta/modal-meta.component';
+import { ModalFuncionarioCadastroComponent } from './views/modal-funcionario-cadastro/modal-funcionario-cadastro.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ModalMetaComponent } from './views/modal-meta/modal-meta.component';
     ModalNovaOrdemComponent,
     ModalOrdemServicoComponent,
     ModalMetaComponent,
+    ModalFuncionarioCadastroComponent,
   ],
   imports: [
     BrowserModule,
