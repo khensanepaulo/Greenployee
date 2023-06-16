@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MetaModalComponent } from './meta-modal.component';
+import { ModalMetaComponent } from './modal-meta.component';
 
-describe('MetaModalComponent', () => {
-  let component: MetaModalComponent;
-  let fixture: ComponentFixture<MetaModalComponent>;
+describe('ModalMetaComponent', () => {
+  let component: ModalMetaComponent;
+  let fixture: ComponentFixture<ModalMetaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MetaModalComponent ]
+      declarations: [ ModalMetaComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MetaModalComponent);
+    fixture = TestBed.createComponent(ModalMetaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
