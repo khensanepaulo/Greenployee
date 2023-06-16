@@ -44,11 +44,7 @@ namespace Greenployee.API.Migrations
                     b.Property<DateTime?>("dtExcluido")
                         .HasColumnType("datetime2");
 
-<<<<<<< HEAD
-                    b.Property<bool?>("flConcluido")
-=======
                     b.Property<bool>("flConcluido")
->>>>>>> 46848bfbf2f82f5a024938abcab3f5b94df1ac89
                         .HasColumnType("bit");
 
                     b.Property<int>("idPessoa")

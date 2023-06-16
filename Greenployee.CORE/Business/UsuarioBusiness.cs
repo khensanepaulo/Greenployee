@@ -11,7 +11,7 @@ namespace Greenployee.CORE.Business
         Task<Usuario> Insert(Usuario usuario);
         Task<Usuario> Update(Usuario usuario);
         Task<bool> Delete(int id);
-        Task<Usuario> GetUserByLoginAndSenhaAsync(string dsLogin, string dsSenha);
+        Task<Usuario?> GetUserByLoginAndSenhaAsync(string dsLogin, string dsSenha);
     }
 
     public class UsuarioBusiness : IUsuarioBusiness
@@ -59,9 +59,12 @@ namespace Greenployee.CORE.Business
             return true;
         }
 
-        public async Task<Usuario> GetUserByLoginAndSenhaAsync(string dsLogin, string dsSenha)
+        public async Task<Usuario?> GetUserByLoginAndSenhaAsync(string dsLogin, string dsSenha)
         {
-            return await db.Usuarios.FirstOrDefaultAsync(x => x.dsLogin == dsLogin && x.dsSenha == dsSenha);
+            return await db.Usuarios
+                           .Include(x => x.PermissoesUsuario)
+                           .ThenInclude(x => x.Permissao)
+                           .FirstOrDefaultAsync(x => x.dsLogin == dsLogin && x.dsSenha == dsSenha);
         }
     }
 }

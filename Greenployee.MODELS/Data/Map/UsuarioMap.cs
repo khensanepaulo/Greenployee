@@ -15,6 +15,7 @@ namespace Greenployee.MODELS.Data.Map
             builder.Property(u => u.id).HasColumnName("id");
             builder.Property(u => u.dsLogin).HasColumnName("dsLogin");
             builder.Property(u => u.dsSenha).HasColumnName("dsSenha");
+            builder.HasMany(u => u.PermissoesUsuario).WithOne(p => p.Usuario).HasForeignKey(p => p.idUsuario);
         }
     }
 }

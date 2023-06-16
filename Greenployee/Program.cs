@@ -1,4 +1,4 @@
-using Greenployee.CORE.Authentication;
+using Greenployee.API.Authentication;
 using Greenployee.CORE.Business;
 using Greenployee.MODELS.Authentication;
 using Greenployee.MODELS.Data;
@@ -62,6 +62,7 @@ builder.Services.AddScoped<IOrdemServicoBusiness, OrdemServicoBusiness>();
 builder.Services.AddScoped<IPessoaBusiness, PessoaBusiness>();
 builder.Services.AddScoped<IUsuarioBusiness, UsuarioBusiness>();
 builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 builder.Services.AddCors(options =>
 {
@@ -88,6 +89,8 @@ builder.Services.AddAuthentication(authOptions =>
         ValidateIssuer = false
     };
 });
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

@@ -1,25 +1,23 @@
 ﻿using Greenployee.MODELS.Authentication;
 using Greenployee.MODELS.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
-namespace Greenployee.CORE.Authentication
+namespace Greenployee.API.Authentication
 {
     public class TokenGenerator : ITokenGenerator
     {
         public dynamic Generator(Usuario usuario)
         {
+            var permission = string.Join(",", usuario.PermissoesUsuario.Select(x => x.Permissao.nmPermissao));
             var claims = new List<Claim>
             {
                 new Claim("id", usuario.id.ToString()),
                 new Claim("dsLogin", usuario.dsLogin),
-                new Claim("dsSenha", usuario.dsSenha)
+                new Claim("dsSenha", usuario.dsSenha),
+                new Claim("permissoes", permission)
             };
 
             var expires = DateTime.Now.AddHours(1);

@@ -1,4 +1,6 @@
-﻿using Greenployee.CORE.Business;
+﻿using Greenployee.API.Controllers;
+using Greenployee.CORE.Business;
+using Greenployee.MODELS.Authentication;
 using Greenployee.MODELS.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +10,19 @@ namespace Greenployee.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class MetaController : ControllerBase
+    public class MetaController : BaseController
     {
         private readonly IMetaBusiness _business;
+        private readonly ICurrentUser _currentUser;
 
-        public MetaController(IMetaBusiness metaBusiness)
+        private List<string> _permissionNeeded = new List<string>() { "Admin" };
+        private readonly List<string> _permissionUser;
+
+        public MetaController(IMetaBusiness metaBusiness, ICurrentUser currentUser)
         {
             _business = metaBusiness;
+            _currentUser = currentUser;
+            _permissionUser = _currentUser?.permissions?.Split(",")?.ToList() ?? new List<string>();
         }
 
         // GET: api/Meta
@@ -23,6 +31,10 @@ namespace Greenployee.Controllers
         {
             try
             {
+                _permissionNeeded.Add("Admin");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                    return Forbidden();
+
                 var result = await _business.FindAll();
                 if (result == null) return BadRequest("Não foi possível listar as metas!");
                 return Ok(result);
@@ -38,6 +50,11 @@ namespace Greenployee.Controllers
         {
             try
             {
+                _permissionNeeded.Add("Admin");
+                _permissionNeeded.Add("User");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                    return Forbidden();
+
                 Meta result = await _business.FindById(id);
                 if (result == null) return NotFound("Não foi possível encontrar a meta!");
                 return Ok(result);
@@ -53,6 +70,10 @@ namespace Greenployee.Controllers
         {
             try
             {
+                _permissionNeeded.Add("Admin");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                    return Forbidden();
+
                 Meta result = await _business.Insert(meta);
                 if (result == null) return BadRequest("Não foi possível inserir a meta!");
                 return Ok(result);
@@ -68,6 +89,10 @@ namespace Greenployee.Controllers
         {
             try
             {
+                _permissionNeeded.Add("Admin");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                    return Forbidden();
+
                 Meta result = await _business.Update(meta);
                 if (result == null) return BadRequest("Não foi possível atualizar a meta!");
                 return Ok(result);
@@ -83,6 +108,10 @@ namespace Greenployee.Controllers
         {
             try
             {
+                _permissionNeeded.Add("Admin");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                    return Forbidden();
+
                 var status = await _business.Delete(id);
                 if (!status) return BadRequest("Não foi possível deletar a meta!");
                 return Ok(status);
