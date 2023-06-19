@@ -44,7 +44,7 @@ namespace Greenployee.API.Migrations
                     b.Property<DateTime?>("dtExcluido")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("flConcluido")
+                    b.Property<bool?>("flConcluido")
                         .HasColumnType("bit");
 
                     b.Property<int>("idPessoa")
@@ -189,6 +189,68 @@ namespace Greenployee.API.Migrations
                     b.ToTable("OrdemServicoItens");
                 });
 
+            modelBuilder.Entity("Greenployee.MODELS.Model.Permissao", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<DateTime?>("dtAtualizado")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dtCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("dtExcluido")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("nmPermissao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nmVisual")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Permissoes");
+                });
+
+            modelBuilder.Entity("Greenployee.MODELS.Model.PermissaoUsuario", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<DateTime?>("dtAtualizado")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dtCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("dtExcluido")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("idPermissao")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("idPermissao");
+
+                    b.HasIndex("idUsuario");
+
+                    b.ToTable("PermissaoUsuarios");
+                });
+
             modelBuilder.Entity("Greenployee.MODELS.Model.Pessoa", b =>
                 {
                     b.Property<int>("id")
@@ -219,7 +281,7 @@ namespace Greenployee.API.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<int>("idUsuario")
+                    b.Property<int?>("idUsuario")
                         .HasColumnType("int");
 
                     b.Property<string>("nmPessoa")
@@ -312,11 +374,6 @@ namespace Greenployee.API.Migrations
                     b.Property<DateTime?>("dtExcluido")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("tpAcesso")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
                     b.HasKey("id");
 
                     b.ToTable("Usuarios");
@@ -345,7 +402,7 @@ namespace Greenployee.API.Migrations
             modelBuilder.Entity("Greenployee.MODELS.Model.OrdemServicoItem", b =>
                 {
                     b.HasOne("Greenployee.MODELS.Model.OrdemServico", "OrdemServico")
-                        .WithMany("OrdemServicoItens")
+                        .WithMany()
                         .HasForeignKey("idOrdemServico")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -353,13 +410,30 @@ namespace Greenployee.API.Migrations
                     b.Navigation("OrdemServico");
                 });
 
+            modelBuilder.Entity("Greenployee.MODELS.Model.PermissaoUsuario", b =>
+                {
+                    b.HasOne("Greenployee.MODELS.Model.Permissao", "Permissao")
+                        .WithMany("PermissaoUsuarios")
+                        .HasForeignKey("idPermissao")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Greenployee.MODELS.Model.Usuario", "Usuario")
+                        .WithMany("PermissaoUsuarios")
+                        .HasForeignKey("idUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permissao");
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("Greenployee.MODELS.Model.Pessoa", b =>
                 {
                     b.HasOne("Greenployee.MODELS.Model.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("idUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("idUsuario");
 
                     b.Navigation("Usuario");
                 });
@@ -383,9 +457,14 @@ namespace Greenployee.API.Migrations
                     b.Navigation("Pessoa");
                 });
 
-            modelBuilder.Entity("Greenployee.MODELS.Model.OrdemServico", b =>
+            modelBuilder.Entity("Greenployee.MODELS.Model.Permissao", b =>
                 {
-                    b.Navigation("OrdemServicoItens");
+                    b.Navigation("PermissaoUsuarios");
+                });
+
+            modelBuilder.Entity("Greenployee.MODELS.Model.Usuario", b =>
+                {
+                    b.Navigation("PermissaoUsuarios");
                 });
 #pragma warning restore 612, 618
         }

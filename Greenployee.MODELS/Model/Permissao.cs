@@ -12,14 +12,14 @@ namespace Greenployee.MODELS.Model
         public Permissao(string nmVisual, string nmPermissao)
         {
             Validation(nmVisual, nmPermissao);
-            PermissoesUsuario = new List<PermissaoUsuario>();
+            PermissaoUsuarios = new List<PermissaoUsuario>();
         }
 
         public string nmVisual { get; set; } = string.Empty;
 
         public string nmPermissao { get; set; } = string.Empty;
 
-        public ICollection<PermissaoUsuario> PermissoesUsuario { get; set; }
+        public ICollection<PermissaoUsuario> PermissaoUsuarios { get; set; }
 
         private void Validation(string nmVisual, string nmPermissao)
         {

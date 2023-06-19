@@ -3,17 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Greenployee.API.Controllers
 {
-    [Authorize]
+    
     [ApiController]
     public class BaseController : ControllerBase
     {
         [NonAction]
+        [Authorize]
         public bool ValidatePermission(List<string> permissionUser, List<string> permissionNeeded)
         {
             return permissionNeeded.Any(x => permissionUser.Contains(x));
         }
 
         [NonAction]
+        [Authorize]
         public ActionResult Forbidden()
         {
             var obj = new

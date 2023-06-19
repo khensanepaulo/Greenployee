@@ -14,6 +14,8 @@ namespace Greenployee.MODELS.Data
         public virtual DbSet<Pessoa> Pessoas { get; set; }
         public virtual DbSet<PessoaMeta> PessoaMetas { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Permissao> Permissoes { get; set; }
+        public virtual DbSet<PermissaoUsuario> PermissaoUsuarios { get; set; }
 
     }
 }

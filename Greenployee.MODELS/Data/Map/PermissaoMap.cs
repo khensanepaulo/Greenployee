@@ -20,7 +20,7 @@ namespace Greenployee.MODELS.Data.Map
             builder.Property(u => u.id).HasColumnName("id");
             builder.Property(u => u.nmVisual).HasColumnName("nmVisual");
             builder.Property(u => u.nmPermissao).HasColumnName("nmPermissao");
-            builder.HasMany(u => u.PermissoesUsuario).WithOne(p => p.Permissao).HasForeignKey(p => p.idPermissao);
+            //builder.HasMany(u => u.PermissaoUsuarios).WithOne(p => p.Permissao).HasForeignKey(p => p.idPermissao);
         }
     }
 }

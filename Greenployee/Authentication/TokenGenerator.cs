@@ -11,13 +11,13 @@ namespace Greenployee.API.Authentication
     {
         public dynamic Generator(Usuario usuario)
         {
-            var permission = string.Join(",", usuario.PermissoesUsuario.Select(x => x.Permissao.nmPermissao));
+            var permission = string.Join(",", usuario.PermissaoUsuarios.Select(x => x.Permissao.nmPermissao));
             var claims = new List<Claim>
             {
                 new Claim("id", usuario.id.ToString()),
                 new Claim("dsLogin", usuario.dsLogin),
                 new Claim("dsSenha", usuario.dsSenha),
-                new Claim("permissoes", permission)
+                new Claim("permissions", permission)
             };
 
             var expires = DateTime.Now.AddHours(1);

@@ -62,7 +62,7 @@ namespace Greenployee.CORE.Business
         public async Task<Usuario?> GetUserByLoginAndSenhaAsync(string dsLogin, string dsSenha)
         {
             return await db.Usuarios
-                           .Include(x => x.PermissoesUsuario)
+                           .Include(x => x.PermissaoUsuarios)
                            .ThenInclude(x => x.Permissao)
                            .FirstOrDefaultAsync(x => x.dsLogin == dsLogin && x.dsSenha == dsSenha);
         }

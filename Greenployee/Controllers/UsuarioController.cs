@@ -15,7 +15,7 @@ namespace Greenployee.API.Controllers
         private readonly ITokenGenerator _tokenGenerator;
         private readonly ICurrentUser _currentUser;
 
-        private List<string> _permissionNeeded = new List<string>() { "Admin" };
+        private List<string> _permissionNeeded = new List<string>() {};
         private readonly List<string> _permissionUser;
 
         public UsuarioController(IUsuarioBusiness usuarioBusiness, ITokenGenerator tokenGenerator, ICurrentUser currentUser)

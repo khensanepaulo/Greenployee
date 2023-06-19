@@ -13,7 +13,7 @@ namespace Greenployee.MODELS.Model
         public Usuario(string dsLogin, string dsSenha)
         {
             Validation(dsLogin, dsSenha);
-            PermissoesUsuario = new List<PermissaoUsuario>();
+            PermissaoUsuarios = new List<PermissaoUsuario>();
         }
 
         [StringLength(60)]
@@ -22,10 +22,7 @@ namespace Greenployee.MODELS.Model
         [StringLength(60)]
         public string dsSenha { get; set; } = string.Empty;
 
-        [StringLength(15)]
-        public string tpAcesso { get; set; } = string.Empty;
-
-        public ICollection<PermissaoUsuario> PermissoesUsuario { get; set; }
+        public ICollection<PermissaoUsuario> PermissaoUsuarios { get; set; }
 
         private void Validation(string dsLogin, string dsSenha)
         {
