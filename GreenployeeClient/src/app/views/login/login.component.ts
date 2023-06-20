@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/model/usuario';
 import { UsuarioService } from 'src/app/service/usuario-service/usuario.service';
 import { MetaService } from 'src/app/service/meta-service/meta.service';
+import { AnotacaoService } from 'src/app/service/anotacao-service/anotacao.service';
+import { OrdemServicoService } from 'src/app/service/ordemServico-service/ordem-servico.service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private metaService: MetaService,
+    private anotacaoService: AnotacaoService,
+    private ordemServicoService: OrdemServicoService,
     private router: Router
   ) {}
 
@@ -26,10 +30,14 @@ export class LoginComponent implements OnInit {
   public login(): void {
     this.usuarioService.cadastrar(this.usuario).subscribe(
       (data) => {
-        console.log(data);
-        const token = data.access_token; // Obtém o valor do token do objeto data
-        this.metaService.setToken(token); // Passa o token para o MetaService
+        const token = data.access_token; 
+        this.metaService.setToken(token); 
         this.metaService.setTokenLocalStorage(token);
+        this.anotacaoService.setToken(token); 
+        this.anotacaoService.setTokenLocalStorage(token);
+        this.metaService.setTokenLocalStorage(token);
+        this.ordemServicoService.setToken(token); 
+        this.ordemServicoService.setTokenLocalStorage(token);
         console.log(token);
         this.router.navigate(['inicio']);
       },

@@ -123,3 +123,9 @@ table {
   .table-responsive::-webkit-scrollbar-thumb:hover {
     background: #a8a6a0;
   }
+
+  .texto-comeca-no-topo {
+    resize: vertical; /* Permite que o usuário redimensione a caixa de texto verticalmente */
+    height: 8vh; /* Define a altura da caixa de texto (ajuste conforme necessário) */
+    overflow-y: auto; /* Adiciona uma barra de rolagem vertical se o texto exceder a altura da caixa */
+  }

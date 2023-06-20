@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { OrdemServico } from 'src/app/model/ordemServico';
+import { OrdemServicoService } from 'src/app/service/ordemServico-service/ordem-servico.service';
 
 @Component({
   selector: 'app-modal-ordem-servico',
@@ -6,5 +8,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./modal-ordem-servico.component.css']
 })
 export class ModalOrdemServicoComponent {
+
+  public ordemServico! : OrdemServico;
+  ordemServicos: OrdemServico[] = [];
+  constructor(private ordemServicoService: OrdemServicoService){}
+  
+  ngOnInit(): void {
+    this.listarOrdemServicos();
+    this.ordemServico = new OrdemServico();
+    
+  }
+  
+  public addOrdemServico(): void {
+    this.ordemServicoService.cadastrar(this.ordemServico);
+  }
+
+   listarOrdemServicos(): void {
+  this.ordemServicoService.findAll()
+    .then((ordemServicos: OrdemServico[]) => {
+      this.ordemServicos = ordemServicos; // Armazena a lista completa de ordemServicos
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as ordens de Serviços:', error);
+    });
+}
 
 }

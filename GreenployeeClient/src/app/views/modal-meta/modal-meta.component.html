@@ -9,25 +9,33 @@
             <!-- Modal body -->
             <div class="modal-body" style="background-color: #C9D7D0;">
                 <div class="row">
-                    <div class="col-lg-5 form-group">
-                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Nova
-                            Meta</label>
-                        <input [(ngModel)]="meta.dsRecompensa" type="text" placeholder="Nova meta..." class="form-control inputCinza" id="">
+                    <div class="col-lg-3 form-group">
+                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Descrição</label>
+                        <textarea [(ngModel)]="meta.dsRecompensa" placeholder="Digite sua nova meta..."  class="texto-comeca-no-topo form-control inputCinza" ></textarea>
+                        <!-- <input [(ngModel)]="meta.dsRecompensa" type="text" placeholder="Descreva a meta" class="form-control inputCinza" id=""> -->
                     </div>
-                    <div class="col-lg-5 form-group">
+                    <div class="col-lg-2 form-group">
                         <label class="textoPadrao row justify-content-start"
-                            style="margin-left: 6px;">Descrição da meta</label>
+                            style="margin-left: 6px;">Recompensa</label>
                         <input [(ngModel)]="meta.vlMeta" type="number" placeholder="" class="form-control inputCinza" id="">
                     </div>
-                    <div class="col-lg-5 form-group">
+                    <div class="col-lg-2 form-group">
                         <label class="textoPadrao row justify-content-start"
                             style="margin-left: 6px;">Data de Inicio</label>
                         <input [(ngModel)]="meta.dtInicio" type="date" placeholder="Nome do Funcionário..." class="form-control inputCinza" id="">
                     </div>
-                    <div class="col-lg-5 form-group">
+                    <div class="col-lg-2 form-group">
                         <label class="textoPadrao row justify-content-start"
                             style="margin-left: 6px;">Data de Término</label>
                         <input [(ngModel)]="meta.dtFim" type="date" placeholder="Nome do Funcionário..." class="form-control inputCinza" id="">
+                    </div>
+                    <div class="col-lg-3 form-group">
+                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Funcionário</label>
+                        <!-- <select class="form-control inputCinza" [(ngModel)]="funcionarioSelecionado">
+                            <option value="">Selecione um funcionário</option>
+                            <option *ngFor="let funcionario of funcionarios" [value]="funcionario.id">{{ funcionario.nome }}</option>
+                        </select> -->
+                        <button (click)="addMeta()" type="button" class="btn gradiente" style="color:white">+</button>
                     </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>

@@ -17,12 +17,6 @@ export class MetaService {
     this.token = ''; // Inicialize com o token vazio
   }
 
-  // public addMeta(meta: Meta){
-  //     return this.httpClient.post('http:/localhost:5001/greenployeedb/Tables/Anotacoes', meta)
-
-  // }
-
-
   public setToken(token: string): void {
     this.token = token;
   }
