@@ -4,4 +4,5 @@ export class Usuario extends BaseClass {
 
     dsLogin! : string;
     dsSenha! : string;
+    permissoes! : string;
 }

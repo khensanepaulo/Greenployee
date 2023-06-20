@@ -16,6 +16,7 @@ export class ModalMetaComponent {
   ngOnInit(): void {
     this.listarMetas();
     this.meta = new Meta();
+    
   }
   
   public addMeta(): void {
