@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosInstance } from "axios";
-
 import { Anotacao } from 'src/app/model/anotacao';
 
 @Injectable({
@@ -18,31 +17,16 @@ export class AnotacaoService {
     this.token = ''; // Inicialize com o token vazio
   }
 
-  // public addAnotacao(anotacao: Anotacao){
-  //     return this.httpClient.post('http:/localhost:5001/greenployeedb/Tables/Anotacoes', anotacao)
-
-  // }
-
-
-  public setToken(token: string): void {
-    this.token = token;
-  }
-
-  public getToken(): string | null {
-    return this.token;
-  }
-
-  public setTokenLocalStorage(token: string): void {
-    localStorage.setItem('token', token);
-  }
-
   public getTokenLocalStorage(): string | null {
-    return localStorage.getItem('token');
+    var user = JSON.parse(localStorage.getItem('userCredentials') ?? "");
+    this.token = user.token;
+    return user.token;
   }
-  private getHeaders(): any {
+
+  public getHeaders(): any {
     return {
       'Content-type': 'application/json',
-      'Authorization': `Bearer ${this.token}` // Inclui o token no cabeçalho de autorização
+      'Authorization': `Bearer ${this.getTokenLocalStorage()}` // Inclui o token no cabeçalho de autorização
     };
   }
 
@@ -50,9 +34,9 @@ export class AnotacaoService {
     console.log(anotacao);
     try {
       await this.axiosClient.post('/', anotacao, { headers: { 'Authorization': `Bearer ${this.token}` } });
-      console.log("Anotação cadastrada com sucesso!");
+      console.log("Anotacao cadastrada com sucesso!");
     } catch (error: any) {
-      return Promise.reject("Não foi possível cadastrar a anotação! :" + error);
+      return Promise.reject("Não foi possível cadastrar a anotacao! :" + error);
     }
   }
 
@@ -73,3 +57,4 @@ export class AnotacaoService {
   }
 
 }
+

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from "axios";
 import { OrdemServico } from 'src/app/model/ordemServico';
 
 @Injectable({
@@ -7,36 +7,26 @@ import { OrdemServico } from 'src/app/model/ordemServico';
 })
 export class OrdemServicoService {
 
-
   private axiosClient!: AxiosInstance;
-  private token: string; 
+  private token: string; // Variável para armazenar o token
   constructor() {
     this.axiosClient = axios.create({
       baseURL: 'https://localhost:5000/api/OrdemServico',
       headers: {'Content-type' : 'application/json'}
     });
-    this.token = ''; 
-  }
-
-  public setToken(token: string): void {
-    this.token = token;
-  }
-
-  public getToken(): string | null {
-    return this.token;
-  }
-
-  public setTokenLocalStorage(token: string): void {
-    localStorage.setItem('token', token);
+    this.token = ''; // Inicialize com o token vazio
   }
 
   public getTokenLocalStorage(): string | null {
-    return localStorage.getItem('token');
+    var user = JSON.parse(localStorage.getItem('userCredentials') ?? "");
+    this.token = user.token;
+    return user.token;
   }
-  private getHeaders(): any {
+
+  public getHeaders(): any {
     return {
       'Content-type': 'application/json',
-      'Authorization': `Bearer ${this.token}` // Inclui o token no cabeçalho de autorização
+      'Authorization': `Bearer ${this.getTokenLocalStorage()}` // Inclui o token no cabeçalho de autorização
     };
   }
 
@@ -44,7 +34,7 @@ export class OrdemServicoService {
     console.log(ordemServico);
     try {
       await this.axiosClient.post('/', ordemServico, { headers: { 'Authorization': `Bearer ${this.token}` } });
-      console.log("Ordem de Serviço cadastrada com sucesso!");
+      console.log("OrdemServico cadastrada com sucesso!");
     } catch (error: any) {
       return Promise.reject("Não foi possível cadastrar a ordemServico! :" + error);
     }
@@ -65,4 +55,6 @@ export class OrdemServicoService {
       return Promise.reject(error.response);
     }
   }
+
 }
+

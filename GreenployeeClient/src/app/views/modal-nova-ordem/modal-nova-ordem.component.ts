@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OrdemServico } from 'src/app/model/ordemServico';
-import { OrdemServicoService } from 'src/app/service/ordemServico-service/ordem-servico.service';
+import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
 
 @Component({
   selector: 'app-modal-nova-ordem',

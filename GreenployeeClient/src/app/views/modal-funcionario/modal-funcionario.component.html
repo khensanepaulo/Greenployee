@@ -36,18 +36,18 @@
                         style="max-height: 380px; overflow-y: scroll;">
                         <table class="table table-borderless table-hover ">
                             <tbody>
-                                <tr *ngFor="" class="trCor col-lg-12">
+                                <tr *ngFor="let pessoa of pessoas" class="trCor col-lg-12">
                                     <td class="text-center tdRadiusLeft  col-lg-2 colorTd">
-                                        <!-- {{ item.nome }} -->
+                                        {{ pessoa.nmPessoa }}
                                     </td>
                                     <td class="text-center col-lg-3 colorTd">
-                                        <!-- {{ item.valor }} -->
+                                        <!-- {{ pessoa. }} -->
                                     </td>
                                     <td class="text-center col-lg-3 colorTd">
                                         <!-- {{ item.valor }} -->
                                     </td>
                                     <td class="text-center tdRadiusRight col-lg-2 colorTd">
-                                        <!-- <p class="colorData">{{ item.nome }}</p> -->
+                                        <p class="colorData">{{ pessoa.dtAdmissao }}</p>
                                     </td>
                                 </tr>
                             </tbody>

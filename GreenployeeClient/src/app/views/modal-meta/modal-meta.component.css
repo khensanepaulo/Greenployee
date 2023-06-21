@@ -47,6 +47,13 @@ body{
   transform: matrix(1, 0, 0, -1, 0, 0);
 }
 
+.refreshColor {
+
+  background: rgb(32, 40, 148);
+  background: linear-gradient(209deg, rgb(61, 59, 196) 0%, rgba(50, 75, 156, 0.705) 29%, rgb(32, 55, 190) 100%);
+
+}
+
 table {
   border-collapse: separate;
   border-spacing: 0 10px; /* Espaçamento vertical entre as linhas */

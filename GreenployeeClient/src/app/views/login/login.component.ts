@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/model/usuario';
-import { UsuarioService } from 'src/app/service/usuario-service/usuario.service';
-import { MetaService } from 'src/app/service/meta-service/meta.service';
-import { AnotacaoService } from 'src/app/service/anotacao-service/anotacao.service';
-import { OrdemServicoService } from 'src/app/service/ordemServico-service/ordem-servico.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { MetaService } from 'src/app/service/meta.service';
+import { AnotacaoService } from 'src/app/service/anotacao.service';
+import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
+import { UserDataService } from 'src/app/service/userDataService';
+import { LocalStorageService } from 'src/app/service/localStorage.service';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +16,10 @@ import { OrdemServicoService } from 'src/app/service/ordemServico-service/ordem-
 export class LoginComponent implements OnInit {
 
   public usuario!: Usuario;
-
   constructor(
+    private userDataService: UserDataService,
     private usuarioService: UsuarioService,
-    private metaService: MetaService,
-    private anotacaoService: AnotacaoService,
-    private ordemServicoService: OrdemServicoService,
+    private localStorageService: LocalStorageService,
     private router: Router
   ) {}
 
@@ -31,14 +31,8 @@ export class LoginComponent implements OnInit {
     this.usuarioService.cadastrar(this.usuario).subscribe(
       (data) => {
         const token = data.access_token; 
-        this.metaService.setToken(token); 
-        this.metaService.setTokenLocalStorage(token);
-        this.anotacaoService.setToken(token); 
-        this.anotacaoService.setTokenLocalStorage(token);
-        this.metaService.setTokenLocalStorage(token);
-        this.ordemServicoService.setToken(token); 
-        this.ordemServicoService.setTokenLocalStorage(token);
-        console.log(token);
+        var userCredentials = this.userDataService.extractUserInfoFromToken(token);
+        this.localStorageService.saveObject("userCredentials", userCredentials);
         this.router.navigate(['inicio']);
       },
       (httpError) => {

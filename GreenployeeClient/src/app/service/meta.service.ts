@@ -17,25 +17,16 @@ export class MetaService {
     this.token = ''; // Inicialize com o token vazio
   }
 
-  public setToken(token: string): void {
-    this.token = token;
-  }
-
-  public getToken(): string | null {
-    return this.token;
-  }
-
-  public setTokenLocalStorage(token: string): void {
-    localStorage.setItem('token', token);
-  }
-
   public getTokenLocalStorage(): string | null {
-    return localStorage.getItem('token');
+    var user = JSON.parse(localStorage.getItem('userCredentials') ?? "");
+    this.token = user.token;
+    return user.token;
   }
-  private getHeaders(): any {
+
+  public getHeaders(): any {
     return {
       'Content-type': 'application/json',
-      'Authorization': `Bearer ${this.token}` // Inclui o token no cabeçalho de autorização
+      'Authorization': `Bearer ${this.getTokenLocalStorage()}` // Inclui o token no cabeçalho de autorização
     };
   }
 

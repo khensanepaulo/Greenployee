@@ -13,7 +13,10 @@ import { ModalNovaOrdemComponent } from './views/modal-nova-ordem/modal-nova-ord
 import { ModalOrdemServicoComponent } from './views/modal-ordem-servico/modal-ordem-servico.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { ModalMetaComponent } from './views/modal-meta/modal-meta.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ModalFuncionarioCadastroComponent } from './views/modal-funcionario-cadastro/modal-funcionario-cadastro.component';
+import { LocalStorageService } from './service/localStorage.service';
 
 
 @NgModule({
@@ -34,10 +37,12 @@ import { ModalFuncionarioCadastroComponent } from './views/modal-funcionario-cad
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    JwtModule,
     RouterModule.forRoot([{ path: '', component: LoginComponent },
     { path: 'inicio', component: InicioComponent },]),
   ],
-  providers: [],
+  providers: [JwtHelperService, LocalStorageService, LoginComponent, InicioComponent,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

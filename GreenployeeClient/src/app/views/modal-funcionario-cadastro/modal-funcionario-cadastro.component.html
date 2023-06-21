@@ -17,12 +17,12 @@
                                     <div class="col-lg-8 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">Nome do Funcionário</label>
-                                        <input type="text" placeholder="Somente letras..." class="form-control inputCinza" id="">
+                                        <input name="pnmPessoa" [(ngModel)]="pessoa.nmPessoa" type="text" placeholder="Somente letras..." class="form-control inputCinza" id="">
                                     </div>
                                     <div class="col-lg-4 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">RG</label>
-                                        <input type="text" placeholder="Somente números..."
+                                        <input name="RG" [(ngModel)]="pessoa.nrRG" type="text" placeholder="Somente números..."
                                             class="form-control inputCinza" id="">
                                     </div>
                                 </div>
@@ -30,40 +30,40 @@
                                     <div class="col-lg-4 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">CPF</label>
-                                        <input type="text" placeholder="Somente números..."
+                                        <input name="CPF" [(ngModel)]="pessoa.nrCPF" type="text" placeholder="Somente números..."
                                             class="form-control inputCinza" id="">
                                     </div>
                                     <div class="col-lg-8 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">E-mail</label>
-                                        <input type="text" placeholder="Ex: funcionario@gmail.com" class="form-control inputCinza"
+                                        <input name="email" [(ngModel)]="pessoa.dsEmail" type="text" placeholder="Ex: funcionario@gmail.com" class="form-control inputCinza"
                                             id="">
                                     </div>
                                     <div class="col-lg-4 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">Telefone</label>
-                                        <input type="text" placeholder="Ex: 45999236754" class="form-control inputCinza"
+                                        <input name="telefone" [(ngModel)]="pessoa.nrTelefone" type="text" placeholder="Ex: 45999236754" class="form-control inputCinza"
                                             id="">
                                     </div>
                                     <div class="col-lg-3 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">Situação</label>
-                                        <select class="form-control inputCinza" id="">
-                                            <option value="sim">Ativo</option>
-                                            <option value="nao">Inativo</option>
+                                        <select name="situacao" [(ngModel)]="pessoa.flSituacao" class="form-control inputCinza" id="">
+                                            <option value="true">Ativo</option>
+                                            <option value="false">Inativo</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-4 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">PIS</label>
-                                        <input type="text" placeholder="Ex: 99999" class="form-control inputCinza"
+                                        <input name="PIS" [(ngModel)]="pessoa.nrPIS" type="text" placeholder="Ex: 99999" class="form-control inputCinza"
                                             id="">
                                     </div>
                                 <div class="row mt3">
                                     <div class="col-lg-6 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">Data de Admissão</label>
-                                        <input type="date" class="form-control inputCinza" id="">
+                                        <input name="dataAdmissao" [(ngModel)]="pessoa.dtAdmissao" type="date" class="form-control inputCinza" id="">
                                     </div>
                                 </div>
                                 </div>
@@ -75,30 +75,20 @@
                                     <div class="col-lg-6 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">Login</label>
-                                        <input type="text" placeholder=""
+                                        <input name="dsLogin" [(ngModel)]="pessoa.usuario.dsLogin" type="text" placeholder=""
                                             class="form-control inputCinza" id="">
                                     </div>
                                     <div class="col-lg-6 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">Senha</label>
-                                        <input type="text" placeholder="" class="form-control inputCinza" id="">
+                                        <input name="dsLogin" [(ngModel)]="pessoa.usuario.dsSenha" type="text" placeholder="" class="form-control inputCinza" id="">
                                     </div>
-                                <div class="row mt3">
-                                    <div class="col-lg-4 form-group">
-                                        <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Permissão</label>
-                                        <select class="form-control inputCinza" id="">
-                                            <option value="sim">Funcionario</option>
-                                            <option value="nao">Inativo</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 </div>
                                 <!-- Modal footer -->
                                 <div class="modal-footer" style="background-color: #C9D7D0;">
                                     <button type="button" class="btn btn-danger"
                                         data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn gradiente" style="color:white">Salvar</button>
+                                    <button (click)="addPessoa()" type="button" class="btn gradiente" style="color:white">Salvar</button>
                                 </div>
                             </form>
                         </div>

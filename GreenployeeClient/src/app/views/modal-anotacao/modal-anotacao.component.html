@@ -9,11 +9,21 @@
             <!-- Modal body -->
             <div class="modal-body" style="background-color: #C9D7D0;">
                 <div class="row">
-                    <div class="col-lg-12 form-group">
+                    <div class="col-lg-4 form-group">
                         <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Nova
                             anotação</label>
                         <!-- <input type="text" placeholder="Nova anotação..." class="form-control inputCinza" id="" style="height: 10vh;"> -->
                         <textarea [(ngModel)]="anotacao.dsMensagem" placeholder="Digite sua anotação..."  class="texto-comeca-no-topo form-control inputCinza" ></textarea>
+                    </div>
+                    <div class="form-switch col-lg-4">
+                        <label class="textoPadrao row justify-content-start" for="flEntrega">Concluido?</label>
+                        <input  [(ngModel)]="anotacao.flConcluido" class="form-check-input" type="checkbox" id="flConcluido" name="flConcluido" >
+                    </div>
+                    <div class="form-switch col-lg-4">
+                        <label class="textoPadrao row justify-content-start" for="funcionario">Pessoa</label>
+                        <select name="situacao" [(ngModel)]="pessoa.id" *ngFor="let pessoa of pessoas" class="form-control inputCinza" id="pessoa">
+                            <option value="pessoa"> {{ pessoa.nmPessoa }}</option>
+                        </select>
                     </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>

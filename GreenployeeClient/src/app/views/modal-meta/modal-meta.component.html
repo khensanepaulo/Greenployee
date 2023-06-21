@@ -35,7 +35,7 @@
                             <option value="">Selecione um funcionário</option>
                             <option *ngFor="let funcionario of funcionarios" [value]="funcionario.id">{{ funcionario.nome }}</option>
                         </select> -->
-                        <button (click)="addMeta()" type="button" class="btn gradiente" style="color:white">+</button>
+                        <button (click)="listarMetas()" type="button" class="btn refreshColor" style="color:white">⟲</button>
                     </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>

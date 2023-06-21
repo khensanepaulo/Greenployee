@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Anotacao } from 'src/app/model/anotacao';
-import { AnotacaoService } from 'src/app/service/anotacao-service/anotacao.service';
+import { Pessoa } from 'src/app/model/pessoa';
+import { AnotacaoService } from 'src/app/service/anotacao.service';
+import { PessoaService } from 'src/app/service/pessoa.service';
 
 @Component({
   selector: 'app-modal-anotacao',
@@ -10,17 +12,37 @@ import { AnotacaoService } from 'src/app/service/anotacao-service/anotacao.servi
 export class ModalAnotacaoComponent {
 
   public anotacao! : Anotacao;
+  public pessoa! : Pessoa;
   anotacaos: Anotacao[] = [];
-  constructor(private anotacaoService: AnotacaoService){}
+  pessoas: Pessoa [] = [];
+
+
+  constructor(
+    private anotacaoService: AnotacaoService,
+    public pessoaService: PessoaService
+    ){}
   
   ngOnInit(): void {
     this.listarAnotacaos();
+    this.selectPessoas();
     this.anotacao = new Anotacao();
+    this.pessoa = new Pessoa();
     
   }
   
   public addAnotacao(): void {
     this.anotacaoService.cadastrar(this.anotacao);
+    console.log(this.anotacao);
+  }
+
+  selectPessoas(): void {
+    this.pessoaService.findAll()
+      .then((pessoas: Pessoa[]) => {
+        this.pessoas = pessoas; 
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as anotacaos:', error);
+      });
   }
 
    listarAnotacaos(): void {
