@@ -11,6 +11,7 @@ namespace Greenployee.CORE.Business
         Task<Pessoa> Insert(Pessoa pessoa);
         Task<Pessoa> Update(Pessoa pessoa);
         Task<bool> Delete(int id);
+        Task<Pessoa> FindByUserId(int id);
     }
 
     public class PessoaBusiness : IPessoaBusiness
@@ -56,6 +57,12 @@ namespace Greenployee.CORE.Business
             db.Pessoas.Remove(pessoa);
             await db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<Pessoa> FindByUserId(int id)
+        {
+            Pessoa pessoa = await db.Pessoas.Include(x => x.Usuario).Where(x => x.Usuario.id == id).FirstOrDefaultAsync();
+            return pessoa;
         }
 
     }

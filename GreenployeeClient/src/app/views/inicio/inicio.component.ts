@@ -30,7 +30,7 @@ export class InicioComponent {
     this.listarMetas();
     this.userDataService.userCredentials = this.localStorageService.getObject("userCredentials");
     console.log(this.userDataService.userCredentials = this.localStorageService.getObject("userCredentials"));
-    this.updateNomePessoa();
+    this.getPessoa();
     this.meta = new Meta();
     
   }
@@ -39,13 +39,15 @@ export class InicioComponent {
     this.metaService.cadastrar(this.meta);
   }
 
- public updateNomePessoa(): void {
+ public getPessoa(): void {
     const userId = this.userDataService.userCredentials.userId;
+    console.log(userId);
+  debugger;
     if (userId) {
       const parsedUserId = parseInt(userId, 10);
-  
-      this.pessoaService.findById(parsedUserId)
+      this.pessoaService.findByUserId(parsedUserId)
         .then((pessoa: Pessoa) => {
+          console.log(pessoa, parsedUserId);
           const nomePessoaElement = document.getElementById('nomePessoa');
           if (nomePessoaElement) {
             nomePessoaElement.textContent = pessoa.nmPessoa;

@@ -26,7 +26,6 @@ namespace Greenployee.Controllers
             _permissionUser = _currentUser?.permissions?.Split(",")?.ToList() ?? new List<string>();
         }
 
-        // GET: api/Meta
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pessoa>>> FindAll()
         {
@@ -115,6 +114,26 @@ namespace Greenployee.Controllers
                 var status = await _business.Delete(id);
                 if (!status) return BadRequest("Não foi possível deletar essa pessoa!");
                 return Ok(status);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        [HttpGet("/api/[controller]/usuario/{id}")]
+        public async Task<ActionResult<Pessoa>> FindByUserId(int id)
+        {
+            try
+            {
+                _permissionNeeded.Add("Admin");
+                _permissionNeeded.Add("User");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                    return Forbidden();
+
+                Pessoa result = await _business.FindByUserId(id);
+                if (result == null) return NotFound("Não foi possível encontrar a Pessoa!");
+                return Ok(result);
             }
             catch (Exception exception)
             {

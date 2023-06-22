@@ -48,6 +48,14 @@ export class PessoaService {
     }
   }
 
+  public async findByUserId(id: number): Promise<Pessoa> {
+    try {
+      return (await this.axiosClient.get<Pessoa>(`/usuario/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+
   
 
   public async findAll(): Promise<Pessoa[]> {
