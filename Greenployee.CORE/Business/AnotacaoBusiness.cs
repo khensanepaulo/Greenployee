@@ -16,6 +16,7 @@ namespace Greenployee.CORE.Business
         Task<Anotacao> Insert(Anotacao anotacao);
         Task<Anotacao> Update(Anotacao anotacao);
         Task<bool> Delete(int id);
+        Task<IEnumerable<Anotacao>> FindByUserId(int id);
     }
 
     public class AnotacaoBusiness : IAnotacaoBusiness
@@ -61,6 +62,12 @@ namespace Greenployee.CORE.Business
             db.Anotacoes.Remove(anotacao);
             await db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<IEnumerable<Anotacao>> FindByUserId(int id)
+        {
+            IEnumerable<Anotacao> list = await db.Anotacoes.Include(x => x.Pessoa).ThenInclude(x => x.Usuario).Where(x => x.Pessoa != null && x.Pessoa.Usuario != null && x.Pessoa.Usuario.id == id).ToListAsync();
+            return list;
         }
     }
 }

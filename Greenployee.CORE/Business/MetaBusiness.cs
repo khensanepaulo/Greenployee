@@ -17,6 +17,7 @@ namespace Greenployee.CORE.Business
         Task<Meta> Insert(Meta meta);
         Task<Meta> Update(Meta meta);
         Task<bool> Delete(int id);
+        Task<IEnumerable<Meta>> FindByUserId(int id);
     }
 
     public class MetaBusiness : IMetaBusiness
@@ -62,6 +63,15 @@ namespace Greenployee.CORE.Business
             db.Metas.Remove(meta);
             await db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<IEnumerable<Meta>> FindByUserId(int id)
+        {
+            IEnumerable<Meta> list = await db.PessoaMetas.Include(x => x.Meta).Include(x => x.Pessoa).ThenInclude(x => x.Usuario)
+                                                         .Where(x => x.Pessoa != null && x.Pessoa.Usuario != null && x.Meta != null && x.Pessoa.Usuario.id == id)
+                                                         .Select(x => x.Meta)
+                                                         .ToListAsync();
+            return list;
         }
     }
 }

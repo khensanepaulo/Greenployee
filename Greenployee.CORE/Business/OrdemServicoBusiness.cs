@@ -16,6 +16,7 @@ namespace Greenployee.CORE.Business
         Task<OrdemServico> Insert(OrdemServico ordemServico);
         Task<OrdemServico> Update(OrdemServico ordemServico);
         Task<bool> Delete(int id);
+        Task<IEnumerable<dynamic>> FindByUserId(int id);
     }
 
     public class OrdemServicoBusiness : IOrdemServicoBusiness
@@ -61,6 +62,22 @@ namespace Greenployee.CORE.Business
             db.OrdensServicos.Remove(ordemServico);
             await db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<IEnumerable<dynamic>> FindByUserId(int id)
+        {
+            IEnumerable<dynamic> list = await (from os in db.OrdensServicos
+                                               join osi in db.OrdemServicoItens
+                                               on os.id equals osi.id
+                                               select new
+                                               {
+                                                   os,
+                                                   os.Funcionario,
+                                                   osi
+                                               })
+                                               .ToListAsync();
+
+            return list;
         }
 
     }

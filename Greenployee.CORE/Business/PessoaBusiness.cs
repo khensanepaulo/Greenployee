@@ -61,7 +61,7 @@ namespace Greenployee.CORE.Business
 
         public async Task<Pessoa> FindByUserId(int id)
         {
-            Pessoa pessoa = await db.Pessoas.Include(x => x.Usuario).Where(x => x.Usuario.id == id).FirstOrDefaultAsync();
+            Pessoa pessoa = await db.Pessoas.Include(x => x.Usuario).Where(x => x.Usuario != null && x.Usuario.id == id).FirstOrDefaultAsync();
             return pessoa;
         }
 

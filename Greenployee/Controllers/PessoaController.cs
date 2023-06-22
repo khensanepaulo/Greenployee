@@ -121,7 +121,7 @@ namespace Greenployee.Controllers
             }
         }
 
-        [HttpGet("/api/[controller]/usuario/{id}")]
+        [HttpGet("/api/[controller]/Usuario/{id}")]
         public async Task<ActionResult<Pessoa>> FindByUserId(int id)
         {
             try

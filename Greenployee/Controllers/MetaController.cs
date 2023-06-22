@@ -121,5 +121,25 @@ namespace Greenployee.Controllers
                 throw exception; 
             }
         }
+
+        [HttpGet("/api/[controller]/Usuario/{id}")]
+        public async Task<ActionResult<Anotacao>> FindByUserId(int id)
+        {
+            try
+            {
+                _permissionNeeded.Add("Admin");
+                _permissionNeeded.Add("User");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                    return Forbidden();
+
+                var result = await _business.FindByUserId(id);
+                if (result == null) return NotFound("Não foi possível encontrar a Pessoa!");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }
