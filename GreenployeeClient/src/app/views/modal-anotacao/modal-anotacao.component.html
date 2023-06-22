@@ -4,7 +4,7 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #C9D7D0;">
-                <h4 class="modal-title textoPadrao">Cadastro - Anotações</h4>
+                <h4 class="modal-title textoPadrao">Anotações</h4>
             </div>
             <!-- Modal body -->
             <div class="modal-body" style="background-color: #C9D7D0;">
@@ -21,8 +21,8 @@
                     </div>
                     <div class="form-switch col-lg-4">
                         <label class="textoPadrao row justify-content-start" for="funcionario">Pessoa</label>
-                        <select name="situacao" [(ngModel)]="pessoa.id" *ngFor="let pessoa of pessoas" class="form-control inputCinza" id="pessoa">
-                            <option value="pessoa"> {{ pessoa.nmPessoa }}</option>
+                        <select name="situacao" [(ngModel)]="pessoa.id" class="form-control inputCinza" id="pessoa">
+                            <option *ngFor="let pessoa of pessoas" [value]="pessoa.id">{{ pessoa.nmPessoa }}</option>
                         </select>
                     </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">

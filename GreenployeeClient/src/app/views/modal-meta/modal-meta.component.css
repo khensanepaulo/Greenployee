@@ -47,12 +47,6 @@ body{
   transform: matrix(1, 0, 0, -1, 0, 0);
 }
 
-.refreshColor {
-
-  background: rgb(32, 40, 148);
-  background: linear-gradient(209deg, rgb(61, 59, 196) 0%, rgba(50, 75, 156, 0.705) 29%, rgb(32, 55, 190) 100%);
-
-}
 
 table {
   border-collapse: separate;
@@ -135,4 +129,11 @@ table {
     resize: vertical; /* Permite que o usuário redimensione a caixa de texto verticalmente */
     height: 8vh; /* Define a altura da caixa de texto (ajuste conforme necessário) */
     overflow-y: auto; /* Adiciona uma barra de rolagem vertical se o texto exceder a altura da caixa */
+  }
+
+  .refreshColor {
+
+    background: rgb(0, 0, 0);
+    background: linear-gradient(209deg, rgb(31, 31, 30) 0%, rgba(22, 22, 22, 0.705) 29%, rgb(15, 15, 15) 100%);
+  
   }

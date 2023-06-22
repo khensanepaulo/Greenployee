@@ -1,13 +1,16 @@
 <!-- Funcionários - modal -->
 <app-modal-funcionario-cadastro></app-modal-funcionario-cadastro>
+<app-modal-permissao-usuario></app-modal-permissao-usuario>
 <div class="modal modal-xl" id="funcionario">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #C9D7D0;">
                 <h4 class="modal-title textoPadrao">Funcionários</h4>
-                <div style="background-color: #C9D7D0;">
-                    <button type="button" class="btn gradiente" data-bs-toggle="modal" data-bs-target="#funcionarioCadastro" style="color:white">Cadastrar</button>
+                <div>
+                        <button (click)="listarPessoas()" class="btn refreshColor" type="button" style="color:white">⟲</button>
+                        <button type="button" class="btn gradiente ml3" data-bs-toggle="modal" data-bs-target="#funcionarioCadastro" style="color:white">Cadastrar</button>
+                        <button type="button" class="btn ml3 secondButtonColor" data-bs-toggle="modal" data-bs-target="#funcionarioPermissao" style="color:white">Permissão</button>
                 </div>
             </div>
             <!-- Modal body -->
@@ -27,7 +30,7 @@
                                     <strong style="margin-right: 2vw;">Metas Concluidas</strong>
                                 </th>
                                 <th class="text-center col-lg-2">
-                                    <strong style="margin-right: 3vw;">Data de Contratação</strong>
+                                    <strong style="margin-right: 3vw;">Contratação</strong>
                                 </th>
                             </tr>
                         </thead>
@@ -56,8 +59,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer" style="background-color: #C9D7D0;">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn gradiente" style="color:white">Salvar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Sair</button>
                 </div>
             </div>
         </div>

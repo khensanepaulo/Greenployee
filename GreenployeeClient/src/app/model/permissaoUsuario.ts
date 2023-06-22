@@ -2,7 +2,7 @@ import { BaseClass } from "./baseClass";
 import { Permissao } from "./permissao";
 import { Usuario } from "./usuario";
 
-export class UsuarioPermissao extends BaseClass {
+export class PermissaoUsuario extends BaseClass {
 
 
     permissao!: Permissao;
