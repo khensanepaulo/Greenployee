@@ -11,36 +11,43 @@
                 <div class="row">
                     <div class="col-lg-3 form-group">
                         <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Descrição</label>
-                        <textarea [(ngModel)]="meta.dsRecompensa" placeholder="Digite sua nova meta..."  class="texto-comeca-no-topo form-control inputCinza" ></textarea>
+                        <textarea [(ngModel)]="meta.dsRecompensa" placeholder="Digite sua nova meta..."
+                            class="texto-comeca-no-topo form-control inputCinza"></textarea>
                         <!-- <input [(ngModel)]="meta.dsRecompensa" type="text" placeholder="Descreva a meta" class="form-control inputCinza" id=""> -->
                     </div>
                     <div class="col-lg-2 form-group">
                         <label class="textoPadrao row justify-content-start"
                             style="margin-left: 6px;">Recompensa</label>
-                        <input [(ngModel)]="meta.vlMeta" type="number" placeholder="" class="form-control inputCinza" id="">
+                        <input [(ngModel)]="meta.vlMeta" type="number" placeholder="" class="form-control inputCinza"
+                            id="">
                     </div>
                     <div class="col-lg-2 form-group">
-                        <label class="textoPadrao row justify-content-start"
-                            style="margin-left: 6px;">Data de Inicio</label>
-                        <input [(ngModel)]="meta.dtInicio" type="date" placeholder="Nome do Funcionário..." class="form-control inputCinza" id="">
+                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Data de
+                            Inicio</label>
+                        <input [(ngModel)]="meta.dtInicio" type="date" placeholder="Nome do Funcionário..."
+                            class="form-control inputCinza" id="">
                     </div>
                     <div class="col-lg-2 form-group">
-                        <label class="textoPadrao row justify-content-start"
-                            style="margin-left: 6px;">Data de Término</label>
-                        <input [(ngModel)]="meta.dtFim" type="date" placeholder="Nome do Funcionário..." class="form-control inputCinza" id="">
+                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Data de
+                            Término</label>
+                        <input [(ngModel)]="meta.dtFim" type="date" placeholder="Nome do Funcionário..."
+                            class="form-control inputCinza" id="">
                     </div>
                     <div class="col-lg-3 form-group">
-                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Funcionário</label>
+                        <label class="textoPadrao row justify-content-start"
+                            style="margin-left: 6px;">Funcionário</label>
                         <!-- <select class="form-control inputCinza" [(ngModel)]="funcionarioSelecionado">
                             <option value="">Selecione um funcionário</option>
                             <option *ngFor="let funcionario of funcionarios" [value]="funcionario.id">{{ funcionario.nome }}</option>
                         </select> -->
-                        
-                    </div> 
+
+                    </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
-                        <button (click)="listarMetas()" type="button" class="btn refreshColor" style="color:white">⟲</button>
+                        <button (click)="listarMetas()" type="button" class="btn refreshColor"
+                            style="color:white">⟲</button>
                         <button type="button" class="btn btn-danger ml3" data-bs-dismiss="modal">Cancelar</button>
-                        <button (click)="addMeta()" type="button" class="btn gradiente ml3" style="color:white">Salvar</button>
+                        <button (click)="addMeta()" type="button" class="btn gradiente ml3"
+                            style="color:white">Salvar</button>
                     </div>
                     <hr>
                     <div class="table-responsive d-flex justify-content-center mt3"
@@ -49,7 +56,7 @@
                             <tbody>
                                 <tr *ngFor="let meta of metas" class="trCor col-lg-12">
                                     <td class="text-center col-lg-6 colorTd">
-                                        {{ meta.dsRecompensa }} 
+                                        {{ meta.dsRecompensa }}
                                     </td>
                                     <td class="text-center tdRadiusRight col-lg-6 colorTd">
                                         <input type="checkbox">

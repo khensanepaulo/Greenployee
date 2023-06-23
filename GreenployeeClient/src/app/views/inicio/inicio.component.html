@@ -6,7 +6,7 @@
     <app-modal-nova-ordem></app-modal-nova-ordem>
     <app-modal-ordem-servico></app-modal-ordem-servico>
     <app-modal-relatorio></app-modal-relatorio>
-     <!-- topUsuario -->
+    <!-- topUsuario -->
     <div class="col-lg-12 divisaotop">
         <div class="usuarioImg gradiente">
         </div>
@@ -14,7 +14,9 @@
             <p style="color: rgb(0, 0, 0); font-size: 24px;">Olá, <strong id="nomePessoa"></strong></p>
             <p style="color: rgb(48, 47, 47); font-size: 16px;">Floricultura Mundo das Flores</p>
         </div>
-        <button (click)="logout()">Logout</button>
+        <button class="btn btn-sm btn-warning gradiente"
+            style="float: right; margin-top: 23px; margin-right: 302px; color: white; border-color: #914141; background: #914141;"
+            (click)="logout()">Logout</button>
     </div>
     <div class="row d-flex justify-content-center">
         <button type="button" data-bs-toggle="modal" data-bs-target="#myModal"
@@ -37,7 +39,8 @@
                 <img src="../../../assets/images/icones/anotacoesIMG.png" alt="..." style="height: 62%; width: 41%;">
             </div>
         </button>
-        <button (click)="listarMetas()" class="col-lg-3 nextButton gradiente ml3"  data-bs-toggle="modal" data-bs-target="#metas">
+        <button (click)="listarMetas()" class="col-lg-3 nextButton gradiente ml3" data-bs-toggle="modal"
+            data-bs-target="#metas">
             <p class="row textoButton mb0 m-1" style="margin-right: 9vw;">Metas</p>
             <div class="row justify-content-end">
                 <img src="../../../assets/images/icones/metasIMG.png" alt="..." style="height: 62%; width: 41%;">
