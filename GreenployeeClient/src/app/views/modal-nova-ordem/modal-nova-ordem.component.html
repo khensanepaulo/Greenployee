@@ -70,17 +70,17 @@
                                     <div class="col-lg-8 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">Produto</label>
-                                        <input type="text" placeholder="Nome do Produto..."
+                                        <input [(ngModel)]="ordemServicoItem.nmProduto" name="nmProduto" type="text" placeholder="Nome do Produto..."
                                             class="form-control inputCinza" id="">
                                     </div>
                                     <div class="col-lg-3 form-group">
                                         <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Valor</label>
-                                        <input type="text" placeholder="R$ 0,00" class="form-control inputCinza" id="">
+                                            style="margin-left: 6px;">Valor Unid.</label>
+                                        <input [(ngModel)]="ordemServicoItem.vlUnitario" name="vlUnitario" type="text" placeholder="R$ 0,00" class="form-control inputCinza" id="">
                                     </div>
                                     <div class="col-lg-1 d-flex align-items-end justify-content-end ms-auto text-end">
-                                        <a role="button" class="btn gradiente popover-test" title="Popover title"
-                                            data-bs-content="Popover body content is set in this attribute.">+</a>
+                                        <button (click)="addItem()" role="button" class="btn gradiente popover-test" title="Popover title"
+                                            data-bs-content="Popover body content is set in this attribute.">+</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -88,28 +88,28 @@
                                         style="max-height: 230px; overflow-y: scroll;">
                                         <table class="table">
                                             <tbody>
-                                                <tr *ngFor="">
+                                                <tr *ngFor="let item of ordemServico.ordemServicoItens ; index as i ">
                                                     <td class="align-middle text-left">
-                                                        <!-- {{ }} -->
+                                                        {{ item.nmProduto }}
                                                     </td>
                                                     <td class="d-flex justify-content-center">
                                                         <div class="btn-group"
                                                             style="display: inline-block; justify-content: center;">
-                                                            <a role="button" class="btn inputCinza popover-test"
+                                                            <button (click)="changeQuantidade('-', i )" role="button" class="btn inputCinza popover-test"
                                                                 title="Popover title"
                                                                 data-bs-content="Popover body content is set in this attribute."
-                                                                >+</a>
+                                                                >-</button>
                                                             <span class="badge badge-secondary">
-                                                                
+                                                                {{ this.item.nrQuantidade }}
                                                             </span>
-                                                            <a role="button" class="btn inputCinza popover-test"
+                                                            <button (click)="changeQuantidade('+', i)" role="button" class="btn inputCinza popover-test"
                                                                 title="Popover title"
                                                                 data-bs-content="Popover body content is set in this attribute."
-                                                                >-</a>
+                                                                >+</button>
                                                         </div>
                                                     </td>
-                                                    <td class="align-middle text-left">
-                                                        <!-- {{}} -->
+                                                    <td class="align-middle text-right">
+                                                        R$ {{ item.vlTotal }}
                                                     </td>
                                                 </tr>
                                             </tbody>

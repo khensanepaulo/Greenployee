@@ -20,6 +20,7 @@ import { LocalStorageService } from './service/localStorage.service';
 import { ModalPermissaoUsuarioComponent } from './views/modal-permissao-usuario/modal-permissao-usuario.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

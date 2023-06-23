@@ -15,7 +15,7 @@ export class UserDataService {
   constructor(private jwtHelper: JwtHelperService) {}
 
   public extractUserInfoFromToken(token: string): any {
-    debugger;
+
     const decodedToken = this.jwtHelper.decodeToken(token);
 
     this.userCredentials.userId = decodedToken.id;

@@ -42,7 +42,6 @@ export class InicioComponent {
  public getPessoa(): void {
     const userId = this.userDataService.userCredentials.userId;
     console.log(userId);
-  debugger;
     if (userId) {
       const parsedUserId = parseInt(userId, 10);
       this.pessoaService.findByUserId(parsedUserId)
