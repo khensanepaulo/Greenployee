@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosInstance } from "axios";
 import { Meta } from 'src/app/model/meta';
+import { Pessoa } from '../model/pessoa';
 
 @Injectable({
   providedIn: 'root'
@@ -48,13 +49,14 @@ export class MetaService {
     }
   }
 
-  public async findAll(): Promise<Meta[]> {
+  public async findByUserId(id: number): Promise<Meta[]> {
     try {
-      return (await this.axiosClient.get<Meta[]>('/', { headers: this.getHeaders() })).data; // Passa os headers na requisição
+      return (await this.axiosClient.get<Meta[]>(`/Usuario/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
     } catch (error: any) {
       return Promise.reject(error.response);
     }
   }
+
 
 }
 

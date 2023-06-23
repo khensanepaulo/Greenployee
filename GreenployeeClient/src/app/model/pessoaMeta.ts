@@ -10,6 +10,6 @@ export class PessoaMeta extends BaseClass {
 constructor() {
     super();
     this.pessoa = new Pessoa();
-    this.meta = new Meta
+    this.meta = new Meta ();
 }   
 }

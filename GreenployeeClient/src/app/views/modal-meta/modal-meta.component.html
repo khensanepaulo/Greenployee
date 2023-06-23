@@ -36,11 +36,37 @@
                     <div class="col-lg-3 form-group">
                         <label class="textoPadrao row justify-content-start"
                             style="margin-left: 6px;">Funcionário</label>
-                        <!-- <select class="form-control inputCinza" [(ngModel)]="funcionarioSelecionado">
-                            <option value="">Selecione um funcionário</option>
-                            <option *ngFor="let funcionario of funcionarios" [value]="funcionario.id">{{ funcionario.nome }}</option>
-                        </select> -->
+                            <select name="pessoaMeta" [(ngModel)]=" pessoaMeta.pessoa" class="form-control inputCinza" id="pessoa">
+                                <option *ngFor="let pessoa of pessoas" [value]="pessoa.id">{{ pessoa.nmPessoa }}</option>
+                            </select>
 
+                    </div>
+                    <div class="col-lg-1 d-flex align-items-end justify-content-end ms-auto text-end">
+                        <button (click)="addItem()" role="button" class="btn gradiente popover-test" title="Popover title"
+                            data-bs-content="Popover body content is set in this attribute.">+</button>
+                    </div>
+                    <div class="row">
+                        <div class="table-responsive d-flex justify-content-center mt3"
+                        style="max-height: 230px; overflow-y: scroll;">
+                        <table class="table">
+                            <tbody>
+                                <tr *ngFor="let item of meta.pessoaMetas; index as i ">
+                                    <td class="align-middle text-left">
+                                        {{ item.pessoa.nmPessoa }}
+                                    </td>
+                                    <td class="d-flex justify-content-center">
+                                        <div class="btn-group"
+                                            style="display: inline-block; justify-content: center;">
+                                            <!-- <button (click)="changeQuantidade('-', i )" role="button" class="btn inputCinza popover-test"
+                                                title="Popover title"
+                                                data-bs-content="Popover body content is set in this attribute."
+                                                >-</button> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
                         <button (click)="listarMetas()" type="button" class="btn refreshColor"

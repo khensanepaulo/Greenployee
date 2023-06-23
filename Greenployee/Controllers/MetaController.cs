@@ -127,7 +127,6 @@ namespace Greenployee.Controllers
         {
             try
             {
-                _permissionNeeded.Add("Admin");
                 _permissionNeeded.Add("User");
                 if (!ValidatePermission(_permissionNeeded, _permissionUser))
                     return Forbidden();

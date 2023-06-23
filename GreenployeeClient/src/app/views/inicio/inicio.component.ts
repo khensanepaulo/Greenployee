@@ -17,6 +17,7 @@ export class InicioComponent {
   public pessoa!: Pessoa;
   public meta! : Meta;
   metas: Meta[] = [];
+
   constructor(public metaService: MetaService,
     public localStorageService: LocalStorageService,
     public pessoaService: PessoaService,
@@ -26,13 +27,10 @@ export class InicioComponent {
 
   }
   
-  ngOnInit(): void {
-    this.listarMetas();
+  ngOnInit(): void {   
     this.userDataService.userCredentials = this.localStorageService.getObject("userCredentials");
     console.log(this.userDataService.userCredentials = this.localStorageService.getObject("userCredentials"));
-    this.getPessoa();
-    this.meta = new Meta();
-    
+    this.getPessoa();    
   }
   
   public addMeta(): void {
@@ -61,15 +59,19 @@ export class InicioComponent {
     }
   }
 
-   listarMetas(): void {
-  this.metaService.findAll()
-    .then((metas: Meta[]) => {
-      this.metas = metas; // Armazena a lista completa de metas
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as metas:', error);
-    });
-}
+  public listarMetas(): void {
+    debugger;
+    const userId = this.userDataService.userCredentials.userId;
+    const parsedUserId = parseInt(userId, 10);
+    this.metaService.findByUserId(parsedUserId)
+      .then((metas: Meta[]) => {
+        this.metas = metas; // Armazena a lista completa de metas
+        console.log(metas);
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as metas:', error);
+      });
+  }
 
 
 logout(): void {
