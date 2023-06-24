@@ -41,7 +41,6 @@ export class ModalNovaOrdemComponent {
   }
 
   public changeQuantidade( sinal: string, index: number): void{
-    debugger;
     if(sinal == '+'){
       this.ordemServico.ordemServicoItens[index].nrQuantidade++
     }else{
@@ -54,7 +53,6 @@ export class ModalNovaOrdemComponent {
   }
   
   public changeValor(index: number): void{
-    debugger;
     this.ordemServico.ordemServicoItens[index].vlTotal = this.ordemServico.ordemServicoItens[index].vlUnitario * this.ordemServico.ordemServicoItens[index].nrQuantidade;
   }
 

@@ -12,6 +12,8 @@ namespace Greenployee.CORE.Business
         Task<Pessoa> Update(Pessoa pessoa);
         Task<bool> Delete(int id);
         Task<Pessoa> FindByUserId(int id);
+        Task<IEnumerable<Pessoa>> FindAllWithUsuarios();
+
     }
 
     public class PessoaBusiness : IPessoaBusiness
@@ -63,6 +65,12 @@ namespace Greenployee.CORE.Business
         {
             Pessoa pessoa = await db.Pessoas.Include(x => x.Usuario).Where(x => x.Usuario != null && x.Usuario.id == id).FirstOrDefaultAsync();
             return pessoa;
+        }
+
+        public async Task<IEnumerable<Pessoa>> FindAllWithUsuarios()
+        {
+            IEnumerable<Pessoa> list = await db.Pessoas.Include(p => p.Usuario).ToListAsync();
+            return list;
         }
 
     }

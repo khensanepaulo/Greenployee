@@ -10,24 +10,24 @@ namespace Greenployee.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class PessoaController : BaseController
+    public class PermissaoUsuarioController : BaseController
     {
 
-        private readonly IPessoaBusiness _business;
+        private readonly IPermissaoUsuarioBusiness _business;
         private readonly ICurrentUser _currentUser;
 
         private List<string> _permissionNeeded = new List<string>() { "Admin" };
         private readonly List<string> _permissionUser;
 
-        public PessoaController(IPessoaBusiness pessoaBusiness, ICurrentUser currentUser)
+        public PermissaoUsuarioController(IPermissaoUsuarioBusiness permissaoUsuarioBusiness, ICurrentUser currentUser)
         {
-            _business = pessoaBusiness;
+            _business = permissaoUsuarioBusiness;
             _currentUser = currentUser;
             _permissionUser = _currentUser?.permissions?.Split(",")?.ToList() ?? new List<string>();
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pessoa>>> FindAll()
+        public async Task<ActionResult<IEnumerable<PermissaoUsuario>>> FindAll()
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Greenployee.Controllers
 
                 var result = await _business.FindAllWithUsuarios();
                 if (result == null)
-                    return BadRequest("Não foi possível listar as Pessoas!");
+                    return BadRequest("Não foi possível listar as PermissaoUsuarios!");
 
                 return Ok(result);
             }
@@ -48,7 +48,7 @@ namespace Greenployee.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pessoa>> FindById(int id)
+        public async Task<ActionResult<PermissaoUsuario>> FindById(int id)
         {
             try
             {
@@ -56,8 +56,8 @@ namespace Greenployee.Controllers
                 if (!ValidatePermission(_permissionNeeded, _permissionUser))
                     return Forbidden();
 
-                Pessoa result = await _business.FindById(id);
-                if (result == null) return NotFound("Não foi possível encontrar a Pessoa!");
+                PermissaoUsuario result = await _business.FindById(id);
+                if (result == null) return NotFound("Não foi possível encontrar a PermissaoUsuario!");
                 return Ok(result);
             }
             catch (Exception exception)
@@ -67,16 +67,13 @@ namespace Greenployee.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Pessoa>> Insert(Pessoa pessoa)
+        public async Task<ActionResult<PermissaoUsuario>> Insert(PermissaoUsuario permissaoUsuario)
         {
             try
             {
-                _permissionNeeded.Add("Admin");
-                if (!ValidatePermission(_permissionNeeded, _permissionUser))
-                    return Forbidden();
-
-                Pessoa result = await _business.Insert(pessoa);
-                if (result == null) return BadRequest("Não foi possível inserir pessoa!");
+                
+                PermissaoUsuario result = await _business.Insert(permissaoUsuario);
+                if (result == null) return BadRequest("Não foi possível inserir permissaoUsuario!");
                 return Ok(result);
             }
             catch (Exception exception)
@@ -86,7 +83,7 @@ namespace Greenployee.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Pessoa>> Update(Pessoa pessoa)
+        public async Task<ActionResult<PermissaoUsuario>> Update(PermissaoUsuario permissaoUsuario)
         {
             try
             {
@@ -94,8 +91,8 @@ namespace Greenployee.Controllers
                 if (!ValidatePermission(_permissionNeeded, _permissionUser))
                     return Forbidden();
 
-                Pessoa result = await _business.Update(pessoa);
-                if (result == null) return BadRequest("Não foi possível atualizar os dados referentes a pessoa!");
+                PermissaoUsuario result = await _business.Update(permissaoUsuario);
+                if (result == null) return BadRequest("Não foi possível atualizar os dados referentes a permissaoUsuario!");
                 return Ok(result);
             }
             catch (Exception exception)
@@ -105,7 +102,7 @@ namespace Greenployee.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Pessoa>> Delete(int id)
+        public async Task<ActionResult<PermissaoUsuario>> Delete(int id)
         {
             try
             {
@@ -114,7 +111,7 @@ namespace Greenployee.Controllers
                     return Forbidden();
 
                 var status = await _business.Delete(id);
-                if (!status) return BadRequest("Não foi possível deletar essa pessoa!");
+                if (!status) return BadRequest("Não foi possível deletar essa permissaoUsuario!");
                 return Ok(status);
             }
             catch (Exception exception)
@@ -124,7 +121,7 @@ namespace Greenployee.Controllers
         }
 
         [HttpGet("/api/[controller]/Usuario/{id}")]
-        public async Task<ActionResult<Pessoa>> FindByUserId(int id)
+        public async Task<ActionResult<PermissaoUsuario>> FindByUserId(int id)
         {
             try
             {
@@ -133,8 +130,8 @@ namespace Greenployee.Controllers
                 if (!ValidatePermission(_permissionNeeded, _permissionUser))
                     return Forbidden();
 
-                Pessoa result = await _business.FindByUserId(id);
-                if (result == null) return NotFound("Não foi possível encontrar a Pessoa!");
+                PermissaoUsuario result = await _business.FindByUserId(id);
+                if (result == null) return NotFound("Não foi possível encontrar a PermissaoUsuario!");
                 return Ok(result);
             }
             catch (Exception exception)

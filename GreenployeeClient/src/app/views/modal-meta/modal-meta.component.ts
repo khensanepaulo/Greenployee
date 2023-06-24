@@ -59,7 +59,7 @@ public addMeta(): void {
 }
 
 public listarMetas(): void {
-  debugger;
+
   const userId = this.userDataService.userCredentials.userId;
   const parsedUserId = parseInt(userId, 10);
 
@@ -92,11 +92,9 @@ public verificarUser(): boolean {
 public listarPessoas(): void {
   this.pessoaService.findAll()
     .then((pessoas: Pessoa[]) => {
-      debugger;
       this.pessoas = pessoas; // Armazena a lista completa de metas
     })
     .catch((error) => {
-      debugger;
       console.error('Erro ao obter as metas:', error);
     });
 }
@@ -106,7 +104,6 @@ public resetItem(): void{
  }
 
  public removeItem( sinal: string, index: number): void{
-  debugger;
   if(sinal == '-'){
     this.meta.pessoaMetas.splice(index,1);
   }else{

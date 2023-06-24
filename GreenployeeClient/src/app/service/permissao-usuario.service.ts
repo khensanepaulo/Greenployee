@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import axios, { AxiosInstance } from 'axios';
-import { PermissaoUsuario } from '../model/permissaoUsuario';
-
+import axios, { AxiosInstance } from "axios";
+import { PermissaoUsuario } from 'src/app/model/permissaoUsuario';
+import { Pessoa } from '../model/pessoa';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermissaoUsuarioService {
-  
+
   private axiosClient!: AxiosInstance;
   private token: string; // Variável para armazenar o token
   constructor() {
@@ -20,6 +20,7 @@ export class PermissaoUsuarioService {
 
   public getTokenLocalStorage(): string | null {
     var user = JSON.parse(localStorage.getItem('userCredentials') ?? "");
+    debugger;
     this.token = user.token;
     return user.token;
   }
@@ -34,7 +35,7 @@ export class PermissaoUsuarioService {
   public async cadastrar(permissaoUsuario: PermissaoUsuario): Promise<void> {
     console.log(permissaoUsuario);
     try {
-      await this.axiosClient.post('/', permissaoUsuario, { headers: { 'Authorization': `Bearer ${this.token}` } });
+      await this.axiosClient.post('/', permissaoUsuario, { headers: { 'Authorization': `Bearer ${this.getTokenLocalStorage()}` } });
       console.log("PermissaoUsuario cadastrada com sucesso!");
     } catch (error: any) {
       return Promise.reject("Não foi possível cadastrar a permissaoUsuario! :" + error);
@@ -49,9 +50,9 @@ export class PermissaoUsuarioService {
     }
   }
 
-  public async findByUserId(id: number): Promise<PermissaoUsuario> {
+  public async findByUserId(id: number): Promise<PermissaoUsuario[]> {
     try {
-      return (await this.axiosClient.get<PermissaoUsuario>(`/usuario/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
+      return (await this.axiosClient.get<PermissaoUsuario[]>(`/Usuario/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -65,7 +66,7 @@ export class PermissaoUsuarioService {
     }
   }
 
- 
 
-  
+
 }
+

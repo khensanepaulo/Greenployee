@@ -16,8 +16,8 @@
                                 <div class="row mt3">
                                     <div class="col-lg-10 form-group">
                                         <label class="textoPadrao row justify-content-start"style="margin-left: 6px;">Funcionário</label>
-                                        <select name="permissaoPessoa" [(ngModel)]="permissaoUsuario.usuario"  class="form-control inputCinza" id="pessoa">
-                                            <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa.usuario">{{ pessoa.nmPessoa }}</option>
+                                        <select name="permissaoPessoa" [(ngModel)]="permissaoUsuario.usuario.id"  class="form-control inputCinza" id="pessoa">
+                                            <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa.usuario.id">{{ pessoa.nmPessoa }}</option>
                                         </select>
                                     </div>
                                 </div>

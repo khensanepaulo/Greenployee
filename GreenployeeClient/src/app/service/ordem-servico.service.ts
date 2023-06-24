@@ -33,7 +33,7 @@ export class OrdemServicoService {
   public async cadastrar(ordemServico: OrdemServico): Promise<void> {
     console.log(ordemServico);
     try {
-      await this.axiosClient.post('/', ordemServico, { headers: { 'Authorization': `Bearer ${this.token}` } });
+      await this.axiosClient.post('/', ordemServico, { headers: { 'Authorization': `Bearer ${this.getHeaders()}` } });
       console.log("OrdemServico cadastrada com sucesso!");
     } catch (error: any) {
       return Promise.reject("Não foi possível cadastrar a ordemServico! :" + error);
