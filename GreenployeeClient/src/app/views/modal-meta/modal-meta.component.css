@@ -15,11 +15,27 @@ body{
 }
 
 .mr3{
-    margin-right: 3vh;
+    margin-right: 3px;
 }
 
 .ml3{
     margin-left: 3vh;
+}
+
+.fitContent{
+
+  word-break: break-all;
+  width: max-content;
+}
+
+.pessoaItem{
+
+  height: 4vh;
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+  border-radius: 4px;
+  margin-left: 1vw;
 }
 
 .textoButton{
@@ -137,3 +153,4 @@ table {
     background: linear-gradient(209deg, rgb(31, 31, 30) 0%, rgba(22, 22, 22, 0.705) 29%, rgb(15, 15, 15) 100%);
   
   }
+

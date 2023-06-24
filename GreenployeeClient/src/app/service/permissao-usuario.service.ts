@@ -31,6 +31,16 @@ export class PermissaoUsuarioService {
     };
   }
 
+  public async cadastrar(permissaoUsuario: PermissaoUsuario): Promise<void> {
+    console.log(permissaoUsuario);
+    try {
+      await this.axiosClient.post('/', permissaoUsuario, { headers: { 'Authorization': `Bearer ${this.token}` } });
+      console.log("PermissaoUsuario cadastrada com sucesso!");
+    } catch (error: any) {
+      return Promise.reject("Não foi possível cadastrar a permissaoUsuario! :" + error);
+    }
+  }
+
   public async findById(id: number): Promise<PermissaoUsuario> {
     try {
       return (await this.axiosClient.get<PermissaoUsuario>(`/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição

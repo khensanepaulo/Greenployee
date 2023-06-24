@@ -57,6 +57,15 @@ export class MetaService {
     }
   }
 
+  public async findAll(): Promise<Meta[]> {
+    try {
+      return (await this.axiosClient.get<Meta[]>('/', { headers: this.getHeaders() })).data; // Passa os headers na requisição
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+
+
 
 }
 

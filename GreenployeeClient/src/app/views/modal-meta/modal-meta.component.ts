@@ -14,6 +14,7 @@ import { UserDataService } from 'src/app/service/userDataService';
 })
 export class ModalMetaComponent {
 
+  verificaUser!: string;
   public pessoa!: Pessoa;
   public meta! : Meta;
   public pessoaMeta!: PessoaMeta;
@@ -34,11 +35,9 @@ export class ModalMetaComponent {
   }
 
 public addItem(): void{
-  // if(!this.pessoaMeta.meta){
-  //   return;
-  // }
   this.meta.pessoaMetas.push(cloneDeep(this.pessoaMeta));
-  console.log(this.pessoaMeta);
+  this.resetItem();
+  console.log(this.meta.pessoaMetas);
 }
 
 // public changeQuantidade( sinal: string, index: number): void{
@@ -63,24 +62,60 @@ public listarMetas(): void {
   debugger;
   const userId = this.userDataService.userCredentials.userId;
   const parsedUserId = parseInt(userId, 10);
-  this.metaService.findByUserId(parsedUserId)
-    .then((metas: Meta[]) => {
+
+  if(this.userDataService.userCredentials.permissions == 'Admin'){
+    this.metaService.findAll().then((metas: Meta[]) => {
+      this.metas = metas; // Armazena a lista completa de pessoas
+      console.log(metas);
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as pessoas:', error);
+    });
+  } else{
+    this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
       this.metas = metas; // Armazena a lista completa de metas
       console.log(metas);
     })
     .catch((error) => {
       console.error('Erro ao obter as metas:', error);
     });
+  }
+}
+
+public verificarUser(): boolean {
+
+  this.verificaUser = this.userDataService.userCredentials.permissions; 
+  return this.verificaUser != 'Admin';
+
 }
 
 public listarPessoas(): void {
   this.pessoaService.findAll()
     .then((pessoas: Pessoa[]) => {
+      debugger;
       this.pessoas = pessoas; // Armazena a lista completa de metas
     })
     .catch((error) => {
+      debugger;
       console.error('Erro ao obter as metas:', error);
     });
 }
+
+public resetItem(): void{
+  this.pessoaMeta = new PessoaMeta();
+ }
+
+ public removeItem( sinal: string, index: number): void{
+  debugger;
+  if(sinal == '-'){
+    this.meta.pessoaMetas.splice(index,1);
+  }else{
+     return;
+  } 
+}
+
+
+
+
 
 }

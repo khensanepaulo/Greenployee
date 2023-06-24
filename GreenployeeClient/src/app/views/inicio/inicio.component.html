@@ -82,7 +82,7 @@
                             style="height: 62%; width: 41%;">
                     </div>
                 </button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#funcionario"
+                <button *ngIf="!verificarUser()" type="button" data-bs-toggle="modal" data-bs-target="#funcionario"
                     class="col-lg-3 nextButton gradiente ml3 mr3">
                     <p class="row textoButton mb0 m-1" style="margin-right: 7vw;">Funcionários</p>
                     <div class="row justify-content-end">

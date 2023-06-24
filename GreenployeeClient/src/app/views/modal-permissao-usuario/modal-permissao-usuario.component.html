@@ -15,21 +15,23 @@
                             <form>
                                 <div class="row mt3">
                                     <div class="col-lg-10 form-group">
-                                        <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Nome do Funcionário</label>
-                                        <input name="pnmPessoa"  type="text" placeholder="Somente letras..." class="form-control inputCinza" id="">
+                                        <label class="textoPadrao row justify-content-start"style="margin-left: 6px;">Funcionário</label>
+                                        <select name="permissaoPessoa" [(ngModel)]="permissaoUsuario.usuario"  class="form-control inputCinza" id="pessoa">
+                                            <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa.usuario">{{ pessoa.nmPessoa }}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row mt3">
                                     <div class="col-lg-4 form-group">
-                                        <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Permissão</label>
-                                        <input name="CPF" type="text" placeholder="Somente números..."
-                                            class="form-control inputCinza" id="">
+                                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Permissão</label>
+                                        <select name="permissao" [(ngModel)]="permissaoUsuario.permissao.id" class="form-control inputCinza" id="permissao">
+                                            <option [ngValue]="1">Admin</option>
+                                            <option [ngValue]="2">User</option>
+                                        </select>
                                     </div>
                                     <div class="modal-footer" style="background-color: #C9D7D0;">
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#funcionario" >Cancelar</button>
-                                        <button  type="button" class="btn gradiente" data-bs-toggle="modal" data-bs-target="#funcionario" style="color:white">Salvar</button>
+                                        <button (click)="addPermissao()"  type="button" class="btn gradiente" data-bs-toggle="modal" data-bs-target="#funcionario" style="color:white">Salvar</button>
                                     </div>
                                 </div>
                             </form>

@@ -14,9 +14,11 @@ import { Router } from '@angular/router';
 })
 export class InicioComponent {
 
+  verificaUser!: string;
   public pessoa!: Pessoa;
   public meta! : Meta;
   metas: Meta[] = [];
+  permissao!: string;
 
   constructor(public metaService: MetaService,
     public localStorageService: LocalStorageService,
@@ -31,15 +33,27 @@ export class InicioComponent {
     this.userDataService.userCredentials = this.localStorageService.getObject("userCredentials");
     console.log(this.userDataService.userCredentials = this.localStorageService.getObject("userCredentials"));
     this.getPessoa();    
+    this.verificarUser();
   }
   
   public addMeta(): void {
     this.metaService.cadastrar(this.meta);
   }
 
+  public verificarUser(): boolean {
+
+    this.verificaUser = this.userDataService.userCredentials.permissions; 
+    return this.verificaUser != 'Admin';
+ 
+  }
+
  public getPessoa(): void {
     const userId = this.userDataService.userCredentials.userId;
     console.log(userId);
+
+    if(this.userDataService.userCredentials.permissions == 'Admin'){
+      return;
+    }
     if (userId) {
       const parsedUserId = parseInt(userId, 10);
       this.pessoaService.findByUserId(parsedUserId)
@@ -60,11 +74,19 @@ export class InicioComponent {
   }
 
   public listarMetas(): void {
-    debugger;
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
-    this.metaService.findByUserId(parsedUserId)
-      .then((metas: Meta[]) => {
+
+    if(this.userDataService.userCredentials.permissions == 'Admin'){
+      this.metaService.findAll().then((metas: Meta[]) => {
+        this.metas = metas; // Armazena a lista completa de pessoas
+        console.log(metas);
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as pessoas:', error);
+      });
+    } else{
+      this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
         this.metas = metas; // Armazena a lista completa de metas
         console.log(metas);
       })
@@ -72,6 +94,8 @@ export class InicioComponent {
         console.error('Erro ao obter as metas:', error);
       });
   }
+}
+    
 
 
 logout(): void {
