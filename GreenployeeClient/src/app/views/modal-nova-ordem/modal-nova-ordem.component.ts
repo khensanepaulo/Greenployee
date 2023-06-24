@@ -12,21 +12,23 @@ import { clone, cloneDeep } from 'lodash';
 })
 export class ModalNovaOrdemComponent {
 
-  flEntrega: boolean = false; 
-  public ordemServicoItem! : OrdemServicoItem;
-  public ordemServico! : OrdemServico;
+  flEntrega: boolean = false;
+  public ordemServicoItem!: OrdemServicoItem;
+  public ordemServico!: OrdemServico;
   ordemServicos: OrdemServico[] = [];
 
-  constructor(private ordemServicoService: OrdemServicoService){}
-  
+  constructor(private ordemServicoService: OrdemServicoService) { }
+
+
+
   ngOnInit(): void {
     this.ordemServico = new OrdemServico();
     this.ordemServicoItem = new OrdemServicoItem();
-    
+
   }
 
-  public addItem(): void{
-    if(!this.ordemServicoItem.nmProduto || !this.ordemServicoItem.vlUnitario){
+  public addItem(): void {
+    if (!this.ordemServicoItem.nmProduto || !this.ordemServicoItem.vlUnitario) {
       return;
     }
     this.ordemServicoItem.nrQuantidade = 1;
@@ -36,23 +38,23 @@ export class ModalNovaOrdemComponent {
     console.log()
   }
 
-  public resetItem(): void{
-   this.ordemServicoItem = new OrdemServicoItem();
+  public resetItem(): void {
+    this.ordemServicoItem = new OrdemServicoItem();
   }
 
-  public changeQuantidade( sinal: string, index: number): void{
-    if(sinal == '+'){
+  public changeQuantidade(sinal: string, index: number): void {
+    if (sinal == '+') {
       this.ordemServico.ordemServicoItens[index].nrQuantidade++
-    }else{
-      this.ordemServico.ordemServicoItens[index].nrQuantidade-- 
-    } 
-    if(this.ordemServico.ordemServicoItens[index].nrQuantidade < 1 ){
-      this.ordemServico.ordemServicoItens.splice(index,1);
+    } else {
+      this.ordemServico.ordemServicoItens[index].nrQuantidade--
+    }
+    if (this.ordemServico.ordemServicoItens[index].nrQuantidade < 1) {
+      this.ordemServico.ordemServicoItens.splice(index, 1);
     }
     this.changeValor(index);
   }
-  
-  public changeValor(index: number): void{
+
+  public changeValor(index: number): void {
     this.ordemServico.ordemServicoItens[index].vlTotal = this.ordemServico.ordemServicoItens[index].vlUnitario * this.ordemServico.ordemServicoItens[index].nrQuantidade;
   }
 
@@ -61,13 +63,13 @@ export class ModalNovaOrdemComponent {
   }
 
   public listarOrdemServicos(): void {
-  this.ordemServicoService.findAll()
-    .then((ordemServicos: OrdemServico[]) => {
-      this.ordemServicos = ordemServicos; 
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as ordens de Serviços:', error);
-    });
-}
+    this.ordemServicoService.findAll()
+      .then((ordemServicos: OrdemServico[]) => {
+        this.ordemServicos = ordemServicos;
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as ordens de Serviços:', error);
+      });
+  }
 
 }

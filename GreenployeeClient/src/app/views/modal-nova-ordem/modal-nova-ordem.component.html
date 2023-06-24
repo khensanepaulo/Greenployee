@@ -54,12 +54,16 @@
                                 </div>
                                 <div class="row mt3">
                                     <div class="form-switch col-lg-3">
-                                        <label class="textoPadrao row justify-content-start" for="flEntrega">Entrega?</label>
-                                        <input class="form-check-input" type="checkbox" id="flEntrega" name="flEntrega" [(ngModel)]="flEntrega">
+                                        <label class="textoPadrao row justify-content-start"
+                                            for="flEntrega">Entrega?</label>
+                                        <input class="form-check-input" type="checkbox" id="flEntrega" name="flEntrega"
+                                            [(ngModel)]="flEntrega">
                                     </div>
                                     <div class="col-lg-9 form-group" *ngIf="flEntrega">
-                                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Endereço</label>
-                                        <input type="text" placeholder="Rua, Nº, Bairro, Cidade" class="form-control inputCinza" id="">
+                                        <label class="textoPadrao row justify-content-start"
+                                            style="margin-left: 6px;">Endereço</label>
+                                        <input type="text" placeholder="Rua, Nº, Bairro, Cidade"
+                                            class="form-control inputCinza" id="">
                                     </div>
                                 </div>
                             </form>
@@ -70,16 +74,18 @@
                                     <div class="col-lg-8 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">Produto</label>
-                                        <input [(ngModel)]="ordemServicoItem.nmProduto" name="nmProduto" type="text" placeholder="Nome do Produto..."
-                                            class="form-control inputCinza" id="">
+                                        <input [(ngModel)]="ordemServicoItem.nmProduto" name="nmProduto" type="text"
+                                            placeholder="Nome do Produto..." class="form-control inputCinza" id="">
                                     </div>
                                     <div class="col-lg-3 form-group">
                                         <label class="textoPadrao row justify-content-start"
                                             style="margin-left: 6px;">Valor Unid.</label>
-                                        <input [(ngModel)]="ordemServicoItem.vlUnitario" name="vlUnitario" type="text" placeholder="R$ 0,00" class="form-control inputCinza" id="">
+                                        <input [(ngModel)]="ordemServicoItem.vlUnitario" name="vlUnitario" type="text"
+                                            placeholder="R$ 0,00" class="form-control inputCinza" id="">
                                     </div>
                                     <div class="col-lg-1 d-flex align-items-end justify-content-end ms-auto text-end">
-                                        <button (click)="addItem()" role="button" class="btn gradiente popover-test" title="Popover title"
+                                        <button (click)="addItem()" role="button" class="btn gradiente popover-test"
+                                            title="Popover title"
                                             data-bs-content="Popover body content is set in this attribute.">+</button>
                                     </div>
                                 </div>
@@ -95,21 +101,21 @@
                                                     <td class="d-flex justify-content-center">
                                                         <div class="btn-group"
                                                             style="display: inline-block; justify-content: center;">
-                                                            <button (click)="changeQuantidade('-', i )" role="button" class="btn inputCinza popover-test"
+                                                            <button (click)="changeQuantidade('-', i )" role="button"
+                                                                class="btn inputCinza popover-test"
                                                                 title="Popover title"
-                                                                data-bs-content="Popover body content is set in this attribute."
-                                                                >-</button>
+                                                                data-bs-content="Popover body content is set in this attribute.">-</button>
                                                             <span class="badge badge-secondary">
                                                                 {{ this.item.nrQuantidade }}
                                                             </span>
-                                                            <button (click)="changeQuantidade('+', i)" role="button" class="btn inputCinza popover-test"
+                                                            <button (click)="changeQuantidade('+', i)" role="button"
+                                                                class="btn inputCinza popover-test"
                                                                 title="Popover title"
-                                                                data-bs-content="Popover body content is set in this attribute."
-                                                                >+</button>
+                                                                data-bs-content="Popover body content is set in this attribute.">+</button>
                                                         </div>
                                                     </td>
                                                     <td class="align-middle text-right">
-                                                        R$ {{ item.vlTotal }}
+                                                        R$ {{ item.vlTotal | currency }}
                                                     </td>
                                                 </tr>
                                             </tbody>

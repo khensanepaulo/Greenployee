@@ -74,7 +74,15 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-center" style="margin-top: 5%; margin-right: 2%">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#ordemServico"
+                <button style="width: 490px" *ngIf="verificarUser()" type="button" data-bs-toggle="modal"
+                    data-bs-target="#ordemServico" class="btn btn-primary col-lg-12 nextButton gradiente mr3">
+                    <p class="row textoButton mb0 m-1">Ordens de Serviço</p>
+                    <div style="height: 94%; width: 64%; margin-left: 40%;" class="row justify-content-end">
+                        <img src="../../../assets/images/icones/ordensDeServicoIMG.png" alt="..."
+                            style="height: 62%; width: 41%;">
+                    </div>
+                </button>
+                <button *ngIf="!verificarUser()" type="button" data-bs-toggle="modal" data-bs-target="#ordemServico"
                     class="btn btn-primary col-lg- nextButton gradiente mr3">
                     <p class="row textoButton mb0 m-1">Ordens de Serviço</p>
                     <div class="row justify-content-end">
