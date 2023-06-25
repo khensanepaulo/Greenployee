@@ -96,7 +96,10 @@
                                     {{ meta.dsRecompensa }}
                                 </td>
                                 <td class="text-center tdRadiusRight col-lg-6 colorTd">
-                                    <input type="checkbox">
+                                    <input  [(ngModel)]="meta.dtFim" type="checkbox">
+                                </td>
+                                <td>
+                                    <button type="button" class="btn succes" data-bs-dismiss="modal">Concluir</button>
                                 </td>
                             </tr>
                         </tbody>

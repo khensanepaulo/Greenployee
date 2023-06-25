@@ -15,7 +15,7 @@ export class ModalRelatorioComponent implements OnInit {
   createDonutChart(): void {
     const donutChartOptions: ChartOptions = {
       responsive: false,
-      cutoutPercentage: 70 // Adjust the cutoutPercentage to control the size of the donut hole
+      // cutoutPercentage: 70 // Adjust the cutoutPercentage to control the size of the donut hole
     };
 
     const donutChartData = {
@@ -32,16 +32,16 @@ export class ModalRelatorioComponent implements OnInit {
       options: donutChartOptions
     };
 
-    const donutChartCanvas = document.getElementById('donutChartCanvas') as HTMLCanvasElement | null;
-    if (donutChartCanvas) {
-      const context = donutChartCanvas.getContext('2d');
-      if (context) {
-        new Chart(context, donutChartConfig);
-      } else {
-        console.error('Could not retrieve 2D context for the canvas element.');
-      }
-    } else {
-      console.error('Could not find the canvas element with the specified ID.');
-    }
+//     const donutChartCanvas = document.getElementById('donutChartCanvas') as HTMLCanvasElement | null;
+//     if (donutChartCanvas) {
+//       const context = donutChartCanvas.getContext('2d');
+//       if (context) {
+//         new Chart(context, donutChartConfig);
+//       } else {
+//         console.error('Could not retrieve 2D context for the canvas element.');
+//       }
+//     } else {
+//       console.error('Could not find the canvas element with the specified ID.');
+//     }
  }
 }

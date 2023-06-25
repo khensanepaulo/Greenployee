@@ -6,6 +6,7 @@ export class Meta extends BaseClass {
     dsRecompensa! : string;
     dtInicio! : Date;
     dtFim! : Date;
+    dataConcluido! : Date;
     vlMeta! : number;
     pessoaMetas!: PessoaMeta [];
 

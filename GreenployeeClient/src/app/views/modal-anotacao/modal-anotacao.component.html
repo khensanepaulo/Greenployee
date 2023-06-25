@@ -15,8 +15,6 @@
                         <textarea [(ngModel)]="anotacao.dsMensagem" placeholder="Digite sua anotação..."  class="texto-comeca-no-topo form-control inputCinza" ></textarea>
                     </div>
                     <div class="form-switch col-lg-2 mt3" style="margin-left: 1vw; margin-bottom: 2vh;">
-                        <input class="form-check-input" [(ngModel)]="anotacao.flConcluido" type="checkbox" id="flexCheckDefault" aria-label="..." name="flConcluido" 
-                        style="width: 24px; height: 24px;" >
                         <style>
                             .form-check-input {
                             }
@@ -42,7 +40,7 @@
                         {{ mensagemErro }}
                       </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Sair</button>
                         <button (click)="addAnotacao()" type="button" class="btn gradiente" style="color:white">Salvar</button>
                     </div>
                     <hr>
@@ -56,13 +54,18 @@
                         style="max-height: 380px; overflow-y: scroll;">
                         <table class="table table-borderless table-hover ">
                             <tbody>
+                                <thead>
+                                    <tr style="background-color: #C9D7D0 !important;" class="trCor col-lg-12">
+                                        <th class="text-center col-lg-1">
+                                            <strong>Suas anotações</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
                                 <tr *ngFor="let anotacao of anotacoes" class="trCor col-lg-12">
                                     <td class="text-center col-lg-6 colorTd">
                                       {{ anotacao.dsMensagem }}
                                     </td>
-                                    <td class="text-center tdRadiusRight col-lg-6 colorTd">
-                                      <input type="checkbox">
-                                    </td>
+                                    
                                   </tr>
                             </tbody>
                         </table>
