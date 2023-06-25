@@ -36,7 +36,7 @@ export class PessoaService {
       await this.axiosClient.post('/', pessoa, { headers: { 'Authorization': `Bearer ${this.token}` } });
       console.log("Pessoa cadastrada com sucesso!");
     } catch (error: any) {
-      return Promise.reject("Não foi possível cadastrar a pessoa! :" + error);
+      return Promise.reject("Não foi possível cadastrar a pessoa!");
     }
   }
 

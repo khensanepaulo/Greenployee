@@ -1,7 +1,10 @@
 ﻿using Greenployee.API.Controllers;
 using Greenployee.CORE.Business;
 using Greenployee.MODELS.Authentication;
+using Greenployee.MODELS.DTO.Anotacao;
+using Greenployee.MODELS.DTO.Anotacao;
 using Greenployee.MODELS.Model;
+using Greenployee.MODELS.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -66,22 +69,21 @@ namespace Greenployee.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Anotacao>> Insert(Anotacao anotacao)
+        public async Task<ActionResult<Anotacao>> Insert(AnotacaoDTO anotacao)
         {
             try
             {
-                _permissionNeeded.Add("Admin");
                 _permissionNeeded.Add("User");
                 if (!ValidatePermission(_permissionNeeded, _permissionUser))
                     return Forbidden();
 
                 Anotacao result = await _business.Insert(anotacao);
-                if (result == null) return BadRequest("Não foi possível inserir a anotação!");
+                if (result == null) return BadRequest("Não foi possível inserir a anotacao!");
                 return Ok(result);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                throw exception;
+                throw;
             }
         }
 

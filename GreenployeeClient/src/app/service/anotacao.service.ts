@@ -36,7 +36,15 @@ export class AnotacaoService {
       await this.axiosClient.post('/', anotacao, { headers: { 'Authorization': `Bearer ${this.token}` } });
       console.log("Anotacao cadastrada com sucesso!");
     } catch (error: any) {
-      return Promise.reject("Não foi possível cadastrar a anotacao! :" + error);
+      return Promise.reject("Não foi possível cadastrar a anotacao!");
+    }
+  }
+
+  public async findByUserId(id: number): Promise<Anotacao[]> {
+    try {
+      return (await this.axiosClient.get<Anotacao[]>(`/Usuario/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
+    } catch (error: any) {
+      return Promise.reject(error.response);
     }
   }
 

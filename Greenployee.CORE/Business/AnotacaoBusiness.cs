@@ -1,4 +1,7 @@
 ﻿using Greenployee.MODELS.Data;
+using Greenployee.MODELS.DTO;
+using Greenployee.MODELS.DTO.Anotacao;
+using Greenployee.MODELS.DTO.PermissaoUsuario;
 using Greenployee.MODELS.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,7 +16,7 @@ namespace Greenployee.CORE.Business
     {
         Task<IEnumerable<Anotacao>> FindAll();
         Task<Anotacao> FindById(int id);
-        Task<Anotacao> Insert(Anotacao anotacao);
+        Task<Anotacao> Insert(AnotacaoDTO anotacao);
         Task<Anotacao> Update(Anotacao anotacao);
         Task<bool> Delete(int id);
         Task<IEnumerable<Anotacao>> FindByUserId(int id);
@@ -40,11 +43,12 @@ namespace Greenployee.CORE.Business
             return anotacao;
         }
 
-        public async Task<Anotacao> Insert(Anotacao anotacao)
+        public async Task<Anotacao> Insert(AnotacaoDTO anotacao)
         {
-            db.Anotacoes.Add(anotacao);
+            var entity = new Anotacao(anotacao.idPessoa, anotacao.dsMensagem);
+            db.Anotacoes.Add(entity);
             await db.SaveChangesAsync();
-            return anotacao;
+            return entity;
         }
 
         public async Task<Anotacao> Update(Anotacao anotacao)

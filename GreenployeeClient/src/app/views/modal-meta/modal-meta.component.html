@@ -5,10 +5,11 @@
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #C9D7D0;">
                 <h4 class="modal-title textoPadrao">Metas</h4>
+                <button (click)="listarMetas()" *ngIf="!verificarAdmin()" type="button" class="btn refreshColor"style="color:white">⟲</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body" style="background-color: #C9D7D0;">
-                <div class="row">
+                <div *ngIf="!verificarUser()" class="row">
                     <div *ngIf="!verificarUser()" class="col-lg-3 form-group">
                         <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Descrição</label>
                         <textarea [(ngModel)]="meta.dsRecompensa" placeholder="Digite sua nova meta..."
@@ -53,13 +54,21 @@
                         <div *ngFor="let item of meta.pessoaMetas; index as i clas" class="gradiente col-lg-3 fitContent pessoaItem d-flex align-items-center">
                             <div >
                                 {{ item.pessoa.nmPessoa }}
-                                <span (click)="removeItem('-', i )" class="ml3">×</span>
+                                <span (click)="removeItem('-', i )" class="ml3 mousePointer">×</span>
+                                <style>
+                                    .mousePointer {
+                                        cursor: pointer;
+                                    }
+                                    .mousePointer:hover {
+                                        color: rgb(188, 9, 48);
+                                    }
+                                </style>
                             </div>
                             
                         </div>
                     </div>
                     <div class="modal-footer" style="background-color: #C9D7D0; margin-top: 1vh;" >
-                        <button (click)="listarMetas()" type="button" class="btn refreshColor"
+                        <button *ngIf="!verificarUser()" (click)="listarMetas()" type="button" class="btn refreshColor"
                             style="color:white">⟲</button>
                         <button *ngIf="!verificarUser()" type="button" class="btn btn-danger ml3"
                             data-bs-dismiss="modal">Cancelar</button>
@@ -71,6 +80,16 @@
                 <div class="table-responsive d-flex justify-content-center mt3"
                     style="max-height: 380px; overflow-y: scroll;">
                     <table class="table table-borderless table-hover ">
+                        <thead>
+                            <tr style="background-color: #C9D7D0 !important;" class="trCor col-lg-12">
+                                <th class="text-center col-lg-1">
+                                    <strong>Descrição da Meta</strong>
+                                </th>
+                                <th class="text-center col-lg-2">
+                                    <strong style="margin-right: 3vw;">Meta Concluída?</strong>
+                                </th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr *ngFor="let meta of metas" class="trCor col-lg-12">
                                 <td class="text-center col-lg-6 colorTd">

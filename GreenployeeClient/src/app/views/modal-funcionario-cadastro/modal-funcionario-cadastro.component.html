@@ -95,9 +95,28 @@
                                     </div>
                                 </div>
                                 <!-- Modal footer -->
-                                <div class="modal-footer" style="background-color: #C9D7D0;">
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#funcionario">Cancelar</button>
-                                    <button (click)="addPessoa()" type="button" class="btn gradiente" style="color:white" data-bs-toggle="modal" data-bs-target="#funcionario">Salvar</button>
+                                <div class="row mt3">
+                                    <div class="d-flex justify-content-start col-lg-9" style="background-color: #C9D7D0;">
+                                        <div *ngIf="mensagem" style="color: rgb(54,130,94); 
+                                            font-family: 'Inter', sans-serif; 
+                                            font-style: normal; 
+                                            font-size: 16px; 
+                                            font-weight: lighter;
+                                            margin-right: 30px;">
+                                            {{ mensagem }}
+                                        </div>
+                                    <div *ngIf="mensagemErro" class="d-flex justify-content-start col-lg-9" style="color: rgb(161, 19, 40); 
+                                            font-family: 'Inter', sans-serif; 
+                                            font-style: normal; 
+                                            font-size: 16px; 
+                                            font-weight: lighter;">
+                                            {{ mensagemErro }}
+                                    </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end col-lg-3">
+                                        <button (click)="addPessoa()" type="button" class="btn gradiente" style="color:white" >Salvar</button>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#funcionario">Sair</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

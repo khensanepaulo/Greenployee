@@ -12,6 +12,8 @@ import { PermissaoService } from 'src/app/service/permissao.service';
 })
 export class ModalFuncionarioCadastroComponent {
 
+  public mensagem: string = '';
+  public mensagemErro: string = "";
   showPassword: boolean = false;
   public pessoa! : Pessoa;
   pessoas: Pessoa[] = [];
@@ -29,12 +31,29 @@ export class ModalFuncionarioCadastroComponent {
     
   }
   
-  public addPessoa(): void {
-    this.pessoaService.cadastrar(this.pessoa);
-    this.listarPessoas();
-    console.log(this.pessoa);
-    this.listarPessoas();
+  private showAndHideMessage(duration: number): void {
+    setTimeout(() => {
+      this.mensagem = ''; 
+      this.mensagemErro = '';// Limpa a mensagem após o tempo especificado
+    }, duration);
   }
+
+  public addPessoa(): void {
+    this.pessoaService.cadastrar(this.pessoa).then(() => {
+      this.mensagem = 'Funcionário cadastrado com sucesso!';
+      this.listarPessoas();
+      this.showAndHideMessage(3000); // Exibe a mensagem por 3 segundos (3000 ms)
+      this.resetItem();
+    }).catch((error) => {
+      this.mensagemErro = error;
+      this.showAndHideMessage(3000); // Exibe a mensagem de erro por 3 segundos (3000 ms)
+    });
+  }
+
+  public resetItem(): void{
+    this.pessoa = new Pessoa();
+   }
+  
 
    listarPessoas(): void {
   this.pessoaService.findAll()

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Greenployee.API.Migrations
 {
     /// <inheritdoc />
-    public partial class StartDatabase : Migration
+    public partial class InicialDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,9 +17,10 @@ namespace Greenployee.API.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    dsRecompensa = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    dsRecompensa = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     dtInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     dtFim = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    dataConcluido = table.Column<DateTime>(type: "datetime2", nullable: true),
                     vlMeta = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     dtCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     dtAtualizado = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -36,8 +37,8 @@ namespace Greenployee.API.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nmVisual = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    nmPermissao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    nmVisual = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    nmPermissao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     dtCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     dtAtualizado = table.Column<DateTime>(type: "datetime2", nullable: true),
                     dtExcluido = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -53,8 +54,8 @@ namespace Greenployee.API.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    dsLogin = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    dsSenha = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    dsLogin = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    dsSenha = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     dtCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     dtAtualizado = table.Column<DateTime>(type: "datetime2", nullable: true),
                     dtExcluido = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -99,12 +100,12 @@ namespace Greenployee.API.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nmPessoa = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    nrCPF = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    nrRG = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    dsEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    nrTelefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    flSituacao = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    nmPessoa = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    nrCPF = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
+                    nrRG = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
+                    dsEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    nrTelefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    flSituacao = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     nrPIS = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     dtAdmissao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     idUsuario = table.Column<int>(type: "int", nullable: true),
@@ -128,8 +129,7 @@ namespace Greenployee.API.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    dsMensagem = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    flConcluido = table.Column<bool>(type: "bit", nullable: true),
+                    dsMensagem = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     idPessoa = table.Column<int>(type: "int", nullable: false),
                     dtCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     dtAtualizado = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -152,7 +152,7 @@ namespace Greenployee.API.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nrOrdem = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    nrOrdem = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     nmCliente = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     nrTelefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     flSituacao = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
@@ -181,8 +181,8 @@ namespace Greenployee.API.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    idPessoa = table.Column<int>(type: "int", nullable: false),
-                    idMeta = table.Column<int>(type: "int", nullable: false),
+                    idPessoa = table.Column<int>(type: "int", nullable: true),
+                    idMeta = table.Column<int>(type: "int", nullable: true),
                     dtCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     dtAtualizado = table.Column<DateTime>(type: "datetime2", nullable: true),
                     dtExcluido = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -194,14 +194,12 @@ namespace Greenployee.API.Migrations
                         name: "FK_PessoaMetas_Metas_idMeta",
                         column: x => x.idMeta,
                         principalTable: "Metas",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_PessoaMetas_Pessoas_idPessoa",
                         column: x => x.idPessoa,
                         principalTable: "Pessoas",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -210,10 +208,10 @@ namespace Greenployee.API.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nmProduto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    nmProduto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     vlUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     nrQuantidade = table.Column<int>(type: "int", nullable: false),
-                    idOrdemServico = table.Column<int>(type: "int", nullable: false),
+                    idOrdemServico = table.Column<int>(type: "int", nullable: true),
                     dtCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     dtAtualizado = table.Column<DateTime>(type: "datetime2", nullable: true),
                     dtExcluido = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -225,8 +223,7 @@ namespace Greenployee.API.Migrations
                         name: "FK_OrdemServicoItens_OrdensServicos_idOrdemServico",
                         column: x => x.idOrdemServico,
                         principalTable: "OrdensServicos",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateIndex(

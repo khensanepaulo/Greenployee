@@ -89,6 +89,12 @@ public verificarUser(): boolean {
 
 }
 
+public verificarAdmin(): boolean {
+  this.verificaUser = this.userDataService.userCredentials.permissions; 
+  return this.verificaUser != 'User';
+
+}
+
 public listarPessoas(): void {
   this.pessoaService.findAll()
     .then((pessoas: Pessoa[]) => {

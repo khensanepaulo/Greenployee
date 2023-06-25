@@ -56,7 +56,7 @@ export class InicioComponent {
       if (nomePessoaElement) {
         nomePessoaElement.textContent = 'Administrador';
       }
-      return; // Sai da função se for 'Admin'
+      return; 
     }
     if (userId) {
       const parsedUserId = parseInt(userId, 10);

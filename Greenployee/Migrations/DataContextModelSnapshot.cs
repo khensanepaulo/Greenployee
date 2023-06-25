@@ -31,7 +31,6 @@ namespace Greenployee.API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("dsMensagem")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -43,9 +42,6 @@ namespace Greenployee.API.Migrations
 
                     b.Property<DateTime?>("dtExcluido")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool?>("flConcluido")
-                        .HasColumnType("bit");
 
                     b.Property<int>("idPessoa")
                         .HasColumnType("int");
@@ -65,8 +61,10 @@ namespace Greenployee.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<DateTime?>("dataConcluido")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("dsRecompensa")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -133,7 +131,6 @@ namespace Greenployee.API.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("nrOrdem")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
@@ -168,11 +165,10 @@ namespace Greenployee.API.Migrations
                     b.Property<DateTime?>("dtExcluido")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("idOrdemServico")
+                    b.Property<int?>("idOrdemServico")
                         .HasColumnType("int");
 
                     b.Property<string>("nmProduto")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -207,11 +203,9 @@ namespace Greenployee.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("nmPermissao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nmVisual")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -260,7 +254,6 @@ namespace Greenployee.API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("dsEmail")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -277,7 +270,6 @@ namespace Greenployee.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("flSituacao")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
@@ -285,12 +277,10 @@ namespace Greenployee.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("nmPessoa")
-                        .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("nrCPF")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
@@ -299,12 +289,10 @@ namespace Greenployee.API.Migrations
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("nrRG")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("nrTelefone")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -332,10 +320,10 @@ namespace Greenployee.API.Migrations
                     b.Property<DateTime?>("dtExcluido")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("idMeta")
+                    b.Property<int?>("idMeta")
                         .HasColumnType("int");
 
-                    b.Property<int>("idPessoa")
+                    b.Property<int?>("idPessoa")
                         .HasColumnType("int");
 
                     b.HasKey("id");
@@ -356,12 +344,10 @@ namespace Greenployee.API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("dsLogin")
-                        .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("dsSenha")
-                        .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
@@ -402,10 +388,8 @@ namespace Greenployee.API.Migrations
             modelBuilder.Entity("Greenployee.MODELS.Model.OrdemServicoItem", b =>
                 {
                     b.HasOne("Greenployee.MODELS.Model.OrdemServico", "OrdemServico")
-                        .WithMany()
-                        .HasForeignKey("idOrdemServico")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("OrdemServicoItem")
+                        .HasForeignKey("idOrdemServico");
 
                     b.Navigation("OrdemServico");
                 });
@@ -442,19 +426,20 @@ namespace Greenployee.API.Migrations
                 {
                     b.HasOne("Greenployee.MODELS.Model.Meta", "Meta")
                         .WithMany()
-                        .HasForeignKey("idMeta")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("idMeta");
 
                     b.HasOne("Greenployee.MODELS.Model.Pessoa", "Pessoa")
                         .WithMany()
-                        .HasForeignKey("idPessoa")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("idPessoa");
 
                     b.Navigation("Meta");
 
                     b.Navigation("Pessoa");
+                });
+
+            modelBuilder.Entity("Greenployee.MODELS.Model.OrdemServico", b =>
+                {
+                    b.Navigation("OrdemServicoItem");
                 });
 
             modelBuilder.Entity("Greenployee.MODELS.Model.Permissao", b =>

@@ -15,6 +15,8 @@ import { LocalStorageService } from 'src/app/service/localStorage.service';
 })
 export class LoginComponent implements OnInit {
 
+  public mensagem: string = '';
+  public mensagemErro: string = "";
   showPassword: boolean = false;
   public usuario!: Usuario;
   constructor(
@@ -37,9 +39,17 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['inicio']);
       },
       (httpError) => {
-        console.error(httpError);
+        this.mensagemErro = 'Login ou senha incorretos.';
+        this.showAndHideMessage(3000); 
       }
     );
+  }
+
+  private showAndHideMessage(duration: number): void {
+    setTimeout(() => {
+      this.mensagem = ''; 
+      this.mensagemErro = '';// Limpa a mensagem após o tempo especificado
+    }, duration);
   }
 
   togglePasswordVisibility(): void {

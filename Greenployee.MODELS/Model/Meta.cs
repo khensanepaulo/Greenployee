@@ -11,6 +11,8 @@ namespace Greenployee.MODELS.Model
 
         public DateTime dtFim { get; set; }
 
+        public DateTime? dataConcluido { get; set; }
+
         public decimal? vlMeta { get; set; }
 
         //public virtual ICollection<PessoaMeta>? PessoasMeta { get; set; }
