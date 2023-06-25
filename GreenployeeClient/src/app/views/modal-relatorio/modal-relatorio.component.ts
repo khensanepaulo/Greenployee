@@ -43,7 +43,5 @@ export class ModalRelatorioComponent implements OnInit {
     } else {
       console.error('Could not find the canvas element with the specified ID.');
     }
-  }
-
-
+ }
 }

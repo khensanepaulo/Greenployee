@@ -52,7 +52,11 @@ export class InicioComponent {
     console.log(userId);
 
     if(this.userDataService.userCredentials.permissions == 'Admin'){
-      return;
+      const nomePessoaElement = document.getElementById('nomePessoa');
+      if (nomePessoaElement) {
+        nomePessoaElement.textContent = 'Administrador';
+      }
+      return; // Sai da função se for 'Admin'
     }
     if (userId) {
       const parsedUserId = parseInt(userId, 10);
@@ -64,8 +68,7 @@ export class InicioComponent {
             nomePessoaElement.textContent = pessoa.nmPessoa;
             console.log(pessoa.nmPessoa);
           }
-        })
-        .catch((error) => {
+        }).catch((error) => {
           console.error('Erro ao obter a pessoa:', error);
         });
     } else {

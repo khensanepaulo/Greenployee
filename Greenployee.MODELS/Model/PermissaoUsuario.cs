@@ -33,5 +33,5 @@ namespace Greenployee.MODELS.Model
             this.idUsuario = idUsuario;
             this.idPermissao = idPermissao;
         }
-    }
+}
 }

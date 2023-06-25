@@ -26,7 +26,7 @@ builder.Services.AddSwaggerGen(c => {
     });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = @"Autenticação em JWT. \n\n
+        Description = @"Autenticaï¿½ï¿½o em JWT. \n\n
                         Ex: Bearer {token}",
         Name = "Authorization",
         In = ParameterLocation.Header,
@@ -63,6 +63,7 @@ builder.Services.AddScoped<IPessoaBusiness, PessoaBusiness>();
 builder.Services.AddScoped<IUsuarioBusiness, UsuarioBusiness>();
 builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+builder.Services.AddScoped<IPermissaoUsuarioBusiness, PermissaoUsuarioBusiness>();
 
 builder.Services.AddCors(options =>
 {

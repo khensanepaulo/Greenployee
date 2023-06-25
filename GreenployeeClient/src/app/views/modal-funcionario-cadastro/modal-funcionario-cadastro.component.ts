@@ -12,6 +12,7 @@ import { PermissaoService } from 'src/app/service/permissao.service';
 })
 export class ModalFuncionarioCadastroComponent {
 
+  showPassword: boolean = false;
   public pessoa! : Pessoa;
   pessoas: Pessoa[] = [];
   permissoes: Permissao[] = [];
@@ -32,6 +33,7 @@ export class ModalFuncionarioCadastroComponent {
     this.pessoaService.cadastrar(this.pessoa);
     this.listarPessoas();
     console.log(this.pessoa);
+    this.listarPessoas();
   }
 
    listarPessoas(): void {
@@ -42,6 +44,10 @@ export class ModalFuncionarioCadastroComponent {
     .catch((error) => {
       console.error('Erro ao obter as pessoas:', error);
     });
+}
+
+togglePasswordVisibility(): void {
+  this.showPassword = !this.showPassword;
 }
 
 listarPermisoes(): void {

@@ -21,7 +21,7 @@ export class ModalFuncionarioComponent {
     this.pessoa.usuario = new Usuario();
     
   }
-  
+
   public addPessoa(): void {
     this.pessoaService.cadastrar(this.pessoa);
     console.log(this.pessoa);

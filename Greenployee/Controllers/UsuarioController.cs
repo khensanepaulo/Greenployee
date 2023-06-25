@@ -3,7 +3,6 @@ using Greenployee.MODELS.Authentication;
 using Greenployee.MODELS.DTO;
 using Greenployee.MODELS.Model;
 using Greenployee.MODELS.Validation;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Greenployee.API.Controllers

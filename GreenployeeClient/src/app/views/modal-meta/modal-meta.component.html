@@ -18,7 +18,7 @@
                     <div *ngIf="!verificarUser()" class="col-lg-1 form-group">
                         <label class="textoPadrao row justify-content-start"
                             style="margin-left: 6px;">Valor</label>
-                        <input [(ngModel)]="meta.vlMeta" type="number" placeholder="" class="form-control inputCinza"
+                        <input [(ngModel)]="meta.vlMeta" type="number" placeholder="R$" class="form-control inputCinza"
                             id="">
                     </div>
                     <div *ngIf="!verificarUser()" class="col-lg-2 form-group">
@@ -38,6 +38,7 @@
                             style="margin-left: 6px;">Funcionário</label>
                         <select name="pessoaMeta" [(ngModel)]=" pessoaMeta.pessoa" class="form-control inputCinza"
                             id="pessoa">
+                            <option disabled selected value="" style="font-weight: bold;">Selecione um Funcionário</option>
                             <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa">{{ pessoa.nmPessoa }}</option>
                         </select>
                     </div>

@@ -1,6 +1,7 @@
 ﻿using Greenployee.API.Controllers;
 using Greenployee.CORE.Business;
 using Greenployee.MODELS.Authentication;
+using Greenployee.MODELS.DTO.PermissaoUsuario;
 using Greenployee.MODELS.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,6 @@ namespace Greenployee.Controllers
     [ApiController]
     public class PermissaoUsuarioController : BaseController
     {
-
         private readonly IPermissaoUsuarioBusiness _business;
         private readonly ICurrentUser _currentUser;
 
@@ -26,6 +26,7 @@ namespace Greenployee.Controllers
             _permissionUser = _currentUser?.permissions?.Split(",")?.ToList() ?? new List<string>();
         }
 
+        // GET: api/PermissaoUsuario
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PermissaoUsuario>>> FindAll()
         {
@@ -35,10 +36,8 @@ namespace Greenployee.Controllers
                 if (!ValidatePermission(_permissionNeeded, _permissionUser))
                     return Forbidden();
 
-                var result = await _business.FindAllWithUsuarios();
-                if (result == null)
-                    return BadRequest("Não foi possível listar as PermissaoUsuarios!");
-
+                var result = await _business.FindAll();
+                if (result == null) return BadRequest("Não foi possível listar as permissaoUsuarios!");
                 return Ok(result);
             }
             catch (Exception exception)
@@ -53,32 +52,36 @@ namespace Greenployee.Controllers
             try
             {
                 _permissionNeeded.Add("Admin");
+                _permissionNeeded.Add("User");
                 if (!ValidatePermission(_permissionNeeded, _permissionUser))
                     return Forbidden();
 
                 PermissaoUsuario result = await _business.FindById(id);
-                if (result == null) return NotFound("Não foi possível encontrar a PermissaoUsuario!");
+                if (result == null) return NotFound("Não foi possível encontrar a permissaoUsuario!");
                 return Ok(result);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                throw exception;
+                throw;
             }
         }
 
         [HttpPost]
-        public async Task<ActionResult<PermissaoUsuario>> Insert(PermissaoUsuario permissaoUsuario)
+        public async Task<ActionResult<PermissaoUsuario>> Insert(PermissaoUsuarioDTO permissaoUsuario)
         {
             try
             {
-                
+                _permissionNeeded.Add("Admin");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                    return Forbidden();
+
                 PermissaoUsuario result = await _business.Insert(permissaoUsuario);
-                if (result == null) return BadRequest("Não foi possível inserir permissaoUsuario!");
+                if (result == null) return BadRequest("Não foi possível inserir a permissaoUsuario!");
                 return Ok(result);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                throw exception;
+                throw;
             }
         }
 
@@ -92,7 +95,7 @@ namespace Greenployee.Controllers
                     return Forbidden();
 
                 PermissaoUsuario result = await _business.Update(permissaoUsuario);
-                if (result == null) return BadRequest("Não foi possível atualizar os dados referentes a permissaoUsuario!");
+                if (result == null) return BadRequest("Não foi possível atualizar a permissaoUsuario!");
                 return Ok(result);
             }
             catch (Exception exception)
@@ -111,7 +114,7 @@ namespace Greenployee.Controllers
                     return Forbidden();
 
                 var status = await _business.Delete(id);
-                if (!status) return BadRequest("Não foi possível deletar essa permissaoUsuario!");
+                if (!status) return BadRequest("Não foi possível deletar a permissaoUsuario!");
                 return Ok(status);
             }
             catch (Exception exception)
@@ -119,27 +122,5 @@ namespace Greenployee.Controllers
                 throw exception;
             }
         }
-
-        [HttpGet("/api/[controller]/Usuario/{id}")]
-        public async Task<ActionResult<PermissaoUsuario>> FindByUserId(int id)
-        {
-            try
-            {
-                _permissionNeeded.Add("Admin");
-                _permissionNeeded.Add("User");
-                if (!ValidatePermission(_permissionNeeded, _permissionUser))
-                    return Forbidden();
-
-                PermissaoUsuario result = await _business.FindByUserId(id);
-                if (result == null) return NotFound("Não foi possível encontrar a PermissaoUsuario!");
-                return Ok(result);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
-        }
-
     }
-
 }

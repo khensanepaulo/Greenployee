@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Permissao } from 'src/app/model/permissao';
 import { PermissaoUsuario } from 'src/app/model/permissaoUsuario';
 import { Pessoa } from 'src/app/model/pessoa';
+import { Usuario } from 'src/app/model/usuario';
 import { LocalStorageService } from 'src/app/service/localStorage.service';
 import { PermissaoUsuarioService } from 'src/app/service/permissao-usuario.service';
 import { PessoaService } from 'src/app/service/pessoa.service';
@@ -14,26 +16,33 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 })
 export class ModalPermissaoUsuarioComponent {
 
+  public usuario! : Usuario;
+  public permissao! : Permissao;
   public pessoa! : Pessoa;
   pessoas: Pessoa[] = [];
   public permissaoUsuario! : PermissaoUsuario;
-  public userDataService!: UserDataService;
 
   
   constructor(private pessoaService: PessoaService,
     public permissaoUsuarioService: PermissaoUsuarioService,
     public usuarioService: UsuarioService,
-    public localStorageService: LocalStorageService,
     ){}
   
   ngOnInit(): void {
-    this.permissaoUsuario = new PermissaoUsuario();
     this.listarPessoas();
-    
+    this.permissaoUsuario = new PermissaoUsuario();
+    this.permissao = new Permissao();
+    this.usuario = new Usuario();
   }
-  
+
   public addPermissao(): void {
     this.permissaoUsuarioService.cadastrar(this.permissaoUsuario);
+    this.resetItem();
+  }
+
+  public resetItem(): void {
+    this.permissaoUsuario = new PermissaoUsuario();
+    this.listarPessoas();
   }
 
  

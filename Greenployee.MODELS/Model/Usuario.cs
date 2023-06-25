@@ -26,8 +26,8 @@ namespace Greenployee.MODELS.Model
 
         private void Validation(string dsLogin, string dsSenha)
         {
-            ModelValidationException.When(string.IsNullOrEmpty(dsLogin), "O nome de usuário deve ser informado");
-            ModelValidationException.When(string.IsNullOrEmpty(dsSenha), "A senha deve ser informado");
+            //ModelValidationException.When(string.IsNullOrEmpty(dsLogin), "O nome de usuário deve ser informado");
+            //ModelValidationException.When(string.IsNullOrEmpty(dsSenha), "A senha deve ser informado");
 
             this.dsLogin = dsLogin;
             this.dsSenha = dsSenha;

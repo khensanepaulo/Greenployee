@@ -1,4 +1,5 @@
 ﻿using Greenployee.MODELS.Data;
+using Greenployee.MODELS.DTO.PermissaoUsuario;
 using Greenployee.MODELS.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,12 +9,9 @@ namespace Greenployee.CORE.Business
     {
         Task<IEnumerable<PermissaoUsuario>> FindAll();
         Task<PermissaoUsuario> FindById(int id);
-        Task<PermissaoUsuario> Insert(PermissaoUsuario permissaoUsuario);
+        Task<PermissaoUsuario> Insert(PermissaoUsuarioDTO permissaoUsuario);
         Task<PermissaoUsuario> Update(PermissaoUsuario permissaoUsuario);
         Task<bool> Delete(int id);
-        Task<PermissaoUsuario> FindByUserId(int id);
-        Task<IEnumerable<PermissaoUsuario>> FindAllWithUsuarios();
-
     }
 
     public class PermissaoUsuarioBusiness : IPermissaoUsuarioBusiness
@@ -37,11 +35,12 @@ namespace Greenployee.CORE.Business
             return permissaoUsuario;
         }
 
-        public async Task<PermissaoUsuario> Insert(PermissaoUsuario permissaoUsuario)
+        public async Task<PermissaoUsuario> Insert(PermissaoUsuarioDTO permissaoUsuario)
         {
-            db.PermissaoUsuarios.Add(permissaoUsuario);
+            var entity = new PermissaoUsuario(permissaoUsuario.idUsuario, permissaoUsuario.idPermissao);
+            db.PermissaoUsuarios.Add(entity);
             await db.SaveChangesAsync();
-            return permissaoUsuario;
+            return entity;
         }
 
         public async Task<PermissaoUsuario> Update(PermissaoUsuario permissaoUsuario)
@@ -60,20 +59,5 @@ namespace Greenployee.CORE.Business
             await db.SaveChangesAsync();
             return true;
         }
-
-        public async Task<PermissaoUsuario> FindByUserId(int id)
-        {
-            PermissaoUsuario permissaoUsuario = await db.PermissaoUsuarios.Include(x => x.Usuario).Where(x => x.Usuario != null && x.Usuario.id == id).FirstOrDefaultAsync();
-            return permissaoUsuario;
-        }
-
-        public async Task<IEnumerable<PermissaoUsuario>> FindAllWithUsuarios()
-        {
-            IEnumerable<PermissaoUsuario> list = await db.PermissaoUsuarios.Include(p => p.Usuario).ToListAsync();
-            return list;
-        }
-
     }
-
 }
-

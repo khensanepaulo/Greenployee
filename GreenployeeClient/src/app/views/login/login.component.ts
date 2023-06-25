@@ -15,6 +15,7 @@ import { LocalStorageService } from 'src/app/service/localStorage.service';
 })
 export class LoginComponent implements OnInit {
 
+  showPassword: boolean = false;
   public usuario!: Usuario;
   constructor(
     private userDataService: UserDataService,
@@ -39,5 +40,9 @@ export class LoginComponent implements OnInit {
         console.error(httpError);
       }
     );
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

@@ -1,40 +1,38 @@
-<!-- Funcionários - modal -->
 <div class="modal modal-xl" id="funcionarioPermissao">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="modal-header" style="background-color: #C9D7D0;">
-                <h4 class="modal-title textoPadrao">Selecione a permissão abaixo</h4>
+            <div class="modal-header justify-content-center" style="background-color: #C9D7D0;">
+                <h4 class="modal-title textoPadrao">Selecione a permissão e o usuário que a deseja atribuir!</h4>
             </div>
             <!-- Modal body -->
-            <div class="modal-body" style="background-color: #C9D7D0;">
-                <div class="">
-                    <div class="row">
-                        <div class="col-lg-6 containerMeio "
-                            style="text-align:center; border-radius: 10px; width: 50%;">
-                            <form>
-                                <div class="row mt3">
-                                    <div class="col-lg-10 form-group">
-                                        <label class="textoPadrao row justify-content-start"style="margin-left: 6px;">Funcionário</label>
-                                        <select name="permissaoPessoa" [(ngModel)]="permissaoUsuario.usuario.id"  class="form-control inputCinza" id="pessoa">
-                                            <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa.usuario.id">{{ pessoa.nmPessoa }}</option>
-                                        </select>
-                                    </div>
+            <div class="modal-body justify-content-center" style="background-color: #C9D7D0;">
+                <div class="d-flex align-items-center justify-content-center">
+                    <div class="col-lg-6 containerMeio" style="border-radius: 10px; width: 50%;">
+                        <form style="margin-bottom: 16px;">
+                            <div class="row mt-3 d-flex justify-content-center">
+                                <div class="col-lg-5 form-group text-center">
+                                    <label class="textoPadrao row" style="margin-left: 6px;">Funcionário</label>
+                                    <select name="permissaoPessoa" [(ngModel)]="permissaoUsuario.idUsuario" class="form-control inputCinza" id="pessoa">
+                                        <option disabled selected value="" style="font-weight: bold;">Selecione um Funcionário</option>
+                                        <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa.usuario.id">{{ pessoa.nmPessoa }}</option>
+                                    </select>
                                 </div>
-                                <div class="row mt3">
-                                    <div class="col-lg-4 form-group">
-                                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Permissão</label>
-                                        <select name="permissao" [(ngModel)]="permissaoUsuario.permissao.id" class="form-control inputCinza" id="permissao">
-                                            <option [ngValue]="1">Admin</option>
-                                            <option [ngValue]="2">User</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer" style="background-color: #C9D7D0;">
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#funcionario" >Cancelar</button>
-                                        <button (click)="addPermissao()"  type="button" class="btn gradiente" data-bs-toggle="modal" data-bs-target="#funcionario" style="color:white">Salvar</button>
-                                    </div>
+                            </div>
+                            <div class="row mt-3 d-flex align-items-center justify-content-center">
+                                <div class="col-lg-5 form-group">
+                                    <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Permissão</label>
+                                    <select name="permissao" [(ngModel)]="permissaoUsuario.idPermissao" class="form-control inputCinza" id="permissao">
+                                        <option disabled selected value="" style="font-weight: bold;">Selecione uma Permissão</option>
+                                        <option [ngValue]="1">Admin</option>
+                                        <option [ngValue]="2">User</option>
+                                    </select>
                                 </div>
-                            </form>
+                            </div>
+                        </form>
+                        <div class="modal-footer d-flex align-items-center justify-content-center" style="background-color: #C9D7D0;">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#funcionario">Cancelar</button>
+                            <button (click)="addPermissao()" type="button" class="btn gradiente" data-bs-toggle="modal" data-bs-target="#funcionario" style="color:white">Salvar</button>
                         </div>
                     </div>
                 </div>

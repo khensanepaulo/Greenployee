@@ -23,8 +23,8 @@ namespace Greenployee.MODELS.Model
 
         private void Validation(string nmVisual, string nmPermissao)
         {
-            ModelValidationException.When(string.IsNullOrEmpty(nmVisual), "O nome visual da permissão deve ser informado");
-            ModelValidationException.When(string.IsNullOrEmpty(nmPermissao), "O nome da permissão deve ser informado");
+            //ModelValidationException.When(string.IsNullOrEmpty(nmVisual), "O nome visual da permissão deve ser informado");
+            //ModelValidationException.When(string.IsNullOrEmpty(nmPermissao), "O nome da permissão deve ser informado");
 
             this.nmVisual = nmVisual;
             this.nmPermissao = nmPermissao;
