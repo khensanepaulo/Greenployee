@@ -43,6 +43,13 @@ namespace Greenployee.CORE.Business
         public async Task<OrdemServico> Insert(OrdemServico ordemServico)
         {
             db.OrdensServicos.Add(ordemServico);
+
+            foreach (var osItem in ordemServico.OrdemServicoItem)
+            {
+                osItem.OrdemServico = ordemServico;
+                db.OrdemServicoItens.Add(osItem);
+            }
+
             await db.SaveChangesAsync();
             return ordemServico;
         }
@@ -67,13 +74,18 @@ namespace Greenployee.CORE.Business
         public async Task<IEnumerable<dynamic>> FindByUserId(int id)
         {
             IEnumerable<dynamic> list = await (from os in db.OrdensServicos
+
                                                join osi in db.OrdemServicoItens
                                                on os.id equals osi.id
+
+                                               where os.Funcionario != null && os.Funcionario.Usuario != null && os.Funcionario.Usuario.id == id
+
                                                select new
                                                {
                                                    os,
                                                    os.Funcionario,
                                                    osi
+
                                                })
                                                .ToListAsync();
 

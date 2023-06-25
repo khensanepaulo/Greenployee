@@ -31,6 +31,8 @@ namespace Greenployee.MODELS.Model
         [ForeignKey("idFuncionario")]
         public virtual Pessoa? Funcionario { get; set; }
 
+        public ICollection<OrdemServicoItem> OrdemServicoItem { get; set; }
+
         //public ICollection<OrdemServicoItem>? OrdemServicoItens { get; set; } = new List<OrdemServicoItem>();
 
     }

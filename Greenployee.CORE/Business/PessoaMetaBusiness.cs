@@ -11,6 +11,9 @@ namespace Greenployee.CORE.Business
         Task<PessoaMeta> Insert(PessoaMeta pessoaMeta);
         Task<PessoaMeta> Update(PessoaMeta pessoaMeta);
         Task<bool> Delete(int id);
+        Task<IEnumerable<dynamic>> FindByUserId(int id);
+
+
     }
 
     public class  PessoaMetaBusiness : IPessoaMetaBusiness
@@ -58,6 +61,19 @@ namespace Greenployee.CORE.Business
             return true;
         }
 
+        public async Task<IEnumerable<dynamic>> FindByUserId(int id)
+        {
+            IEnumerable<dynamic> list = await (from p in db.PessoaMetas
+                                               where p.Pessoa != null && p.Pessoa.Usuario != null && p.Pessoa.Usuario.id == id
+                                               select new
+                                               {
+                                                   p.Pessoa,
+                                                   p,
+                                                   p.Meta,
+                                               })
+                                               .ToListAsync();
+            return list;
+        }
     }
 
 }

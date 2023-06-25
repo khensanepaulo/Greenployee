@@ -123,7 +123,7 @@ namespace Greenployee.Controllers
         }
 
         [HttpGet("/api/[controller]/Usuario/{id}")]
-        public async Task<ActionResult<Anotacao>> FindByUserId(int id)
+        public async Task<ActionResult<Meta>> FindByUserId(int id)
         {
             try
             {
