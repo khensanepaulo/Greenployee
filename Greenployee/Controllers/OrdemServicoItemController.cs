@@ -147,5 +147,32 @@ namespace Greenployee.Controllers
                 throw exception;
             }
         }
+
+        [HttpGet("/api/[controller]/Vendas")]
+        public async Task<ActionResult<IEnumerable<OrdemServicoItem>>> GetLastSalesChart()
+        {
+            try
+            {
+                _permissionNeeded.Add("Admin");
+                _permissionNeeded.Add("User");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                {
+                    return Forbidden();
+                }
+
+                var result = await _business.GetLastSalesChart();
+
+                if (result == null) return NotFound("Não há vendas registradas na ultima semana");
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+
+
+
     }
 }

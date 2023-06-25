@@ -12,6 +12,7 @@ namespace Greenployee.CORE.Business
         Task<OrdemServicoItem> Update(OrdemServicoItem ordemServicoItem);
         Task<bool> Delete(int id);
         Task<IEnumerable<dynamic>> FindByUserId(int id);
+        Task<IEnumerable<dynamic>> GetLastSalesChart();
     }
 
     public class OrdemServicoItemBusiness : IOrdemServicoItemBusiness
@@ -63,6 +64,23 @@ namespace Greenployee.CORE.Business
         {
             IEnumerable<dynamic> list = await (from o in db.OrdemServicoItens
                                                where o.OrdemServico.Funcionario != null && o.OrdemServico.Funcionario.Usuario != null && o.OrdemServico.Funcionario.Usuario.id == id
+                                               select new
+                                               {
+                                                   o,
+                                                   o.OrdemServico.Funcionario,
+                                               })
+                                               .ToListAsync();
+            return list;
+        }
+
+        public async Task<IEnumerable<dynamic>> GetLastSalesChart()
+        {
+            DateTime currentDate = DateTime.Now;
+            DateTime dateSevenDaysAgo = currentDate.AddDays(-7);
+
+            IEnumerable<dynamic> list = await (from o in db.OrdemServicoItens
+                                               where o.dtCadastro >= currentDate
+                                               && o.dtCadastro <= dateSevenDaysAgo
                                                select new
                                                {
                                                    o,
