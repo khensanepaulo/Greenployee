@@ -40,19 +40,6 @@ public addItem(): void{
   console.log(this.meta.pessoaMetas);
 }
 
-// public changeQuantidade( sinal: string, index: number): void{
-//   debugger;
-//   if(sinal == '-'){
-//     this.pessoaMeta.pessoasMetas[index].nrQuantidade--
-//   }else{
-//    return; 
-//   } 
-//   if(this.ordemServico.ordemServicoItens[index].nrQuantidade < 1 ){
-//     this.ordemServico.ordemServicoItens.splice(index,1);
-//   }
-// }
-
-  
 public addMeta(): void {
   this.metaService.cadastrar(this.meta);
   this.listarMetas();

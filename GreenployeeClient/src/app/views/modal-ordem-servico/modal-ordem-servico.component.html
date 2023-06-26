@@ -1,5 +1,4 @@
-
-<app-modal-ordem-servico-visualizar></app-modal-ordem-servico-visualizar>
+<app-modal-nova-ordem></app-modal-nova-ordem>
 <!-- Ordens Serviço - modal -->
 <div class="modal modal-xl" id="ordemServico">
     <div class="modal-dialog modal-dialog-centered">
@@ -18,17 +17,20 @@
                                 <th class="text-center col-lg-1">
                                     <strong>N° Ordem</strong>
                                 </th>
-                                <th class="text-center col-lg-4">
+                                <th class="text-center col-lg-3">
                                     <strong style="margin-right: 1vw;">Cliente</strong>
                                 </th>
                                 <th class="text-center col-lg-3">
                                     <strong style="margin-right: 2vw;">Funcionário</strong>
                                 </th>
-                                <th class="text-center col-lg-2">
+                                <th class="text-center col-lg-1">
                                     <strong style="margin-right: 2vw;">Qtd. Produtos</strong>
                                 </th>
                                 <th class="text-center col-lg-2">
                                     <strong style="margin-right: 3vw;">Data</strong>
+                                </th>
+                                <th class="text-center col-lg-2">
+                                    <strong style="margin-right: 3vw;">Ações</strong>
                                 </th>
                             </tr>
                         </thead>
@@ -45,16 +47,16 @@
                                         {{ ordemServico.nmCliente }}
                                     </td>
                                     <td class="text-center col-lg-3 colorTd">
-                                        {{ ordemServico.funcionario.nmPessoa }}
+                                        {{ ordemServico.Funcionario.nmPessoa }}
                                     </td>
-                                    <td class="text-center col-lg-2 colorTd">
-                                        <!-- {{ ordemServico. }} -->
+                                    <td class="text-center  col-lg-2 colorTd">
+                                        {{ ordemServico.nrProdutos }}
                                     </td>
-                                    <td class="text-center tdRadiusRight col-lg-2 colorTd">
+                                    <td class="text-center  col-lg-2 colorTd">
                                         {{ ordemServico.dtOrdem }}
                                     </td>
                                     <td class="text-center tdRadiusRight colorTd">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bts-target="visualizarOrdem">Visualizar</button>
+                                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" bts-target="#myModal"   style="margin-bottom: 3px; color:white">Visualizar</button>
                                     </td>
                                 </tr>
                             </tbody>

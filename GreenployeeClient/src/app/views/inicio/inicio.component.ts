@@ -6,6 +6,9 @@ import { LocalStorageService } from 'src/app/service/localStorage.service';
 import { Pessoa } from 'src/app/model/pessoa';
 import { PessoaService } from 'src/app/service/pessoa.service';
 import { Router } from '@angular/router';
+import { OrdemServicoItem } from 'src/app/model/ordemServicoItem';
+import { OrdemServico } from 'src/app/model/ordemServico';
+import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
 
 @Component({
   selector: 'app-inicio',
@@ -16,15 +19,19 @@ export class InicioComponent {
 
   verificaUser!: string;
   public pessoa!: Pessoa;
+  ordemServico!: OrdemServico;
+  ordemServicoItem!: OrdemServicoItem;
   public meta! : Meta;
   metas: Meta[] = [];
+  ordemServicos: OrdemServico [] = [];
   permissao!: string;
 
   constructor(public metaService: MetaService,
     public localStorageService: LocalStorageService,
     public pessoaService: PessoaService,
     private router: Router,
-    public userDataService: UserDataService
+    public userDataService: UserDataService,
+    public ordemServicoService: OrdemServicoService,
     ){
 
   }
@@ -47,7 +54,15 @@ export class InicioComponent {
  
   }
 
- public getPessoa(): void {
+  public resetItemOrdemServico(): void{
+    this.ordemServico = new OrdemServico();
+   }
+
+   public resetItemMeta(): void{
+    this.meta = new Meta();
+   }
+
+  public getPessoa(): void {
     const userId = this.userDataService.userCredentials.userId;
     console.log(userId);
 
@@ -96,6 +111,30 @@ export class InicioComponent {
       .catch((error) => {
         console.error('Erro ao obter as metas:', error);
       });
+  }
+}
+
+public listarOrdemServico(): void {
+
+  const userId = this.userDataService.userCredentials.userId;
+  const parsedUserId = parseInt(userId, 10);
+
+  if(this.userDataService.userCredentials.permissions == 'Admin'){
+    this.ordemServicoService.findAll().then((ordemServicos: OrdemServico[]) => {
+      this.ordemServicos = ordemServicos; // Armazena a lista completa de pessoas
+      console.log(this.ordemServicos);
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as pessoas:', error);
+    });
+  } else{
+    this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: OrdemServico[]) => {
+      this.ordemServicos = ordemServicos; // Armazena a lista completa de metas
+      console.log(this.ordemServicos);
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as metas:', error);
+    });
   }
 }
     

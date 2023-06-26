@@ -6,5 +6,5 @@ export class OrdemServicoItem extends BaseClass {
     vlUnitario!: number;
     nrQuantidade!: number;
     vlTotal!: number;
-    ordemServico!: number;
+    idOrdemServico!: number;
 }

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { OrdemServico } from 'src/app/model/ordemServico';
-import { OrdemServicoItem } from 'src/app/model/ordemServicoItem';
+
 import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
 import { clone, cloneDeep } from 'lodash';
 import { PessoaService } from 'src/app/service/pessoa.service';
 import { Pessoa } from 'src/app/model/pessoa';
+import { OrdemServicoItem } from 'src/app/model/ordemServicoItem';
 
 
 @Component({
@@ -14,10 +15,11 @@ import { Pessoa } from 'src/app/model/pessoa';
 })
 export class ModalNovaOrdemComponent {
 
+  nrOrdemRecebida!: string;
   pessoa!: Pessoa;
   pessoas: Pessoa []=[];
   flEntrega: boolean = false;
-  public ordemServicoItem!: OrdemServicoItem;
+  public OrdemServicoItem!: OrdemServicoItem;
   public ordemServico!: OrdemServico;
   ordemServicos: OrdemServico[] = [];
 
@@ -28,40 +30,46 @@ export class ModalNovaOrdemComponent {
 
   ngOnInit(): void {
     this.ordemServico = new OrdemServico();
-    this.ordemServicoItem = new OrdemServicoItem();
+    this.OrdemServicoItem = new OrdemServicoItem();
     this.listarPessoas();
 
   }
 
   public addItem(): void {
-    if (!this.ordemServicoItem.nmProduto || !this.ordemServicoItem.vlUnitario) {
+    if (!this.OrdemServicoItem.nmProduto || !this.OrdemServicoItem.vlUnitario && isNaN(this.OrdemServicoItem.vlUnitario)) {
       return;
     }
-    this.ordemServicoItem.nrQuantidade = 1;
-    this.ordemServicoItem.vlTotal = this.ordemServicoItem.vlUnitario;
-    this.ordemServico.ordemServicoItem.push(cloneDeep(this.ordemServicoItem));
+    this.OrdemServicoItem.nrQuantidade = 1;
+    this.OrdemServicoItem.vlTotal = this.OrdemServicoItem.vlUnitario;
+    this.ordemServico.OrdemServicoItem.push(cloneDeep(this.OrdemServicoItem));
     this.resetItem();
     console.log()
   }
 
   public resetItem(): void {
-    this.ordemServicoItem = new OrdemServicoItem();
+    this.OrdemServicoItem = new OrdemServicoItem();
+    // this.ordemServico = new OrdemServico ();
+  }
+
+  public resetItemModal(): void {
+    this.ordemServico = new OrdemServico ();
   }
 
   public changeQuantidade(sinal: string, index: number): void {
     if (sinal == '+') {
-      this.ordemServico.ordemServicoItem[index].nrQuantidade++
+      this.ordemServico.OrdemServicoItem[index].nrQuantidade++
     } else {
-      this.ordemServico.ordemServicoItem[index].nrQuantidade--
+      this.ordemServico.OrdemServicoItem[index].nrQuantidade--
     }
-    if (this.ordemServico.ordemServicoItem[index].nrQuantidade < 1) {
-      this.ordemServico.ordemServicoItem.splice(index, 1);
+
+    if (this.ordemServico.OrdemServicoItem[index].nrQuantidade < 1) {
+      this.ordemServico.OrdemServicoItem.splice(index, 1);
     }
     this.changeValor(index);
   }
 
   public changeValor(index: number): void {
-    this.ordemServico.ordemServicoItem[index].vlTotal = this.ordemServico.ordemServicoItem[index].vlUnitario * this.ordemServico.ordemServicoItem[index].nrQuantidade;
+    this.ordemServico.OrdemServicoItem[index].vlTotal = this.ordemServico.OrdemServicoItem[index].vlUnitario * this.ordemServico.OrdemServicoItem[index].nrQuantidade;
   }
 
   public addOrdemServico(): void {
@@ -77,7 +85,6 @@ export class ModalNovaOrdemComponent {
         console.error('Erro ao obter as pessoas:', error);
       });
   }
-
 
   public listarOrdemServicos(): void {
     this.ordemServicoService.findAll()

@@ -19,7 +19,7 @@
             (click)="logout()">Logout</button>
     </div>
     <div class="row d-flex justify-content-center">
-        <button type="button" data-bs-toggle="modal" data-bs-target="#myModal"
+        <button (click)="resetItemOrdemServico()" type="button" data-bs-toggle="modal" data-bs-target="#myModal"
             class="btn btn-primary col-lg-3 nextButton gradiente mr3">
             <p class="row textoButton mb0 m-1">Nova Ordem</p>
             <div class="row justify-content-end">
@@ -39,7 +39,7 @@
                 <img src="../../../assets/images/icones/anotacoesIMG.png" alt="..." style="height: 62%; width: 41%;">
             </div>
         </button>
-        <button (click)="listarMetas()" class="col-lg-3 nextButton gradiente ml3" data-bs-toggle="modal"
+        <button (click)="listarMetas(); resetItemMeta()" class="col-lg-3 nextButton gradiente ml3" data-bs-toggle="modal"
             data-bs-target="#metas">
             <p class="row textoButton mb0 m-1" style="margin-right: 9vw;">Metas</p>
             <div class="row justify-content-end">
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-start" style="margin-top: 5%; margin-right: 2%">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#ordemServico"
+                <button (click)="listarOrdemServico()" type="button" data-bs-toggle="modal" data-bs-target="#ordemServico"
                     class="btn btn-primary col-lg- nextButton gradiente mr3">
                     <p class="row textoButton mb0 m-1">Ordens de Serviço</p>
                     <div class="row justify-content-end">

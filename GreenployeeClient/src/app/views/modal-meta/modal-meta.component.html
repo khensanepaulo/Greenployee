@@ -40,7 +40,7 @@
                         <select name="pessoaMeta" [(ngModel)]=" pessoaMeta.pessoa" class="form-control inputCinza"
                             id="pessoa">
                             <option disabled selected value="" style="font-weight: bold;">Selecione um Funcionário</option>
-                            <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa">{{ pessoa.nmPessoa }}</option>
+                            <option *ngFor="let pessoa of pessoas" [ngValue]="pessoaMeta.pessoa">{{ pessoa.nmPessoa }}</option>
                         </select>
                     </div>
                     <div *ngIf="!verificarUser()"
@@ -79,20 +79,20 @@
                 </div>
                 <div class="table-responsive d-flex justify-content-center mt3"
                     style="max-height: 380px; overflow-y: scroll;">
-                    <table class="table table-borderless table-hover ">
-                        <thead>
-                            <tr class="trCor col-lg-12">
-                                <th class="text-center col-lg-1">
+                    <table class="table table-borderless table-hover">
+                        <thead style="background-color: #C9D7D0;">
+                            <tr class="col-lg-12" style="background-color: #C9D7D0;">
+                                <th class="text-center col-lg-1"  style="background-color: #C9D7D0;">
                                     <strong>Descrição da Meta</strong>
                                 </th>
-                                <th class="text-center col-lg-2">
+                                <th class="text-center col-lg-2"  style="background-color: #C9D7D0;">
                                     <strong style="margin-right: 3vw;">Meta Concluída?</strong>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let meta of metas" class="trCor col-lg-12">
-                                <td class="text-center col-lg-6 colorTd">
+                            <tr *ngFor="let meta of metas" class="col-lg-12">
+                                <td class="text-centert tdRadiusLeft col-lg-6 colorTd">
                                     {{ meta.dsRecompensa }}
                                 </td>
                                 <td class="text-center tdRadiusRight col-lg-6 colorTd">
@@ -103,7 +103,7 @@
                     </table>
                 </div>
                 <div class="modal-footer" style="background-color: #C9D7D0;">
-                    <button type="button" class="btn btn-danger ml3" data-bs-dismiss="modal">Sair</button>
+                    <button (click)="resetItem()" type="button" class="btn btn-danger ml3" data-bs-dismiss="modal">Sair</button>
                 </div>
             </div>
         </div>

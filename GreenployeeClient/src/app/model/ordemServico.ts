@@ -4,7 +4,7 @@ import { Pessoa } from "./pessoa";
 
 export class OrdemServico extends BaseClass {
 
-    nrOrdem!: string;
+    nrOrdem!: number;
     nmCliente!: string;
     nrTelefone!: string;
     flSituacao!: string;
@@ -13,12 +13,13 @@ export class OrdemServico extends BaseClass {
     flEntrega!: boolean;
     vlTotal!: number;
     dtOrdem!: Date;
-    funcionario!: Pessoa;
-    ordemServicoItem!: OrdemServicoItem [];
+    Funcionario!: Pessoa;
+    OrdemServicoItem!: OrdemServicoItem [];
+    nrProdutos!: number;
 
 constructor() {
     super();
-    this.funcionario = new Pessoa();
-    this.ordemServicoItem = [];
+    this.Funcionario = new Pessoa();
+    this.OrdemServicoItem = [];
 }   
 }

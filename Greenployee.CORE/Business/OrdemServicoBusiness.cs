@@ -1,6 +1,8 @@
 ﻿using Greenployee.MODELS.Data;
 using Greenployee.MODELS.DTO;
 using Greenployee.MODELS.Model;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -8,12 +10,13 @@ namespace Greenployee.CORE.Business
 {
     public interface IOrdemServicoBusiness
     {
-        Task<IEnumerable<OrdemServico>> FindAll();
+        Task<IEnumerable<dynamic>> FindAll();
         Task<OrdemServico> FindById(int id);
         Task<OrdemServico> Insert(OrdemServico ordemServico);
         Task<OrdemServico> Update(OrdemServico ordemServico);
         Task<bool> Delete(int id);
         Task<IEnumerable<dynamic>> FindByUserId(int id);
+        string GetSequenceNrOrdem();
 
     }
 
@@ -26,10 +29,25 @@ namespace Greenployee.CORE.Business
             db = context;
         }
 
-        public async Task<IEnumerable<OrdemServico>> FindAll()
+        public async Task<IEnumerable<dynamic>> FindAll()
         {
-            IEnumerable<OrdemServico> list = await db.OrdensServicos.Where(x => x.dtExcluido == null).ToListAsync();
-            return list;
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                MaxDepth = 32 // Defina o valor adequado para a profundidade máxima permitida, se necessário
+            };
+
+            IEnumerable<OrdemServico> list = await db.OrdensServicos.Include(x => x.Funcionario).Include(x => x.OrdemServicoItem)
+                                                                    .Where(x => x.dtExcluido == null)
+                                                                    .ToListAsync();
+
+            var serializedResults = list.Select(obj =>
+            {
+                string jsonString = JsonSerializer.Serialize(obj, options);
+                return JsonSerializer.Deserialize<dynamic>(jsonString, options);
+            });
+
+            return serializedResults;
         }
 
         public async Task<OrdemServico> FindById(int id)
@@ -40,6 +58,9 @@ namespace Greenployee.CORE.Business
 
         public async Task<OrdemServico> Insert(OrdemServico ordemServico)
         {
+            ordemServico.nrOrdem = GetSequenceNrOrdem();
+            ordemServico.idFuncionario = ordemServico.Funcionario.id;
+            ordemServico.Funcionario = null;
 
             db.Entry(ordemServico).State = EntityState.Added;
             await db.SaveChangesAsync();
@@ -54,7 +75,7 @@ namespace Greenployee.CORE.Business
             await db.SaveChangesAsync();
             return ordemServico;
         }
-
+        
         public async Task<OrdemServico> Update(OrdemServico ordemServico)
         {
             db.OrdensServicos.Update(ordemServico);
@@ -74,23 +95,33 @@ namespace Greenployee.CORE.Business
 
         public async Task<IEnumerable<dynamic>> FindByUserId(int id)
         {
-            IEnumerable<dynamic> list = await (from os in db.OrdensServicos
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                MaxDepth = 32 // Defina o valor adequado para a profundidade máxima permitida, se necessário
+            };
 
-                                               join osi in db.OrdemServicoItens
-                                               on os.id equals osi.id
+            var query = from os in db.OrdensServicos.Include(x => x.Funcionario).Include(x => x.OrdemServicoItem)
+                        where os.Funcionario != null && os.Funcionario.Usuario != null && os.Funcionario.Usuario.id == id
+                        select os;
 
-                                               where os.Funcionario != null && os.Funcionario.Usuario != null && os.Funcionario.Usuario.id == id
+            var results = await query.ToListAsync();
 
-                                               select new
-                                               {
-                                                   os,
-                                                   os.Funcionario,
-                                                   osi
+            // Serializar cada objeto da lista para JSON
+            var serializedResults = results.Select(obj =>
+            {
+                string jsonString = JsonSerializer.Serialize(obj, options);
+                return JsonSerializer.Deserialize<dynamic>(jsonString, options);
+            });
 
-                                               })
-                                               .ToListAsync();
+            return serializedResults;
+        }
 
-            return list;
+        public string GetSequenceNrOrdem()
+        {
+            var lastNrOrdem = int.Parse(db.OrdensServicos.OrderByDescending(x => x.id).FirstOrDefault().nrOrdem) + 1;
+            var nrOrdem = lastNrOrdem.ToString("00000");
+            return nrOrdem;
         }
     }
 }

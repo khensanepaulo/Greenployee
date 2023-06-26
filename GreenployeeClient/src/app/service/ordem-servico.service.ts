@@ -49,6 +49,14 @@ export class OrdemServicoService {
     }
   }
 
+  public async findByUserId(id: number): Promise<OrdemServico[]> {
+    try {
+      return (await this.axiosClient.get<OrdemServico[]>(`/Usuario/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+
   public async findAll(): Promise<OrdemServico[]> {
     try {
       return (await this.axiosClient.get<OrdemServico[]>('/', { headers: this.getHeaders() })).data; // Passa os headers na requisição

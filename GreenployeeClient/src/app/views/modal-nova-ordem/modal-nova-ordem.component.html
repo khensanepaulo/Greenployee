@@ -1,3 +1,5 @@
+
+
 <!-- Modal Nova Ordem -->
 <div class="modal modal-xl" id="myModal">
     <div class="modal-dialog modal-dialog-centered">
@@ -15,34 +17,32 @@
                             <form>
                                 <div class="row mt3">
                                     <div class="col-lg-3 form-group">
-                                        <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Nº Ordem</label>
-                                        <input type="text" placeholder="" class="form-control inputCinza" id="">
+                                        <label class="textoPadrao d-flex justify-content-start" for="flEntrega">Nº Ordem</label>
+                                        <input type="text" id="nrOrdem" name="nmOrdem" class="form-control inputCinza" placeholder="00000" [disabled]="true"
+                                            [(ngModel)]="ordemServico.nrOrdem">
                                     </div>
                                     <div class="col-lg-9 form-group">
-                                        <select name="permissaoPessoa" [(ngModel)]="ordemServico.funcionario" name="funcionario" class="form-control inputCinza" id="pessoa">
-                                            <option disabled selected value="" style="font-weight: bold;">Selecione um Funcionário</option>
+                                        <label class="textoPadrao d-flex justify-content-start">Funcionário</label>
+                                        <select name="permissaoPessoa" [(ngModel)]="ordemServico.Funcionario" name="ordemServicoFuncionario" class="form-control inputCinza" id="pessoa">
+                                            <option selected value="" style="font-weight: bold;">Selecione um Funcionário</option>
                                             <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa">{{ pessoa.nmPessoa }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row mt3">
                                     <div class="col-lg-8 form-group">
-                                        <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Nome do Cliente</label>
+                                        <label class="textoPadrao d-flex justify-content-start">Nome do Cliente</label>
                                         <input [(ngModel)]="ordemServico.nmCliente" type="text" placeholder="Nome do Cliente..." name="nmCliente" class="form-control inputCinza" id="nmCliente">
                                     </div>
                                     <div class="col-lg-4 form-group">
-                                        <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Telefone</label>
+                                        <label class="textoPadrao d-flex justify-content-start">Telefone</label>
                                         <input [(ngModel)]="ordemServico.nrTelefone" name="telefone" type="text" placeholder="Ex: 45999236754" class="form-control inputCinza"
                                             id="">
                                     </div>
                                 </div>
                                 <div class="row mt3">
                                     <div class="col-lg-6 form-group">
-                                        <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Forma de Pagamento</label>
+                                        <label class="textoPadrao d-flex justify-content-start">Forma de Pagamento</label>
                                         <select [(ngModel)]="ordemServico.dsFormaPagamento" name="dsFormaPagamento" class="form-control inputCinza" id="">
                                             <option value="Dinheiro">Dinheiro</option>
                                             <option value="Crédito">Cartão Crédito</option>
@@ -50,29 +50,31 @@
                                             <option value="Pix">PIX</option>
                                         </select>
                                     </div>
-                                    <div class="form-switch col-lg-3">
-                                        <label class="textoPadrao row justify-content-start"
+                                    <div class="col-lg-3 form-group">
+                                        <label class="textoPadrao d-flex justify-content-start"
                                             for="flEntrega">Situação</label>
-                                        <input type="text" id="flSItuacao" name="flSituacao" class="form-control inputCinza"
-                                            [(ngModel)]="ordemServico.flSituacao">
+                                        <select [(ngModel)]="ordemServico.flSituacao" name="flSituacao" class="form-control inputCinza" id="">
+                                            <option value="Aberta">Aberta</option>
+                                            <option value="Fechada">Fechada</option>
+                                            <option value="Cancelada">Cancelada</option>
+                                        </select>
                                     </div>
-                                    <div class="form-switch col-lg-3">
-                                        <label class="textoPadrao row justify-content-start"
+                                    <div class="col-lg-3 form-group">
+                                        <label class="textoPadrao d-flex justify-content-start"
                                             for="flEntrega">Valor total</label>
                                         <input type="number" id="vlTotal" name="vlTotal" class="form-control inputCinza"
                                             [(ngModel)]="ordemServico.vlTotal">
                                     </div>
                                 </div>
                                 <div class="row mt3">
-                                    <div class="form-switch col-lg-3">
-                                        <label class="textoPadrao row justify-content-start"
+                                    <div class="col-lg-3 form-switch">
+                                        <label class="textoPadrao d-flex align-items-start"
                                             for="flEntrega">Entrega?</label>
                                         <input class="form-check-input" type="checkbox" id="flEntrega" name="flEntrega"
                                             [(ngModel)]="ordemServico.flEntrega">
                                     </div>
                                     <div class="col-lg-9 form-group" *ngIf="ordemServico.flEntrega">
-                                        <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Endereço</label>
+                                        <label class="textoPadrao d-flex justify-content-start">Endereço</label>
                                         <input [(ngModel)]="ordemServico.dsEndereco" name="dsEndereco" type="text" placeholder="Rua, Nº, Bairro, Cidade"
                                             class="form-control inputCinza" id="">
                                     </div>
@@ -83,15 +85,13 @@
                             <form>
                                 <div class="row mt3">
                                     <div class="col-lg-8 form-group">
-                                        <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Produto</label>
-                                        <input [(ngModel)]="ordemServicoItem.nmProduto" name="nmProduto" type="text"
+                                        <label class="textoPadrao d-flex justify-content-start">Produto</label>
+                                        <input [(ngModel)]="OrdemServicoItem.nmProduto" name="nmProduto" type="text"
                                             placeholder="Nome do Produto..." class="form-control inputCinza" id="">
                                     </div>
                                     <div class="col-lg-3 form-group">
-                                        <label class="textoPadrao row justify-content-start"
-                                            style="margin-left: 6px;">Valor Unid.</label>
-                                        <input [(ngModel)]="ordemServicoItem.vlUnitario" name="vlUnitario" type="text"
+                                        <label class="textoPadrao d-flex justify-content-start">Valor Unid.</label>
+                                        <input [(ngModel)]="OrdemServicoItem.vlUnitario" name="vlUnitario" type="number"
                                             placeholder="R$ 0,00" class="form-control inputCinza" id="">
                                     </div>
                                     <div class="col-lg-1 d-flex align-items-end justify-content-end ms-auto text-end">
@@ -105,11 +105,11 @@
                                         style="max-height: 230px; overflow-y: scroll;">
                                         <table class="table">
                                             <tbody>
-                                                <tr *ngFor="let item of ordemServico.ordemServicoItem ; index as i " background-color: #C9D7D0;>
-                                                    <td class="align-middle text-left" background-color: #C9D7D0;>
+                                                <tr *ngFor="let item of ordemServico.OrdemServicoItem ; index as i " style="background-color: #C9D7D0;">
+                                                    <td class="align-middle text-left" style="background-color: #C9D7D0;">
                                                         {{ item.nmProduto }}
                                                     </td>
-                                                    <td class="d-flex justify-content-center">
+                                                    <td class="d-flex justify-content-center" style="background-color: #C9D7D0;">
                                                         <div class="btn-group"
                                                             style="display: inline-block; justify-content: center;">
                                                             <button (click)="changeQuantidade('-', i )" role="button"
@@ -125,7 +125,7 @@
                                                                 data-bs-content="Popover body content is set in this attribute.">+</button>
                                                         </div>
                                                     </td>
-                                                    <td class="align-middle text-right">
+                                                    <td class="align-middle text-right " style="background-color: #C9D7D0;">
                                                          {{ item.vlTotal | currency: 'BRL'}}
                                                     </td>
                                                 </tr>
@@ -140,7 +140,7 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer" style="background-color: #C9D7D0;">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button (click)="resetItemModal()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 <button (click)="addOrdemServico()" type="button" class="btn gradiente" style="color:white">Salvar</button>
             </div>
         </div>
