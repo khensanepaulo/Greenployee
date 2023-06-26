@@ -18,6 +18,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ModalFuncionarioCadastroComponent } from './views/modal-funcionario-cadastro/modal-funcionario-cadastro.component';
 import { LocalStorageService } from './service/localStorage.service';
 import { ModalPermissaoUsuarioComponent } from './views/modal-permissao-usuario/modal-permissao-usuario.component';
+import { ModalOrdemServicoVisualizarComponent } from './views/modal-ordem-servico-visualizar/modal-ordem-servico-visualizar.component';
 
 
 
@@ -34,6 +35,7 @@ import { ModalPermissaoUsuarioComponent } from './views/modal-permissao-usuario/
     ModalMetaComponent,
     ModalFuncionarioCadastroComponent,
     ModalPermissaoUsuarioComponent,
+    ModalOrdemServicoVisualizarComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,7 +11,7 @@ import { PessoaService } from 'src/app/service/pessoa.service';
 export class ModalFuncionarioComponent {
 
   public pessoa! : Pessoa;
-  pessoas: Pessoa[] = [];
+  public pessoas: Pessoa[] = [];
   
   constructor(private pessoaService: PessoaService){}
   

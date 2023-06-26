@@ -3,6 +3,8 @@ import { OrdemServico } from 'src/app/model/ordemServico';
 import { OrdemServicoItem } from 'src/app/model/ordemServicoItem';
 import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
 import { clone, cloneDeep } from 'lodash';
+import { PessoaService } from 'src/app/service/pessoa.service';
+import { Pessoa } from 'src/app/model/pessoa';
 
 
 @Component({
@@ -12,18 +14,22 @@ import { clone, cloneDeep } from 'lodash';
 })
 export class ModalNovaOrdemComponent {
 
+  pessoa!: Pessoa;
+  pessoas: Pessoa []=[];
   flEntrega: boolean = false;
   public ordemServicoItem!: OrdemServicoItem;
   public ordemServico!: OrdemServico;
   ordemServicos: OrdemServico[] = [];
 
-  constructor(private ordemServicoService: OrdemServicoService) { }
+  constructor(private ordemServicoService: OrdemServicoService,
+    public pessoaService: PessoaService) { }
 
 
 
   ngOnInit(): void {
     this.ordemServico = new OrdemServico();
     this.ordemServicoItem = new OrdemServicoItem();
+    this.listarPessoas();
 
   }
 
@@ -33,7 +39,7 @@ export class ModalNovaOrdemComponent {
     }
     this.ordemServicoItem.nrQuantidade = 1;
     this.ordemServicoItem.vlTotal = this.ordemServicoItem.vlUnitario;
-    this.ordemServico.ordemServicoItens.push(cloneDeep(this.ordemServicoItem));
+    this.ordemServico.ordemServicoItem.push(cloneDeep(this.ordemServicoItem));
     this.resetItem();
     console.log()
   }
@@ -44,23 +50,34 @@ export class ModalNovaOrdemComponent {
 
   public changeQuantidade(sinal: string, index: number): void {
     if (sinal == '+') {
-      this.ordemServico.ordemServicoItens[index].nrQuantidade++
+      this.ordemServico.ordemServicoItem[index].nrQuantidade++
     } else {
-      this.ordemServico.ordemServicoItens[index].nrQuantidade--
+      this.ordemServico.ordemServicoItem[index].nrQuantidade--
     }
-    if (this.ordemServico.ordemServicoItens[index].nrQuantidade < 1) {
-      this.ordemServico.ordemServicoItens.splice(index, 1);
+    if (this.ordemServico.ordemServicoItem[index].nrQuantidade < 1) {
+      this.ordemServico.ordemServicoItem.splice(index, 1);
     }
     this.changeValor(index);
   }
 
   public changeValor(index: number): void {
-    this.ordemServico.ordemServicoItens[index].vlTotal = this.ordemServico.ordemServicoItens[index].vlUnitario * this.ordemServico.ordemServicoItens[index].nrQuantidade;
+    this.ordemServico.ordemServicoItem[index].vlTotal = this.ordemServico.ordemServicoItem[index].vlUnitario * this.ordemServico.ordemServicoItem[index].nrQuantidade;
   }
 
   public addOrdemServico(): void {
     this.ordemServicoService.cadastrar(this.ordemServico);
   }
+
+  public listarPessoas(): void {
+    this.pessoaService.findAll()
+      .then((pessoas: Pessoa[]) => {
+        this.pessoas = pessoas;
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as pessoas:', error);
+      });
+  }
+
 
   public listarOrdemServicos(): void {
     this.ordemServicoService.findAll()

@@ -56,6 +56,7 @@ public addItem(): void{
 public addMeta(): void {
   this.metaService.cadastrar(this.meta);
   this.listarMetas();
+  this.listarMetas();
 }
 
 public listarMetas(): void {
@@ -107,6 +108,7 @@ public listarPessoas(): void {
 
 public resetItem(): void{
   this.pessoaMeta = new PessoaMeta();
+  this.meta = new Meta();
  }
 
  public removeItem( sinal: string, index: number): void{

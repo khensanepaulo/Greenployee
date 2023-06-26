@@ -1,16 +1,11 @@
-﻿using Greenployee.MODELS.DTO;
-using Greenployee.MODELS.Validation;
+﻿using Greenployee.MODELS.Model;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Greenployee.MODELS.Model
+namespace Greenployee.MODELS.DTO
 {
-    public class OrdemServico : BaseClass
+    public class OrdemServicoDTO
     {
-
-        
         [StringLength(15)]
         public string nrOrdem { get; set; } = string.Empty;
 
@@ -33,14 +28,6 @@ namespace Greenployee.MODELS.Model
 
         public decimal? vlTotal { get; set; }
 
-        public int idFuncionario { get; set; }  
-
-        [ForeignKey("idFuncionario")]
-        public virtual Pessoa? Funcionario { get; set; }
-
         public ICollection<OrdemServicoItem> OrdemServicoItem { get; set; }
-
-        //public ICollection<OrdemServicoItem>? OrdemServicoItens { get; set; } = new List<OrdemServicoItem>();
-
     }
 }

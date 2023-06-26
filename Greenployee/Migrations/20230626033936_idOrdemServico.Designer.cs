@@ -4,6 +4,7 @@ using Greenployee.MODELS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Greenployee.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230626033936_idOrdemServico")]
+    partial class idOrdemServico
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,7 +126,7 @@ namespace Greenployee.API.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<int>("idFuncionario")
+                    b.Property<int?>("idFuncionario")
                         .HasColumnType("int");
 
                     b.Property<string>("nmCliente")
@@ -320,10 +323,10 @@ namespace Greenployee.API.Migrations
                     b.Property<DateTime?>("dtExcluido")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("idMeta")
+                    b.Property<int?>("idMeta")
                         .HasColumnType("int");
 
-                    b.Property<int>("idPessoa")
+                    b.Property<int?>("idPessoa")
                         .HasColumnType("int");
 
                     b.HasKey("id");
@@ -380,9 +383,7 @@ namespace Greenployee.API.Migrations
                 {
                     b.HasOne("Greenployee.MODELS.Model.Pessoa", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("idFuncionario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("idFuncionario");
 
                     b.Navigation("Funcionario");
                 });
@@ -430,15 +431,11 @@ namespace Greenployee.API.Migrations
                 {
                     b.HasOne("Greenployee.MODELS.Model.Meta", "Meta")
                         .WithMany()
-                        .HasForeignKey("idMeta")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("idMeta");
 
                     b.HasOne("Greenployee.MODELS.Model.Pessoa", "Pessoa")
                         .WithMany()
-                        .HasForeignKey("idPessoa")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("idPessoa");
 
                     b.Navigation("Meta");
 

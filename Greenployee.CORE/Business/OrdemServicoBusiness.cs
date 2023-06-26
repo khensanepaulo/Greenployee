@@ -1,11 +1,8 @@
 ﻿using Greenployee.MODELS.Data;
+using Greenployee.MODELS.DTO;
 using Greenployee.MODELS.Model;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Greenployee.CORE.Business
 {
@@ -17,6 +14,7 @@ namespace Greenployee.CORE.Business
         Task<OrdemServico> Update(OrdemServico ordemServico);
         Task<bool> Delete(int id);
         Task<IEnumerable<dynamic>> FindByUserId(int id);
+
     }
 
     public class OrdemServicoBusiness : IOrdemServicoBusiness
@@ -42,11 +40,14 @@ namespace Greenployee.CORE.Business
 
         public async Task<OrdemServico> Insert(OrdemServico ordemServico)
         {
-            db.OrdensServicos.Add(ordemServico);
+
+            db.Entry(ordemServico).State = EntityState.Added;
+            await db.SaveChangesAsync();
 
             foreach (var osItem in ordemServico.OrdemServicoItem)
             {
-                osItem.OrdemServico = ordemServico;
+                osItem.idOrdemServico = ordemServico.id;
+                osItem.OrdemServico = null;
                 db.OrdemServicoItens.Add(osItem);
             }
 
@@ -91,6 +92,5 @@ namespace Greenployee.CORE.Business
 
             return list;
         }
-
     }
 }

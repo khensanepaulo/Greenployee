@@ -67,11 +67,11 @@
                             
                         </div>
                     </div>
-                    <div class="modal-footer" style="background-color: #C9D7D0; margin-top: 1vh;" >
+                    <div class="modal-footer" style="margin-top: 1vh;" >
                         <button *ngIf="!verificarUser()" (click)="listarMetas()" type="button" class="btn refreshColor"
                             style="color:white">⟲</button>
-                        <button *ngIf="!verificarUser()" type="button" class="btn btn-danger ml3"
-                            data-bs-dismiss="modal">Cancelar</button>
+                        <button (click)="resetItem()" *ngIf="!verificarUser()" type="button" class="btn btn-danger ml3"
+                            >Cancelar</button>
                         <button *ngIf="!verificarUser()" (click)="addMeta()" type="button" class="btn gradiente ml3"
                             style="color:white">Salvar</button>
                     </div>
@@ -81,7 +81,7 @@
                     style="max-height: 380px; overflow-y: scroll;">
                     <table class="table table-borderless table-hover ">
                         <thead>
-                            <tr style="background-color: #C9D7D0 !important;" class="trCor col-lg-12">
+                            <tr class="trCor col-lg-12">
                                 <th class="text-center col-lg-1">
                                     <strong>Descrição da Meta</strong>
                                 </th>
@@ -97,9 +97,6 @@
                                 </td>
                                 <td class="text-center tdRadiusRight col-lg-6 colorTd">
                                     <input  [(ngModel)]="meta.dtFim" type="checkbox">
-                                </td>
-                                <td>
-                                    <button type="button" class="btn succes" data-bs-dismiss="modal">Concluir</button>
                                 </td>
                             </tr>
                         </tbody>

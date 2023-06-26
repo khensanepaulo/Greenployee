@@ -1,20 +1,16 @@
 
-<app-modal-ordem-servico-visualizar></app-modal-ordem-servico-visualizar>
-<!-- Ordens Serviço - modal -->
-<div class="modal modal-xl" id="ordemServico">
+<!-- Ordens Serviço  - modal -->
+<div class="modal modal-xl" id="visualizarOrdem">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header" style="background-color: #C9D7D0;">
+            <div class="modal-header">
                 <h4 class="modal-title textoPadrao">Ordens de Serviços</h4>
             </div>
-            <!-- Modal body -->
-            <div class="modal-body" style="background-color: #C9D7D0;">
+            <div class="modal-body">
                 <div class="row">
-
                     <table class="table-borderless table-hover ">
                         <thead>
-                            <tr style="background-color: #C9D7D0 !important;" class="trCor col-lg-12">
+                            <tr class="trCor col-lg-12">
                                 <th class="text-center col-lg-1">
                                     <strong>N° Ordem</strong>
                                 </th>
@@ -33,36 +29,32 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="table-responsive d-flex justify-content-center mt3"
+                    <div class="table-responsive d-flex justify-content-center mt-3"
                         style="max-height: 380px; overflow-y: scroll;">
-                        <table class="table table-borderless table-hover ">
+                        <table class="table table-borderless table-hover">
                             <tbody>
-                                <tr *ngFor="let ordemServico of ordemServicos" class="trCor col-lg-12">
-                                    <td class="text-center tdRadiusLeft  col-lg-1 colorTd">
-                                        {{ ordemServico.nrOrdem }}
+                                <tr class="trCor col-lg-12">
+                                    <td class="text-center tdRadiusLeft col-lg-1 colorTd">
+                                        <!-- Dados da ordem de serviço -->
                                     </td>
                                     <td class="text-center col-lg-4 colorTd">
-                                        {{ ordemServico.nmCliente }}
+                                        <!-- Dados da ordem de serviço -->
                                     </td>
                                     <td class="text-center col-lg-3 colorTd">
-                                        {{ ordemServico.funcionario.nmPessoa }}
+                                        <!-- Dados da ordem de serviço -->
                                     </td>
                                     <td class="text-center col-lg-2 colorTd">
-                                        <!-- {{ ordemServico. }} -->
+                                        <!-- Dados da ordem de serviço -->
                                     </td>
                                     <td class="text-center tdRadiusRight col-lg-2 colorTd">
-                                        {{ ordemServico.dtOrdem }}
-                                    </td>
-                                    <td class="text-center tdRadiusRight colorTd">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bts-target="visualizarOrdem">Visualizar</button>
+                                        <!-- Dados da ordem de serviço -->
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <!-- Modal footer -->
-                <div class="modal-footer" style="background-color: #C9D7D0;">
+                <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn gradiente" style="color:white">Salvar</button>
                 </div>

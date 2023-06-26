@@ -9,6 +9,12 @@ namespace Greenployee.MODELS.Model
 {
     public class PessoaMeta : BaseClass
     {
+
+
+        public int idPessoa { get; set; }
+
+        public int idMeta { get; set; }
+
         [ForeignKey("idPessoa")]
         public virtual Pessoa Pessoa { get; set; }
 

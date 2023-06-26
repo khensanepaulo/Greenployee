@@ -1,6 +1,7 @@
 ﻿using Greenployee.API.Controllers;
 using Greenployee.CORE.Business;
 using Greenployee.MODELS.Authentication;
+using Greenployee.MODELS.DTO;
 using Greenployee.MODELS.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
