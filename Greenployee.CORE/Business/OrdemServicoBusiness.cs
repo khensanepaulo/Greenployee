@@ -10,7 +10,7 @@ namespace Greenployee.CORE.Business
 {
     public interface IOrdemServicoBusiness
     {
-        Task<IEnumerable<dynamic>> FindAll();
+        Task<IEnumerable<OrdemServico>> FindAll();
         Task<OrdemServico> FindById(int id);
         Task<OrdemServico> Insert(OrdemServico ordemServico);
         Task<OrdemServico> Update(OrdemServico ordemServico);
@@ -29,25 +29,12 @@ namespace Greenployee.CORE.Business
             db = context;
         }
 
-        public async Task<IEnumerable<dynamic>> FindAll()
-        {
-            var options = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                MaxDepth = 32 // Defina o valor adequado para a profundidade máxima permitida, se necessário
-            };
-
-            IEnumerable<OrdemServico> list = await db.OrdensServicos.Include(x => x.Funcionario).Include(x => x.OrdemServicoItem)
+        public async Task<IEnumerable<OrdemServico>> FindAll()
+        {            
+            var list = await db.OrdensServicos.Include(x => x.Funcionario).Include(x => x.OrdemServicoItem)
                                                                     .Where(x => x.dtExcluido == null)
-                                                                    .ToListAsync();
-
-            var serializedResults = list.Select(obj =>
-            {
-                string jsonString = JsonSerializer.Serialize(obj, options);
-                return JsonSerializer.Deserialize<dynamic>(jsonString, options);
-            });
-
-            return serializedResults;
+                                                                    .ToListAsync();          
+            return list;
         }
 
         public async Task<OrdemServico> FindById(int id)

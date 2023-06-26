@@ -40,9 +40,9 @@ namespace Greenployee.Controllers
                 if (result == null) return BadRequest("Não foi possível listar as ordens de serviço!");
                 return Ok(result);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                throw exception;
+                throw;
             }
         }
 

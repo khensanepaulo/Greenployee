@@ -21,6 +21,7 @@ namespace Greenployee.MODELS.Model
         public int idOrdemServico { get; set; }
 
         [ForeignKey("idOrdemServico")]
+        [InverseProperty(nameof(Model.OrdemServico.OrdemServicoItem))]
         public virtual OrdemServico OrdemServico { get; set; }
     }
 }

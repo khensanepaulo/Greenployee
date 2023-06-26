@@ -166,9 +166,9 @@ namespace Greenployee.Controllers
                 if (result == null) return NotFound("Não há vendas registradas na ultima semana");
                 return Ok(result);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                throw exception;
+                throw;
             }
         }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Greenployee.MODELS.Model
 {
@@ -15,19 +16,19 @@ namespace Greenployee.MODELS.Model
         public string nrOrdem { get; set; } = string.Empty;
 
         [StringLength(60)]
-        public string? nmCliente { get; set; } = string.Empty;
+        public string nmCliente { get; set; } = string.Empty;
 
         [StringLength(20)]
-        public string? nrTelefone { get; set; } = string.Empty;
+        public string nrTelefone { get; set; } = string.Empty;
 
         [StringLength(15)]
-        public string? flSituacao { get; set; } = string.Empty;
+        public string flSituacao { get; set; } = string.Empty;
 
         [StringLength(15)]
-        public string? dsFormaPagamento { get; set; } = string.Empty;
+        public string dsFormaPagamento { get; set; } = string.Empty;
 
         [StringLength(100)]
-        public string? dsEndereco { get; set; } = string.Empty;
+        public string dsEndereco { get; set; } = string.Empty;
 
         public bool flEntrega { get; set; } = false;
 
@@ -36,11 +37,9 @@ namespace Greenployee.MODELS.Model
         public int idFuncionario { get; set; }  
 
         [ForeignKey("idFuncionario")]
-        public virtual Pessoa? Funcionario { get; set; }
-
-        public ICollection<OrdemServicoItem> OrdemServicoItem { get; set; }
-
-        //public ICollection<OrdemServicoItem>? OrdemServicoItens { get; set; } = new List<OrdemServicoItem>();
-
+        public virtual Pessoa Funcionario { get; set; }
+        
+        [InverseProperty("OrdemServico")]
+        public virtual ICollection<OrdemServicoItem> OrdemServicoItem { get; set; }      
     }
 }
