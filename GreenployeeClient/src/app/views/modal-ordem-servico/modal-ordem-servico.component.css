@@ -123,3 +123,10 @@ table {
   .table-responsive::-webkit-scrollbar-thumb:hover {
     background: #a8a6a0;
   }
+
+  .refreshColor {
+
+    background: rgb(0, 0, 0);
+    background: linear-gradient(209deg, rgb(31, 31, 30) 0%, rgba(22, 22, 22, 0.705) 29%, rgb(15, 15, 15) 100%);
+  
+  }

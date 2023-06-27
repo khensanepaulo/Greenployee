@@ -36,13 +36,11 @@ export class ModalMetaComponent {
 
 public addItem(): void{
   this.meta.pessoaMetas.push(cloneDeep(this.pessoaMeta));
-  this.resetItem();
   console.log(this.meta.pessoaMetas);
 }
 
 public addMeta(): void {
   this.metaService.cadastrar(this.meta);
-  this.listarMetas();
   this.listarMetas();
 }
 

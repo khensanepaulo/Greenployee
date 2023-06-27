@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Permissao } from 'src/app/model/permissao';
 import { Pessoa } from 'src/app/model/pessoa';
 import { Usuario } from 'src/app/model/usuario';
@@ -12,6 +12,7 @@ import { PermissaoService } from 'src/app/service/permissao.service';
 })
 export class ModalFuncionarioCadastroComponent {
 
+  @Input("objeto") pessoaObtida!: any;
   public mensagem: string = '';
   public mensagemErro: string = "";
   showPassword: boolean = false;
@@ -29,6 +30,15 @@ export class ModalFuncionarioCadastroComponent {
     this.pessoa = new Pessoa();
     this.pessoa.usuario = new Usuario();
     
+  }
+
+  ngOnChanges(): void{
+    this.pessoa = this.pessoaObtida ? this.pessoaObtida : new Pessoa();
+    this.refresh;
+  }
+
+  public refresh(): void {
+    this.listarPessoas();
   }
   
   private showAndHideMessage(duration: number): void {
@@ -48,6 +58,11 @@ export class ModalFuncionarioCadastroComponent {
       this.mensagemErro = error;
       this.showAndHideMessage(3000); // Exibe a mensagem de erro por 3 segundos (3000 ms)
     });
+  }
+
+  public editFuncionario(): void {
+    this.pessoaService.update(this.pessoa);
+    this.refresh();
   }
 
   public resetItem(): void{

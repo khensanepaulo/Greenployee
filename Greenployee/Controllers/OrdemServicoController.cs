@@ -60,9 +60,9 @@ namespace Greenployee.Controllers
                 if (result == null) return NotFound("Não foi possível encontrar a ordem de serviço!");
                 return Ok(result);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                throw exception;
+                throw;
             }
         }
 
@@ -80,9 +80,9 @@ namespace Greenployee.Controllers
                 if (result == null) return BadRequest("Não foi possível inserir a ordem de serviço!");
                 return Ok(result);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                throw exception;
+                throw;
             }
         }
 
@@ -100,9 +100,9 @@ namespace Greenployee.Controllers
                 if (result == null) return BadRequest("Não foi possível atualizar a ordem de serviço!");
                 return Ok(result);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                throw exception;
+                throw;
             }
         }
 
@@ -119,9 +119,9 @@ namespace Greenployee.Controllers
                 if (!status) return BadRequest("Não foi possível deletar a ordem de serviço!");
                 return Ok(status);
             }
-            catch (Exception exception)
-            {
-                throw exception;
+            catch (Exception) 
+            { 
+                throw; 
             }
         }
 
@@ -139,9 +139,9 @@ namespace Greenployee.Controllers
                 if (result == null) return NotFound("Não foi possível encontrar a Pessoa!");
                 return Ok(result);
             }
-            catch (Exception exception)
-            {
-                throw exception;
+            catch (Exception)
+            { 
+                throw; 
             }
         }
 

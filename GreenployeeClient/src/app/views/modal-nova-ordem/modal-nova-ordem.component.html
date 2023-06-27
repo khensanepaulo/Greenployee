@@ -138,6 +138,23 @@
                     </div>
                 </div>
             </div>
+            <div class="d-flex justify-content-start " style="background-color: #C9D7D0;">
+                <div *ngIf="mensagem" style="color: rgb(54,130,94); 
+                    font-family: 'Inter', sans-serif; 
+                    font-style: normal; 
+                    font-size: 16px; 
+                    font-weight: lighter;
+                    margin-right: 30px;">
+                    {{ mensagem }}
+                </div>
+            <div *ngIf="mensagemErro" class="d-flex justify-content-start" style="color: rgb(161, 19, 40); 
+                    font-family: 'Inter', sans-serif; 
+                    font-style: normal; 
+                    font-size: 16px; 
+                    font-weight: lighter;">
+                    {{ mensagemErro }}
+            </div>
+            </div>
             <!-- Modal footer -->
             <div class="modal-footer" style="background-color: #C9D7D0;">
                 <button (click)="resetItemModal()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -278,6 +295,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Modal footer -->
             <div class="modal-footer" style="background-color: #C9D7D0;">
                 <button (click)="resetItemModal()" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ordemServico" >Voltar</button>

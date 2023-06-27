@@ -1,6 +1,10 @@
 <!-- Funcionários - modal -->
-<app-modal-funcionario-cadastro></app-modal-funcionario-cadastro>
 <app-modal-permissao-usuario></app-modal-permissao-usuario>
+
+
+<div *ngIf="this.pessoa">
+    <app-modal-funcionario-cadastro [objeto]="pessoa"></app-modal-funcionario-cadastro>
+</div>
 <div class="modal modal-xl" id="funcionario">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -32,6 +36,9 @@
                                 <th class="text-center col-lg-2">
                                     <strong style="margin-right: 3vw;">Contratação</strong>
                                 </th>
+                                <th class="text-center col-lg-2">
+                                    <strong style="margin-right: 3vw;">Ações</strong>
+                                </th>
                             </tr>
                         </thead>
                     </table>
@@ -39,7 +46,7 @@
                         style="max-height: 380px; overflow-y: scroll;">
                         <table class="table table-borderless table-hover ">
                             <tbody>
-                                <tr *ngFor="let pessoa of pessoas" class="trCor col-lg-12">
+                                <tr *ngFor="let pessoa of pessoas ; index as index" class="trCor col-lg-12">
                                     <td class="text-center tdRadiusLeft  col-lg-2 colorTd">
                                         {{ pessoa.nmPessoa }}
                                     </td>
@@ -49,8 +56,16 @@
                                     <td class="text-center col-lg-3 colorTd">
                                         <!-- {{ item.valor }} -->
                                     </td>
-                                    <td class="text-center tdRadiusRight col-lg-2 colorTd">
-                                        <p class="colorData">{{ pessoa.dtAdmissao }}</p>
+                                    <td class="text-center  col-lg-2 colorTd">
+                                        <p class="colorData">{{ pessoa.dtAdmissao  | date: 'dd/MM/yyyy HH:mm' }}</p>
+                                    </td>
+                                    <td class="tdRadiusRight colorTd" style="width: 15%;">
+                                        <button type="button" class="btn" data-bs-toggle="modal"  data-bs-target="#funcionarioEditar" (click)="openEditModal(index)">
+                                            <img src="../../../assets/images/icones/editar.png" style="height: 20px; width: 20px;">
+                                        </button>
+                                        <button type="button" class="btn" (click)="this.delete(index)">
+                                            <img src="../../../assets/images/icones/excluir.png" style="height: 20px; width: 20px;">
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>

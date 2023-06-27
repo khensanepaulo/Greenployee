@@ -10,8 +10,8 @@ namespace Greenployee.MODELS.Model
         public DateTime dtCadastro { get; set; } = DateTime.Now;
 
         public DateTime? dtAtualizado { get; set; }
-        
-        public DateTime? dtExcluido { get; set; }
+
+        public DateTime? dtExcluido { get; set; } 
 
     }
 }

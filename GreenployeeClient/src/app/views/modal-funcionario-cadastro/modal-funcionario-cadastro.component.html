@@ -126,3 +126,133 @@
         </div>
     </div>
 </div>
+
+
+<!-- Funcionários - modal -->
+<div class="modal modal-xl" id="funcionarioEditar">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #C9D7D0;">
+                <h4 class="modal-title textoPadrao">Editar - Funcionario</h4>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="background-color: #C9D7D0;">
+                <div class="">
+                    <div class="row">
+                        <div class="col-lg-6 containerMeio "
+                            style="text-align:center; border-radius: 10px; width: 50%;">
+                            <form>
+                                <div class="row mt3">
+                                    <div class="col-lg-8 form-group">
+                                        <label class="textoPadrao row justify-content-start"
+                                            style="margin-left: 6px;">Nome do Funcionário</label>
+                                        <input name="pnmPessoa" [(ngModel)]="pessoa.nmPessoa" type="text" placeholder="Somente letras..." class="form-control inputCinza" id="">
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="textoPadrao row justify-content-start"
+                                            style="margin-left: 6px;">RG</label>
+                                        <input name="RG" [(ngModel)]="pessoa.nrRG" type="text" placeholder="Somente números..."
+                                            class="form-control inputCinza" id="">
+                                    </div>
+                                </div>
+                                <div class="row mt3">
+                                    <div class="col-lg-4 form-group">
+                                        <label class="textoPadrao row justify-content-start"
+                                            style="margin-left: 6px;">CPF</label>
+                                        <input name="CPF" [(ngModel)]="pessoa.nrCPF" type="text" placeholder="Somente números..."
+                                            class="form-control inputCinza" id="">
+                                    </div>
+                                    <div class="col-lg-8 form-group">
+                                        <label class="textoPadrao row justify-content-start"
+                                            style="margin-left: 6px;">E-mail</label>
+                                        <input name="email" [(ngModel)]="pessoa.dsEmail" type="text" placeholder="Ex: funcionario@gmail.com" class="form-control inputCinza"
+                                            id="">
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="textoPadrao row justify-content-start"
+                                            style="margin-left: 6px;">Telefone</label>
+                                        <input name="telefone" [(ngModel)]="pessoa.nrTelefone" type="text" placeholder="Ex: 45999236754" class="form-control inputCinza"
+                                            id="">
+                                    </div>
+                                    <div class="col-lg-3 form-group">
+                                        <label class="textoPadrao row justify-content-start"
+                                            style="margin-left: 6px;">Situação</label>
+                                        <select placeholder="Selecionar" name="situacao" [(ngModel)]="pessoa.flSituacao" class="form-control inputCinza" id="">
+                                            <option value="true">Ativo</option>
+                                            <option value="false">Inativo</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 form-group">
+                                        <label class="textoPadrao row justify-content-start"
+                                            style="margin-left: 6px;">PIS</label>
+                                        <input name="PIS" [(ngModel)]="pessoa.nrPIS" type="text" placeholder="Ex: 99999" class="form-control inputCinza"
+                                            id="">
+                                    </div>
+                                <div class="row mt3">
+                                    <div class="col-lg-6 form-group">
+                                        <label class="textoPadrao row justify-content-start"
+                                            style="margin-left: 6px;">Data de Admissão</label>
+                                        <input name="dataAdmissao" [(ngModel)]="pessoa.dtAdmissao" type="date" class="form-control inputCinza" id="">
+                                    </div>
+                                </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-6 containerMeio2">
+                            <form>
+                                <div class="row mt3">
+                                    <div class="col-lg-5 form-group">
+                                        <label class="textoPadrao row justify-content-start"
+                                            style="margin-left: 6px;">Login</label>
+                                        <input placeholder="Digite seu login..." name="dsLogin" [(ngModel)]="pessoa.usuario.dsLogin" type="text" class="form-control inputCinza" id="">
+                                    </div>
+                                    <div class="col-lg-5 form-group">
+                                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Senha</label>
+                                        <div class="input-group">
+                                            <input placeholder="Digite sua senha..." name="dsLogin" [(ngModel)]="pessoa.usuario.dsSenha" [type]="showPassword ? 'text' : 'password'" class="form-control inputCinza" id="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 input-group-append" style="margin-top: 4vh;">
+                                        <span (click)="togglePasswordVisibility()">
+                                            <i class="fa fa-eye" [class.fa-eye-slash]="!showPassword"><img src="../../../assets/images/icones/eyeIcon.png" alt="..." 
+                                            style="max-width:60px;
+                                                max-height:30px;
+                                                width: auto;
+                                                height: auto;">
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="row mt3">
+                                    <div class="d-flex justify-content-start col-lg-9" style="background-color: #C9D7D0;">
+                                        <div *ngIf="mensagem" style="color: rgb(54,130,94); 
+                                            font-family: 'Inter', sans-serif; 
+                                            font-style: normal; 
+                                            font-size: 16px; 
+                                            font-weight: lighter;
+                                            margin-right: 30px;">
+                                            {{ mensagem }}
+                                        </div>
+                                    <div *ngIf="mensagemErro" class="d-flex justify-content-start col-lg-9" style="color: rgb(161, 19, 40); 
+                                            font-family: 'Inter', sans-serif; 
+                                            font-style: normal; 
+                                            font-size: 16px; 
+                                            font-weight: lighter;">
+                                            {{ mensagemErro }}
+                                    </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end col-lg-3">
+                                        <button (click)="editFuncionario()" type="button" class="btn gradiente" style="color:white" >Salvar</button>
+                                        <button (click)="listarPessoas()" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#funcionario">Sair</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

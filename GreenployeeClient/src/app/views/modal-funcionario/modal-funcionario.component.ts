@@ -27,6 +27,19 @@ export class ModalFuncionarioComponent {
     console.log(this.pessoa);
   }
 
+  public openEditModal(index: number): void {
+    this.pessoa = this.pessoas[index];
+  }
+
+  public delete(index: number): void{
+    debugger;
+    this.pessoaService.delete(this.pessoas[index].id).then(value => {
+      if(value){
+        this.listarPessoas();
+      }
+    });
+  }
+
    listarPessoas(): void {
   this.pessoaService.findAll()
     .then((pessoas: Pessoa[]) => {

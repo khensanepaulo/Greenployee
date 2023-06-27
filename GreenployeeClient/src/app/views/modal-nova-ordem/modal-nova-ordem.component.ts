@@ -16,6 +16,8 @@ import { UserDataService } from 'src/app/service/userDataService';
 })
 export class ModalNovaOrdemComponent implements OnInit{
 
+  public mensagem: string = '';
+  public mensagemErro: string = "";
   @Input("objeto") ordemServicoObtida!: any;
   nrOrdemRecebida!: string;
   pessoa!: Pessoa;
@@ -40,6 +42,7 @@ export class ModalNovaOrdemComponent implements OnInit{
   ngOnChanges(): void{
     this.ordemServico = this.ordemServicoObtida ? this.ordemServicoObtida : new OrdemServico();
     this.setItens();
+    this.refresh();
   }
 
   public addItem(): void {
@@ -62,6 +65,7 @@ export class ModalNovaOrdemComponent implements OnInit{
   public resetItemModal(): void {
     debugger;
     this.ordemServicoItem = new OrdemServicoItem ();
+    this.ordemServico = new OrdemServico();
     this.refresh();
   }
 
@@ -99,8 +103,23 @@ export class ModalNovaOrdemComponent implements OnInit{
   }
 
   public addOrdemServico(): void {
-    this.ordemServicoService.cadastrar(this.ordemServico);
+    this.ordemServicoService.cadastrar(this.ordemServico).then(() => {
+      this.mensagem = ' Ordem de serviço adicionada com sucesso!';
+      this.resetItemModal();
+      this.showAndHideMessage(3000); // Exibe a mensagem por 3 segundos (3000 ms)
+      this.refresh();
+    }).catch((error) => {
+      this.mensagemErro = error;
+      this.showAndHideMessage(3000); // Exibe a mensagem de erro por 3 segundos (3000 ms)
+    });
     this.refresh();
+  }
+
+   private showAndHideMessage(duration: number): void {
+    setTimeout(() => {
+      this.mensagem = ''; 
+      this.mensagemErro = '';// Limpa a mensagem após o tempo especificado
+    }, duration);
   }
 
   public editOrdemServico(): void {

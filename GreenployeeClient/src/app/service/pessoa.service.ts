@@ -40,6 +40,25 @@ export class PessoaService {
     }
   }
 
+  public async update(pessoa: Pessoa): Promise<void> {
+    try {
+      await this.axiosClient.put('/', pessoa, { headers: { 'Authorization': `Bearer ${this.token}` } });
+      console.log("Pessoa atualizada com sucesso!");
+    } catch (error: any) {
+      return Promise.reject("Não foi possível atualizar a pessoa! :" + error);
+    }
+  }
+
+  public async delete(id: number): Promise<boolean> {
+    try {
+      return (await this.axiosClient.delete<boolean>(`/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
+      console.log("Pessoa deletada com sucesso!");
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+
+
   public async findById(id: number): Promise<Pessoa> {
     try {
       return (await this.axiosClient.get<Pessoa>(`/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
@@ -47,6 +66,7 @@ export class PessoaService {
       return Promise.reject(error.response);
     }
   }
+
 
   public async findByUserId(id: number): Promise<Pessoa> {
     try {
