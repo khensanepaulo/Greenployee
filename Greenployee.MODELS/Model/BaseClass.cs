@@ -7,7 +7,7 @@ namespace Greenployee.MODELS.Model
 
         public int id { get; set; }
 
-        public DateTime dtCadastro { get; set; }
+        public DateTime dtCadastro { get; set; } = DateTime.Now;
 
         public DateTime? dtAtualizado { get; set; }
         

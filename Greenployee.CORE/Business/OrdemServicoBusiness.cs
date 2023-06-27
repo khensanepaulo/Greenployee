@@ -33,6 +33,7 @@ namespace Greenployee.CORE.Business
         {            
             var list = await db.OrdensServicos.Include(x => x.Funcionario).Include(x => x.OrdemServicoItem)
                                                                     .Where(x => x.dtExcluido == null)
+                                                                    .OrderByDescending(x => x.nrOrdem)
                                                                     .ToListAsync();          
             return list;
         }
@@ -65,6 +66,7 @@ namespace Greenployee.CORE.Business
         
         public async Task<OrdemServico> Update(OrdemServico ordemServico)
         {
+            ordemServico.dtAtualizado = DateTime.Now;
             db.OrdensServicos.Update(ordemServico);
             await db.SaveChangesAsync();
             return ordemServico;
@@ -75,7 +77,8 @@ namespace Greenployee.CORE.Business
             OrdemServico ordemServico = await db.OrdensServicos.Where(x => x.id == id).FirstOrDefaultAsync();
             if (ordemServico == null) { return false; }
 
-            db.OrdensServicos.Remove(ordemServico);
+            ordemServico.dtExcluido = DateTime.Now;
+            db.OrdensServicos.Update(ordemServico);
             await db.SaveChangesAsync();
             return true;
         }
@@ -92,7 +95,7 @@ namespace Greenployee.CORE.Business
                         where os.Funcionario != null && os.Funcionario.Usuario != null && os.Funcionario.Usuario.id == id
                         select os;
 
-            var results = await query.ToListAsync();
+            var results = await query.OrderByDescending(x => x.nrOrdem).ToListAsync();
 
             // Serializar cada objeto da lista para JSON
             var serializedResults = results.Select(obj =>

@@ -13,13 +13,12 @@ export class OrdemServico extends BaseClass {
     flEntrega!: boolean;
     vlTotal!: number;
     dtOrdem!: Date;
-    Funcionario!: Pessoa;
-    OrdemServicoItem!: OrdemServicoItem [];
-    nrProdutos!: number;
+    funcionario!: Pessoa;
+    ordemServicoItem!: OrdemServicoItem [];
 
 constructor() {
     super();
-    this.Funcionario = new Pessoa();
-    this.OrdemServicoItem = [];
+    this.funcionario = new Pessoa();
+    this.ordemServicoItem = [];
 }   
 }

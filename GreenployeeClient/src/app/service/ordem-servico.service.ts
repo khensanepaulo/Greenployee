@@ -31,13 +31,29 @@ export class OrdemServicoService {
   }
 
   public async cadastrar(ordemServico: OrdemServico): Promise<void> {
-    console.log(ordemServico);
-    debugger;
     try {
       await this.axiosClient.post('/', ordemServico, { headers: { 'Authorization': `Bearer ${this.token}` } });
       console.log("OrdemServico cadastrada com sucesso!");
     } catch (error: any) {
       return Promise.reject("Não foi possível cadastrar a ordemServico! :" + error);
+    }
+  }
+
+  public async update(ordemServico: OrdemServico): Promise<void> {
+    try {
+      await this.axiosClient.put('/', ordemServico, { headers: { 'Authorization': `Bearer ${this.token}` } });
+      console.log("OrdemServico atualizada com sucesso!");
+    } catch (error: any) {
+      return Promise.reject("Não foi possível atualizar a ordemServico! :" + error);
+    }
+  }
+
+  public async delete(id: number): Promise<boolean> {
+    try {
+      return (await this.axiosClient.delete<boolean>(`/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
+      console.log("OrdemServico deletada com sucesso!");
+    } catch (error: any) {
+      return Promise.reject(error.response);
     }
   }
 

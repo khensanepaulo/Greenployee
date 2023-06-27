@@ -1,7 +1,10 @@
-<app-modal-nova-ordem></app-modal-nova-ordem>
+
+<div *ngIf="this.ordemServico">
+    <app-modal-nova-ordem [objeto]="ordemServico"></app-modal-nova-ordem>
+</div>
 <!-- Ordens Serviço - modal -->
-<div class="modal modal-xl" id="ordemServico">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal" id="ordemServico">
+    <div class="modal-dialog modal-dialog-centered" style="min-width: 75vw;" >
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #C9D7D0;">
@@ -10,27 +13,26 @@
             <!-- Modal body -->
             <div class="modal-body" style="background-color: #C9D7D0;">
                 <div class="row">
-
-                    <table class="table-borderless table-hover ">
+                    <table class="table-borderless table-hover colorTd">
                         <thead>
-                            <tr style="background-color: #C9D7D0 !important;" class="trCor col-lg-12">
-                                <th class="text-center col-lg-1">
+                            <tr class="col-lg-12">
+                                <th class="text-left" style="width: 10%;">
                                     <strong>N° Ordem</strong>
                                 </th>
-                                <th class="text-center col-lg-3">
-                                    <strong style="margin-right: 1vw;">Cliente</strong>
+                                <th class="text-left" style="width: 25%;">
+                                    <strong>Cliente</strong>
                                 </th>
-                                <th class="text-center col-lg-3">
-                                    <strong style="margin-right: 2vw;">Funcionário</strong>
+                                <th class="text-left" style="width: 25%;">
+                                    <strong>Funcionário</strong>
                                 </th>
-                                <th class="text-center col-lg-1">
-                                    <strong style="margin-right: 2vw;">Qtd. Produtos</strong>
+                                <th class="text-right" style="width: 10%;">
+                                    <strong>Valor</strong>
                                 </th>
-                                <th class="text-center col-lg-2">
-                                    <strong style="margin-right: 3vw;">Data</strong>
+                                <th class="text-right" style="width: 15%;">
+                                    <strong>Data</strong>
                                 </th>
-                                <th class="text-center col-lg-2">
-                                    <strong style="margin-right: 3vw;">Ações</strong>
+                                <th class="text-center" style="width: 15%;">
+                                    <strong>Ações</strong>
                                 </th>
                             </tr>
                         </thead>
@@ -39,27 +41,29 @@
                         style="max-height: 380px; overflow-y: scroll;">
                         <table class="table table-borderless table-hover ">
                             <tbody>
-                                <tr *ngFor="let ordemServico of ordemServicos" class="trCor col-lg-12">
-                                    <td class="text-center tdRadiusLeft  col-lg-1 colorTd">
+                                <tr *ngFor="let ordemServico of ordemServicos; index as index" class="trCor col-lg-12">
+                                    <td class="text-left tdRadiusLeft colorTd" style="width: 10%;">
                                         {{ ordemServico.nrOrdem }}
                                     </td>
-                                    <td class="text-center col-lg-4 colorTd">
+                                    <td class="text-left colorTd" style="width: 25%;">
                                         {{ ordemServico.nmCliente }}
                                     </td>
-                                    <td class="text-center col-lg-3 colorTd">
-                                        {{ ordemServico.Funcionario.nmPessoa }}
+                                    <td class="text-left colorTd" style="width: 25%;">
+                                        {{ ordemServico.funcionario.nmPessoa }}
                                     </td>
-                                    <td class="text-center  col-lg-2 colorTd">
-                                        {{ ordemServico.nrProdutos }}
+                                    <td class="text-right colorTd" style="width: 10%;">
+                                        {{ ordemServico.vlTotal | currency:'BRL'}}
                                     </td>
-                                    <td class="text-center  col-lg-2 colorTd">
-                                        {{ ordemServico.dtOrdem }}
+                                    <td class="text-right colorTd" style="width: 15%;">
+                                        {{ ordemServico.dtCadastro | date: 'dd/MM/yyyy HH:mm'}}
                                     </td>
-                                    <!-- <td class="text-center tdRadiusRight colorTd">
-                                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" bts-target="#myModal"   style="margin-bottom: 3px; color:white">Visualizar</button>
-                                    </td> -->
-                                    <td class="text-center tdRadiusRight colorTd">
-                                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" bts-target="#myModal"   style="margin-bottom: 3px; color:white">Visualizar</button>
+                                    <td class="tdRadiusRight colorTd" style="width: 15%;">
+                                        <button type="button" class="btn" data-bs-toggle="modal"  data-bs-target="#ordemServicoEditar" (click)="openEditModal(index)">
+                                            <img src="../../../assets/images/icones/editar.png" style="height: 20px; width: 20px;">
+                                        </button>
+                                        <button type="button" class="btn" (click)="this.delete(index)">
+                                            <img src="../../../assets/images/icones/excluir.png" style="height: 20px; width: 20px;">
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
