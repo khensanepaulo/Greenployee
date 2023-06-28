@@ -35,13 +35,20 @@ export class ModalMetaComponent {
   }
 
 public addItem(): void{
-  this.meta.pessoaMetas.push(cloneDeep(this.pessoaMeta));
-  console.log(this.meta.pessoaMetas);
+  debugger;
+  this.meta.pessoasMeta.push(cloneDeep(this.pessoaMeta));
+  console.log(this.meta.pessoasMeta);
 }
 
 public addMeta(): void {
   this.metaService.cadastrar(this.meta);
+  this.resetMeta();
   this.listarMetas();
+}
+
+public resetMeta(): void {
+  this.meta = new Meta();
+  this.pessoaMeta = new PessoaMeta();
 }
 
 public listarMetas(): void {
@@ -98,7 +105,7 @@ public resetItem(): void{
 
  public removeItem( sinal: string, index: number): void{
   if(sinal == '-'){
-    this.meta.pessoaMetas.splice(index,1);
+    this.meta.pessoasMeta.splice(index,1);
   }else{
      return;
   } 

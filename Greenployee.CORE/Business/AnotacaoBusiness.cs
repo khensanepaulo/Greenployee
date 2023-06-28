@@ -33,7 +33,7 @@ namespace Greenployee.CORE.Business
 
         public async Task<IEnumerable<Anotacao>> FindAll()
         {
-            IEnumerable<Anotacao> list = await db.Anotacoes.Where(x => x.dtExcluido == null).ToListAsync();
+            IEnumerable<Anotacao> list = await db.Anotacoes.Where(x => x.dtExcluido == null).OrderByDescending(x => x.dtCadastro).ToListAsync();
             return list;
         }
 
@@ -53,6 +53,7 @@ namespace Greenployee.CORE.Business
 
         public async Task<Anotacao> Update(Anotacao anotacao)
         {
+            anotacao.dtAtualizado = DateTime.Now;
             db.Anotacoes.Update(anotacao);
             await db.SaveChangesAsync();
             return anotacao;
@@ -63,14 +64,18 @@ namespace Greenployee.CORE.Business
             Anotacao anotacao = await db.Anotacoes.Where(x => x.id == id).FirstOrDefaultAsync();
             if (anotacao == null) { return false; }
 
-            db.Anotacoes.Remove(anotacao);
+            anotacao.dtExcluido = DateTime.Now;
+            db.Anotacoes.Update(anotacao);
             await db.SaveChangesAsync();
             return true;
         }
 
         public async Task<IEnumerable<Anotacao>> FindByUserId(int id)
         {
-            IEnumerable<Anotacao> list = await db.Anotacoes.Include(x => x.Pessoa).ThenInclude(x => x.Usuario).Where(x => x.Pessoa != null && x.Pessoa.Usuario != null && x.Pessoa.Usuario.id == id).ToListAsync();
+            IEnumerable<Anotacao> list = await db.Anotacoes.Include(x => x.Pessoa)
+                                                           .ThenInclude(x => x.Usuario)
+                                                           .Where(x => x.dtExcluido == null && x.Pessoa != null && x.Pessoa.Usuario != null && x.Pessoa.Usuario.id == id)
+                                                           .ToListAsync();
             return list;
         }
     }

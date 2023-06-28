@@ -11,13 +11,16 @@ import { ModalRelatorioComponent } from './views/modal-relatorio/modal-relatorio
 import { ModalFuncionarioComponent } from './views/modal-funcionario/modal-funcionario.component';
 import { ModalNovaOrdemComponent } from './views/modal-nova-ordem/modal-nova-ordem.component';
 import { ModalOrdemServicoComponent } from './views/modal-ordem-servico/modal-ordem-servico.component';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import { ModalMetaComponent } from './views/modal-meta/modal-meta.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ModalFuncionarioCadastroComponent } from './views/modal-funcionario-cadastro/modal-funcionario-cadastro.component';
 import { LocalStorageService } from './service/localStorage.service';
 import { ModalPermissaoUsuarioComponent } from './views/modal-permissao-usuario/modal-permissao-usuario.component';
+import { NgChartsModule } from 'ng2-charts';
+
+
 
 
 
@@ -41,9 +44,11 @@ import { ModalPermissaoUsuarioComponent } from './views/modal-permissao-usuario/
     AppRoutingModule,
     HttpClientModule,
     JwtModule,
+    NgChartsModule,
     RouterModule.forRoot([{ path: '', component: LoginComponent },
     { path: 'inicio', component: InicioComponent },]),
   ],
+  
   providers: [JwtHelperService, LocalStorageService, LoginComponent, InicioComponent,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS}],
   bootstrap: [AppComponent]

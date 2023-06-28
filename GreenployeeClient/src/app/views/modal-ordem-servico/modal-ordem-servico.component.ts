@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { ChangeDetectorRef, Component, NgModule } from '@angular/core';
 import { OrdemServico } from 'src/app/model/ordemServico';
 import { OrdemServicoItem } from 'src/app/model/ordemServicoItem';
 import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
@@ -12,16 +12,19 @@ import { UserDataService } from 'src/app/service/userDataService';
 
 export class ModalOrdemServicoComponent {
 
+  
   public ordemServico! : OrdemServico;
   ordemServicos: OrdemServico[] = [];
   OrdemServicoItem: OrdemServicoItem[] = [];
 
   constructor(public ordemServicoService: OrdemServicoService,
-              public userDataService: UserDataService){}
+              public userDataService: UserDataService,
+              public cdr: ChangeDetectorRef){}
   
   ngOnInit(): void {
     this.listarOrdemServico();
     this.ordemServico = new OrdemServico();
+
   }
 
   ngOnChanges(): void {
@@ -59,6 +62,7 @@ export class ModalOrdemServicoComponent {
     if (this.userDataService.userCredentials.permissions === 'Admin') {
       this.ordemServicoService.findAll().then((ordemServicos: any[]) => {
         this.ordemServicos = ordemServicos;
+        this.cdr.detectChanges();
         console.log(this.ordemServicos);
       }).catch((error) => {
         console.error('Erro ao obter as ordens de serviço:', error);

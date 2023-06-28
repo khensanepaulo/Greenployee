@@ -22,6 +22,7 @@ export class InicioComponent {
   ordemServico!: OrdemServico;
   ordemServicoItem!: OrdemServicoItem;
   public meta! : Meta;
+  pessoas: Pessoa[] = [];
   metas: Meta[] = [];
   ordemServicos: OrdemServico [] = [];
   permissao!: string;
@@ -54,6 +55,7 @@ export class InicioComponent {
  
   }
 
+ 
   public resetItemOrdemServico(): void{
     this.ordemServico = new OrdemServico();
    }

@@ -8,10 +8,10 @@ export class Meta extends BaseClass {
     dtFim! : Date;
     dataConcluido! : Date;
     vlMeta! : number;
-    pessoaMetas!: PessoaMeta [];
+    pessoasMeta!: PessoaMeta [];
 
     constructor() {
         super();
-        this.pessoaMetas = [];
+        this.pessoasMeta = [];
     }  
 }

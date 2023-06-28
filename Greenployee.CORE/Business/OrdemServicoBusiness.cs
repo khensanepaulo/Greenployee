@@ -85,26 +85,15 @@ namespace Greenployee.CORE.Business
 
         public async Task<IEnumerable<dynamic>> FindByUserId(int id)
         {
-            var options = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                MaxDepth = 32 // Defina o valor adequado para a profundidade máxima permitida, se necessário
-            };
-
-            var query = from os in db.OrdensServicos.Include(x => x.Funcionario).Include(x => x.OrdemServicoItem)
+            var query = from os in db.OrdensServicos.Include(x => x.Funcionario)
+                                                    .Include(x => x.OrdemServicoItem)
+                                                    .Where(x => x.dtExcluido == null)
+                                                    .OrderByDescending(x => x.nrOrdem)
                         where os.Funcionario != null && os.Funcionario.Usuario != null && os.Funcionario.Usuario.id == id
                         select os;
 
             var results = await query.OrderByDescending(x => x.nrOrdem).ToListAsync();
-
-            // Serializar cada objeto da lista para JSON
-            var serializedResults = results.Select(obj =>
-            {
-                string jsonString = JsonSerializer.Serialize(obj, options);
-                return JsonSerializer.Deserialize<dynamic>(jsonString, options);
-            });
-
-            return serializedResults;
+            return results;
         }
 
         public string GetSequenceNrOrdem()

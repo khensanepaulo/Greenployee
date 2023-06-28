@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { OrdemServico } from 'src/app/model/ordemServico';
 
 import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
@@ -18,7 +18,10 @@ export class ModalNovaOrdemComponent implements OnInit{
 
   public mensagem: string = '';
   public mensagemErro: string = "";
+  public verificaUser: string = "";  
+
   @Input("objeto") ordemServicoObtida!: any;
+
   nrOrdemRecebida!: string;
   pessoa!: Pessoa;
   pessoas: Pessoa []=[];
@@ -29,7 +32,8 @@ export class ModalNovaOrdemComponent implements OnInit{
 
   constructor(private ordemServicoService: OrdemServicoService,
     public pessoaService: PessoaService,
-    public userDataService: UserDataService) { }
+    public userDataService: UserDataService,
+    private cdr: ChangeDetectorRef) { }
 
 
 
@@ -37,12 +41,13 @@ export class ModalNovaOrdemComponent implements OnInit{
     this.ordemServico = new OrdemServico();
     this.ordemServicoItem = new OrdemServicoItem();
     this.listarPessoas();
+    this.getPessoa();
   }
 
   ngOnChanges(): void{
     this.ordemServico = this.ordemServicoObtida ? this.ordemServicoObtida : new OrdemServico();
     this.setItens();
-    this.refresh();
+    this.cdr.detectChanges();
   }
 
   public addItem(): void {
@@ -62,11 +67,53 @@ export class ModalNovaOrdemComponent implements OnInit{
     this.ordemServicoItem = new OrdemServicoItem();
   }
 
+  public async getPessoa(): Promise<Pessoa | null> {
+    const userId = this.userDataService.userCredentials.userId;
+    console.log(userId);
+  
+    if (this.userDataService.userCredentials.permissions === 'Admin') {
+      const nomePessoaElement = document.getElementById('nomePessoa');
+      if (nomePessoaElement) {
+        nomePessoaElement.textContent = 'Administrador';
+      }
+      return null;
+    }
+  
+    if (userId) {
+      const parsedUserId = parseInt(userId, 10);
+      try {
+        const pessoa: Pessoa = await this.pessoaService.findByUserId(parsedUserId);
+        console.log(pessoa, parsedUserId);
+  
+        const nomePessoaElement = document.getElementById('nomePessoa');
+        if (nomePessoaElement) {
+          nomePessoaElement.textContent = pessoa.nmPessoa;
+          console.log(pessoa.nmPessoa);
+        }
+  
+        return pessoa;
+      } catch (error) {
+        console.error('Erro ao obter a pessoa:', error);
+        throw error; 
+      }
+    } else {
+      console.error('ID do usuário não encontrado no local storage.');
+      throw new Error('ID do usuário não encontrado no local storage.'); 
+    }
+  }
+
+
   public resetItemModal(): void {
     debugger;
     this.ordemServicoItem = new OrdemServicoItem ();
-    this.ordemServico = new OrdemServico();
-    this.refresh();
+    this.cdr.detectChanges();
+  }
+
+  public verificarUser(): boolean {
+
+    this.verificaUser = this.userDataService.userCredentials.permissions; 
+    return this.verificaUser != 'Admin';
+ 
   }
 
   public changeQuantidade(sinal: string, index: number): void {
@@ -103,28 +150,53 @@ export class ModalNovaOrdemComponent implements OnInit{
   }
 
   public addOrdemServico(): void {
-    this.ordemServicoService.cadastrar(this.ordemServico).then(() => {
-      this.mensagem = ' Ordem de serviço adicionada com sucesso!';
-      this.resetItemModal();
-      this.showAndHideMessage(3000); // Exibe a mensagem por 3 segundos (3000 ms)
-      this.refresh();
-    }).catch((error) => {
-      this.mensagemErro = error;
-      this.showAndHideMessage(3000); // Exibe a mensagem de erro por 3 segundos (3000 ms)
-    });
-    this.refresh();
+    
+    const userId = this.userDataService.userCredentials.userId;
+    const parsedUserId = parseInt(userId, 10);
+
+    if (this.userDataService.userCredentials.permissions === 'Admin') {
+      this.ordemServicoService.cadastrar(this.ordemServico).then(() => {
+        this.mensagem = ' Ordem de serviço adicionada com sucesso!';
+        this.resetItemModal();
+        this.showAndHideMessage(3000);
+        this.cdr.detectChanges();
+      }).catch((error) => {
+        this.mensagemErro = error;
+        this.showAndHideMessage(3000);
+      });
+      this.cdr.detectChanges();
+    } else { this.getPessoa().then((pessoa) => {
+        if (pessoa !== null) {
+          this.ordemServico.funcionario = pessoa;
+          return this.ordemServicoService.cadastrar(this.ordemServico);
+          console.log(this.ordemServico);
+        } else {
+          throw new Error('Pessoa não encontrada.'); 
+        }
+      })
+      .then(() => {
+        this.mensagem = 'Ordem de serviço adicionada com sucesso!';
+        this.resetItemModal();
+        this.showAndHideMessage(3000);
+        this.cdr.detectChanges();
+      })
+      .catch((error) => {
+        this.mensagemErro = error;
+        this.showAndHideMessage(3000);
+      });
+     }
   }
 
    private showAndHideMessage(duration: number): void {
     setTimeout(() => {
       this.mensagem = ''; 
-      this.mensagemErro = '';// Limpa a mensagem após o tempo especificado
+      this.mensagemErro = '';
     }, duration);
   }
 
   public editOrdemServico(): void {
     this.ordemServicoService.update(this.ordemServicoObtida);
-    this.refresh();
+    this.cdr.detectChanges();
   }
 
   public refresh(): void {
@@ -132,15 +204,21 @@ export class ModalNovaOrdemComponent implements OnInit{
   }
 
   public listarPessoas(): void {
-    this.pessoaService.findAll()
-      .then((pessoas: Pessoa[]) => {
+
+    const userId = this.userDataService.userCredentials.userId;
+    const parsedUserId = parseInt(userId, 10);
+    if(this.userDataService.userCredentials.permissions === 'Admin'){
+      this.pessoaService.findAll().then((pessoas: Pessoa[]) => {
         this.pessoas = pessoas;
       })
       .catch((error) => {
         console.error('Erro ao obter as pessoas:', error);
       });
+    } else{
+      return;
+    }
   }
-
+   
   public listarOrdemServicos(): void {
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);

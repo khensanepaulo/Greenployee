@@ -21,8 +21,15 @@
                                         <input type="text" id="nrOrdem" name="nmOrdem" class="form-control inputCinza" placeholder="00000" [disabled]="true"
                                             [(ngModel)]="ordemServico.nrOrdem">
                                     </div>
+                                    <div *ngIf="!verificarUser()" class="col-lg-9 form-group">
+                                        <label  class="textoPadrao d-flex justify-content-start">Funcionário</label>
+                                        <select name="permissaoPessoa" [(ngModel)]="ordemServico.funcionario" name="ordemServicoFuncionario" class="form-control inputCinza" id="pessoa">
+                                            <option selected value="" style="font-weight: bold;">Selecione um Funcionário</option>
+                                            <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa">{{ pessoa.nmPessoa }}</option>
+                                        </select>
+                                    </div>
                                     <div class="col-lg-9 form-group">
-                                        <label class="textoPadrao d-flex justify-content-start">Funcionário</label>
+                                        <label  class="textoPadrao d-flex justify-content-start">Funcionário</label>
                                         <select name="permissaoPessoa" [(ngModel)]="ordemServico.funcionario" name="ordemServicoFuncionario" class="form-control inputCinza" id="pessoa">
                                             <option selected value="" style="font-weight: bold;">Selecione um Funcionário</option>
                                             <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa">{{ pessoa.nmPessoa }}</option>

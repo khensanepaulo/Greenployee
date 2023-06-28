@@ -37,10 +37,8 @@
                     <div *ngIf="!verificarUser()" class="col-lg-3 form-group">
                         <label class="textoPadrao row justify-content-start"
                             style="margin-left: 6px;">Funcionário</label>
-                        <select name="pessoaMeta" [(ngModel)]=" pessoaMeta.pessoa" class="form-control inputCinza"
-                            id="pessoa">
-                            <option disabled selected value="" style="font-weight: bold;">Selecione um Funcionário</option>
-                            <option *ngFor="let pessoa of pessoas" [ngValue]="pessoaMeta.pessoa">{{ pessoa.nmPessoa }}</option>
+                        <select name="pessoaMeta" [(ngModel)]=" pessoaMeta.pessoa" class="form-control inputCinza" id="pessoa">
+                            <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa">{{ pessoa.nmPessoa }}</option>
                         </select>
                     </div>
                     <div *ngIf="!verificarUser()"
@@ -51,7 +49,7 @@
                     </div>
                     <hr *ngIf="!verificarUser()" style="margin-top: 1vh;">
                     <div class="row">
-                        <div *ngFor="let item of meta.pessoaMetas; index as i clas" class="gradiente col-lg-3 fitContent pessoaItem d-flex align-items-center">
+                        <div *ngFor="let item of meta.pessoasMeta; index as i clas" class="gradiente col-lg-3 fitContent pessoaItem d-flex align-items-center">
                             <div >
                                 {{ item.pessoa.nmPessoa }}
                                 <span (click)="removeItem('-', i )" class="ml3 mousePointer">×</span>
@@ -68,8 +66,6 @@
                         </div>
                     </div>
                     <div class="modal-footer" style="margin-top: 1vh;" >
-                        <button *ngIf="!verificarUser()" (click)="listarMetas()" type="button" class="btn refreshColor"
-                            style="color:white">⟲</button>
                         <button (click)="resetItem()" *ngIf="!verificarUser()" type="button" class="btn btn-danger ml3"
                             >Cancelar</button>
                         <button *ngIf="!verificarUser()" (click)="addMeta()" type="button" class="btn gradiente ml3"
