@@ -113,7 +113,9 @@ namespace Greenployee.CORE.Business
                               {
                                   nmMes = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMMM yyyy"),
                                   vlTotal = g.Sum(os => os.vlTotal),
-                                  //ordensServico = g.ToList()
+                                  dtOrdem = g.Select(x => x.dtCadastro), 
+                                  vlOrdem = g.Select(x => x.vlTotal),
+
                               }).ToListAsync();
 
             return list;
