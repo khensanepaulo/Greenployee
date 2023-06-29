@@ -33,8 +33,6 @@ export class PermissaoUsuarioService {
   }
 
   public async cadastrar(permissaoUsuario: PermissaoUsuario): Promise<void> {
-    console.log(permissaoUsuario);
-    debugger;
     try {
       await this.axiosClient.post('/', permissaoUsuario, { headers: this.getHeaders() });
       console.log("PermissaoUsuario cadastrada com sucesso!");

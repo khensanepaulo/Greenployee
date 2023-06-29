@@ -12,8 +12,6 @@ namespace Greenployee.MODELS.Model
 
         public DateTime dtFim { get; set; }
 
-        public DateTime? dtConcluido { get; set; }
-
         public decimal? vlMeta { get; set; }
 
         [InverseProperty("Meta")]

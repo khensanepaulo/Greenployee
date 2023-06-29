@@ -15,6 +15,11 @@ namespace Greenployee.MODELS.Model
 
         public int idMeta { get; set; }
 
+        public bool flConcluido { get; set; }
+
+        public decimal vlAlcancado { get; set; }
+        public DateTime dtConcluido { get; set; }
+
         [ForeignKey("idPessoa")]
         public virtual Pessoa Pessoa { get; set; }
 

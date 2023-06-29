@@ -112,7 +112,7 @@ export class ModalNovaOrdemComponent implements OnInit{
   public verificarUser(): boolean {
 
     this.verificaUser = this.userDataService.userCredentials.permissions; 
-    return this.verificaUser != 'Admin';
+    return this.verificaUser != 'User';
  
   }
 

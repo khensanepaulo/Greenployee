@@ -4,12 +4,33 @@
 </div>
 <!-- Ordens Serviço - modal -->
 <div class="modal" id="ordemServico">
-    <div class="modal-dialog modal-dialog-centered" style="min-width: 75vw;" >
+    <div class="modal-dialog modal-dialog-centered" style="min-width: 75vw;">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="modal-header" style="background-color: #C9D7D0;">
+            <div class="modal-header d-flex justify-content-between" style="background-color: #C9D7D0;">
                 <h4 class="modal-title textoPadrao">Ordens de Serviços</h4>
-                <button (click)="listarOrdemServico()" type="button" class="btn refreshColor"style="color:white">⟲</button>
+                <div class="d-flex justify-content-center">
+                    <div class="form-group">
+                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">Cliente</label>
+                        <input name="cliente" type="text" class="form-control inputCinza" [(ngModel)]="this.filtro.nmCliente" (ngModelChange)="filtrarCliente()">
+                    </div>
+                    <div class="form-group" *ngIf="this.isAdmin()">
+                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">Funcionário</label>
+                        <input name="funcionario" type="text" class="form-control inputCinza" [(ngModel)]="this.filtro.nmFuncionario" (ngModelChange)="filtrarFuncionario()">
+                    </div>
+                    <div class="form-group">
+                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">Data de</label>
+                        <input name="dataDe" type="date" class="form-control inputCinza" [(ngModel)]="this.filtro.dtInicio">
+                    </div>
+                    <div class="form-group">
+                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">Data até</label>
+                        <input name="dataDe" type="date" class="form-control inputCinza" [(ngModel)]="this.filtro.dtFim">
+                    </div>
+                    <div>
+                        <label class="textoPadrao text-left" style="margin-bottom: 5px; margin-top: 36px;"><p>&nbsp;</p></label>
+                        <button (click)="filtrarLista()" type="button" class="btn refreshColor" style="color: white; margin-left: 10px;"><i class='fas fa-filter'></i></button>
+                    </div>
+                </div>   
             </div>
             <!-- Modal body -->
             <div class="modal-body" style="background-color: #C9D7D0;">
@@ -20,16 +41,16 @@
                                 <th class="text-left" style="width: 10%;">
                                     <strong>N° Ordem</strong>
                                 </th>
-                                <th class="text-left" style="width: 25%;">
+                                <th class="text-left" style="width: 10%;">
                                     <strong>Cliente</strong>
                                 </th>
-                                <th class="text-left" style="width: 25%;">
+                                <th class="text-left" style="width: 10%;">
                                     <strong>Funcionário</strong>
                                 </th>
                                 <th class="text-right" style="width: 10%;">
                                     <strong>Valor</strong>
                                 </th>
-                                <th class="text-right" style="width: 15%;">
+                                <th class="text-right" style="width: 8%;">
                                     <strong>Data</strong>
                                 </th>
                                 <th class="text-center" style="width: 15%;">
@@ -62,10 +83,11 @@
                                         <button type="button" class="btn" data-bs-toggle="modal"  data-bs-target="#ordemServicoEditar" (click)="openEditModal(index)">
                                             <img src="../../../assets/images/icones/editar.png" style="height: 20px; width: 20px;">
                                         </button>
-                                        <button type="button" class="btn" (click)="this.delete(index)">
+                                        <button  type="button" class="btn" (click)="this.delete(index)">
                                             <img src="../../../assets/images/icones/excluir.png" style="height: 20px; width: 20px;">
                                         </button>
                                     </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>
