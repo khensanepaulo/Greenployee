@@ -17,6 +17,8 @@ namespace Greenployee.CORE.Business
         Task<bool> Delete(int id);
         Task<IEnumerable<dynamic>> FindByUserId(int id);
         string GetSequenceNrOrdem();
+        Task<IEnumerable<dynamic>> FindBycommissionsByMonthById(int id);
+        Task<IEnumerable<dynamic>> FindByCommissionsByMonthAll();
 
     }
 
@@ -102,5 +104,36 @@ namespace Greenployee.CORE.Business
             var nrOrdem = lastNrOrdem.ToString("00000");
             return nrOrdem;
         }
+
+        public async Task<IEnumerable<dynamic>> FindByCommissionsByMonthAll()
+        {
+            var list = await (from o in db.OrdensServicos
+                              group o by new { o.dtCadastro.Year, o.dtCadastro.Month } into g
+                              select new
+                              {
+                                  nmMes = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMMM yyyy"),
+                                  vlTotal = g.Sum(os => os.vlTotal),
+                                  //ordensServico = g.ToList()
+                              }).ToListAsync();
+
+            return list;
+        }
+
+        public async Task<IEnumerable<dynamic>> FindBycommissionsByMonthById(int id)
+        {
+            var list = await (from o in db.OrdensServicos
+                              where o.Funcionario != null && o.Funcionario.Usuario != null && o.Funcionario.Usuario.id == id
+                              group o by new { o.dtCadastro.Year, o.dtCadastro.Month } into g
+                              select new
+                              {
+                                  Mes = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMMM yyyy"),
+                                  vlTotal = g.Sum(os => os.vlTotal) /** 0.07*/,
+                                  OrdensServico = g.ToList()
+                              }).ToListAsync();
+
+            return list;
+        }
+
+
     }
 }

@@ -145,5 +145,52 @@ namespace Greenployee.Controllers
             }
         }
 
+        [HttpGet("/api/[controller]/OrdemPorMes/{id}")]
+        public async Task<ActionResult<dynamic>> FindBycommissionsByMonthById(int id)
+        {
+            try
+            {
+               
+                _permissionNeeded.Add("User");
+
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                {
+                    return NotFound();
+                }
+
+                var result = await _business.FindBycommissionsByMonthById(id);
+
+                if (result == null) return NotFound("Não foi possível encontrar comissões!");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("/api/[controller]/OrdemPorMes")]
+        public async Task<ActionResult<dynamic>> FindByCommissionsByMonthAll()
+        {
+            try
+            {
+                _permissionNeeded.Add("Admin");
+
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                {
+                    return NotFound();
+                }
+
+                var result = await _business.FindByCommissionsByMonthAll();
+
+                if (result == null) return NotFound("Não foi possível encontrar as comissões!");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }
