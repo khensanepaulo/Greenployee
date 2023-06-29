@@ -42,7 +42,10 @@ export class InicioComponent {
     console.log(this.userDataService.userCredentials = this.localStorageService.getObject("userCredentials"));
     this.getPessoa();    
     this.verificarUser();
+    this.listarOrdemServico();
   }
+
+  
   
   public addMeta(): void {
     this.metaService.cadastrar(this.meta);
@@ -123,19 +126,19 @@ public listarOrdemServico(): void {
 
   if(this.userDataService.userCredentials.permissions == 'Admin'){
     this.ordemServicoService.findAll().then((ordemServicos: OrdemServico[]) => {
-      this.ordemServicos = ordemServicos; // Armazena a lista completa de pessoas
+      this.ordemServicos = ordemServicos.slice(0, 10); 
       console.log(this.ordemServicos);
     })
     .catch((error) => {
-      console.error('Erro ao obter as pessoas:', error);
+      console.error('Erro ao obter as pessoas.');
     });
   } else{
     this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: OrdemServico[]) => {
-      this.ordemServicos = ordemServicos; // Armazena a lista completa de metas
+      this.ordemServicos = ordemServicos.slice(0, 10); 
       console.log(this.ordemServicos);
     })
     .catch((error) => {
-      console.error('Erro ao obter as metas:', error);
+      console.error('Erro ao obter as Ordens de serviço.');
     });
   }
 }

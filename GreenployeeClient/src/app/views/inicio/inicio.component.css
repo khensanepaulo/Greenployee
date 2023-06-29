@@ -11,6 +11,10 @@ body{
     height: 18%;
 }
 
+.tdCor{
+    background-color: #386C54;
+    color: white;
+}
 .divisao{
     display: inline-block;
     align-items: center;
