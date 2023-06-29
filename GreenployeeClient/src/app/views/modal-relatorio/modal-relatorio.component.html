@@ -1,28 +1,20 @@
 <!-- Modal Relatorios -->
 <div class="modal modal-xl" id="modalRelatorios">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: #c9d7d0;">
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #C9D7D0;">
                 <h4 class="modal-title textoPadrao">Relatórios</h4>
             </div>
             <!-- Modal body -->
-            <div style="max-width:700px; height:400px">
-                <canvas baseChart class="chart"
-                    [data]="pieChartData"
-                    [type]="pieChartType"
-                    [options]="pieChartOptions"
+            <div style="max-width:400px; height:500px">
+                <h4 style="margin-left: 85px;">Relatorio de Metas</h4>
+                <canvas baseChart class="chart" [data]="pieChartData" [type]="pieChartType" [options]="pieChartOptions"
                     [plugins]="pieChartPlugins">
                 </canvas>
-                <div class="button-row">
-                <button mat-button mat-raised-button color="primary" (click)="toggleLegend()">Toggle Legend</button>
-                <button mat-button mat-raised-button color="primary" (click)="changeLabels()">Change Labels</button>
-                <button mat-button mat-raised-button color="primary" (click)="addSlice()">Add Slice</button>
-                <button mat-button mat-raised-button color="primary" (click)="removeSlice()">Remove Slice</button>
-                <button mat-button mat-raised-button color="primary" (click)="changeLegendPosition()">Change Legend Position</button>
-                </div>
+
             </div>
-            
+
             <!-- Modal footer -->
             <div class="modal-footer" style="background-color: #C9D7D0;">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -30,4 +22,3 @@
         </div>
     </div>
 </div>
-

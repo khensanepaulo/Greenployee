@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import  DatalabelsPlugin from 'chartjs-plugin-datalabels';
+import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
@@ -13,14 +13,14 @@ export class ModalRelatorioComponent {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  
+
 
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
       legend: {
         display: true,
-        position: 'top',
+        position: 'bottom',
       },
       datalabels: {
         formatter: (value: any, ctx: any) => {
@@ -29,16 +29,17 @@ export class ModalRelatorioComponent {
           }
         },
       },
-    }
+    },
+    // maintainAspectRatio: false, // Add this line to disable aspect ratio
   };
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: [ [ 'Download', 'Sales' ], [ 'In', 'Store', 'Sales' ], 'Mail Sales' ],
-    datasets: [ {
-      data: [ 300, 500, 100 ]
-    } ]
+    labels: ['Concluídas', 'Não Concluídas'],
+    datasets: [{
+      data: [300, 100]
+    }]
   };
   public pieChartType: ChartType = 'pie';
-  public pieChartPlugins = [ DatalabelsPlugin ];
+  public pieChartPlugins = [DatalabelsPlugin];
 
   // events
   public chartClicked({ event, active }: { event: ChartEvent, active: {}[] }): void {
@@ -50,11 +51,11 @@ export class ModalRelatorioComponent {
   }
 
   changeLabels(): void {
-    const words = [ 'hen', 'variable', 'embryo', 'instal', 'pleasant', 'physical', 'bomber', 'army', 'add', 'film',
+    const words = ['hen', 'variable', 'embryo', 'instal', 'pleasant', 'physical', 'bomber', 'army', 'add', 'film',
       'conductor', 'comfortable', 'flourish', 'establish', 'circumstance', 'chimney', 'crack', 'hall', 'energy',
       'treat', 'window', 'shareholder', 'division', 'disk', 'temptation', 'chord', 'left', 'hospital', 'beef',
       'patrol', 'satisfied', 'academy', 'acceptance', 'ivory', 'aquarium', 'building', 'store', 'replace', 'language',
-      'redeem', 'honest', 'intention', 'silk', 'opera', 'sleep', 'innocent', 'ignore', 'suite', 'applaud', 'funny' ];
+      'redeem', 'honest', 'intention', 'silk', 'opera', 'sleep', 'innocent', 'ignore', 'suite', 'applaud', 'funny'];
     const randomWord = () => words[Math.trunc(Math.random() * words.length)];
     this.pieChartData.labels = new Array(3).map(_ => randomWord());
 
@@ -63,7 +64,7 @@ export class ModalRelatorioComponent {
 
   addSlice(): void {
     if (this.pieChartData.labels) {
-      this.pieChartData.labels.push([ 'Line 1', 'Line 2', 'Line 3' ]);
+      this.pieChartData.labels.push(['Line 1', 'Line 2', 'Line 3']);
     }
 
     this.pieChartData.datasets[0].data.push(400);
@@ -96,7 +97,7 @@ export class ModalRelatorioComponent {
 
     this.chart?.render();
   }
- 
+
 
 }
 
