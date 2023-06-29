@@ -8,13 +8,9 @@ import { PessoaService } from 'src/app/service/pessoa.service';
 import { Router } from '@angular/router';
 import { OrdemServicoItem } from 'src/app/model/ordemServicoItem';
 import { OrdemServico } from 'src/app/model/ordemServico';
+import { ComissoesPorPeriodo } from 'src/app/model/comissoesPorPeriodo';
 import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
 
-interface ComissoesPorPeriodo {
-  nmMes: string;
-  vlTotal: number;
-  ordemServicos: OrdemServico[];
-}
 
 @Component({
   selector: 'app-inicio',
