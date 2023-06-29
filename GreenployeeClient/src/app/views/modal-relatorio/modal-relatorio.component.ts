@@ -3,6 +3,13 @@ import { ViewChild } from '@angular/core';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { Meta } from 'src/app/model/meta';
+import { Pessoa } from 'src/app/model/pessoa';
+import { PessoaMeta } from 'src/app/model/pessoaMeta';
+import { MetaService } from 'src/app/service/meta.service';
+import { PessoaService } from 'src/app/service/pessoa.service';
+import { cloneDeep } from 'lodash';
+import { UserDataService } from 'src/app/service/userDataService';
 
 @Component({
   selector: 'app-modal-relatorio',
@@ -11,7 +18,28 @@ import { BaseChartDirective } from 'ng2-charts';
 })
 export class ModalRelatorioComponent {
 
+  public quantidadeMetasConcluida!: number;
+  public quantidadeMetasNaoConcluida!: number;
+  verificaUser!: string;
+  public pessoa!: Pessoa;
+  public meta! : Meta;
+  public pessoaMeta!: PessoaMeta;
+  pessoas : Pessoa [] = [];
+  metas: Meta[] = [];
+
+  constructor(public metaService: MetaService,
+    public pessoaService: PessoaService,
+    public userDataService: UserDataService){}
+
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  ngOnInit(): void {
+    this.listarMetas();
+    this.listarPessoas();
+    this.pessoaMeta = new PessoaMeta();
+    this.meta = new Meta();
+    this.pessoa = new Pessoa();
+  }
 
 
 
@@ -21,6 +49,7 @@ export class ModalRelatorioComponent {
       legend: {
         display: true,
         position: 'bottom',
+        
       },
       datalabels: {
         formatter: (value: any, ctx: any) => {
@@ -28,16 +57,36 @@ export class ModalRelatorioComponent {
             return ctx.chart.data.labels[ctx.dataIndex];
           }
         },
+        color: 'white', // Altera a cor do texto para branco
+      },
+      tooltip: {
+        enabled: true,
+      },
+      title: {
+        display: true,
+        text: 'Metas',
+        font: {
+          size: 22,
+        },
+        color: 'black', // Altera a cor do texto para branco
       },
     },
-    // maintainAspectRatio: false, // Add this line to disable aspect ratio
+    elements: {
+      arc: {
+        backgroundColor: ['rgb(54,130,94)', 'rgb(107, 25, 25)', '#FFCE56', '#4BC0C0', '#9966FF'],
+        borderColor: '#FFFFFF',
+      },
+    },
   };
-  public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['Concluídas', 'Não Concluídas'],
-    datasets: [{
-      data: [300, 100]
-    }]
-  };
+  
+  public get pieChartData(): ChartData<'pie', number[], string | string[]> {
+    return {
+      labels: ['Concluídas', 'Não Concluídas'],
+      datasets: [{
+        data: [this.quantidadeMetasConcluida, this.quantidadeMetasNaoConcluida  ]
+      }]
+    };
+  }
   public pieChartType: ChartType = 'pie';
   public pieChartPlugins = [DatalabelsPlugin];
 
@@ -98,6 +147,96 @@ export class ModalRelatorioComponent {
     this.chart?.render();
   }
 
+  
+
+public addItem(): void{
+  debugger;
+  this.meta.pessoasMeta.push(cloneDeep(this.pessoaMeta));
+  console.log(this.meta.pessoasMeta);
+}
+
+public addMeta(): void {
+  this.metaService.cadastrar(this.meta);
+  this.resetMeta();
+  this.listarMetas();
+}
+
+public resetMeta(): void {
+  this.meta = new Meta();
+  this.pessoaMeta = new PessoaMeta();
+}
+
+public listarMetas(): void {
+
+  const userId = this.userDataService.userCredentials.userId;
+  const parsedUserId = parseInt(userId, 10);
+  if(this.userDataService.userCredentials.permissions == 'Admin'){
+    this.metaService.findAll().then((metas: Meta[]) => {
+      debugger;
+      this.metas = metas; // Armazena a lista completa de pessoas
+      console.log(metas);
+      this.contagemMetas();
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as pessoas:', error);
+    });
+  } else{
+    this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
+      this.metas = metas; // Armazena a lista completa de metas
+      this.contagemMetas();
+      console.log(metas);
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as metas:', error);
+    });
+  }
+}
+
+public contagemMetas(): void {
+  const metasComDataNull = this.metas.filter(item => item.dtAtualizado === null);
+  this.quantidadeMetasNaoConcluida = metasComDataNull.length;
+
+  const metasComData = this.metas.filter(item => item.dtAtualizado != null);
+  this.quantidadeMetasConcluida = metasComData.length;
+}
+
+
+
+public verificarUser(): boolean {
+
+  this.verificaUser = this.userDataService.userCredentials.permissions; 
+  return this.verificaUser != 'Admin';
+
+}
+
+public verificarAdmin(): boolean {
+  this.verificaUser = this.userDataService.userCredentials.permissions; 
+  return this.verificaUser != 'User';
+
+}
+
+public listarPessoas(): void {
+  this.pessoaService.findAll()
+    .then((pessoas: Pessoa[]) => {
+      this.pessoas = pessoas; // Armazena a lista completa de metas
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as metas:', error);
+    });
+}
+
+public resetItem(): void{
+  this.pessoaMeta = new PessoaMeta();
+  this.meta = new Meta();
+ }
+
+ public removeItem( sinal: string, index: number): void{
+  if(sinal == '-'){
+    this.meta.pessoasMeta.splice(index,1);
+  }else{
+     return;
+  } 
+}
 
 }
 

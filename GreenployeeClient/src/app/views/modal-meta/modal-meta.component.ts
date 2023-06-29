@@ -40,6 +40,12 @@ public addItem(): void{
   console.log(this.meta.pessoasMeta);
 }
 
+public editMeta(index: number): void {
+  this.meta = this.metas[index]; 
+  this.metaService.update(this.meta);
+  this.resetMeta();
+}
+
 public addMeta(): void {
   this.metaService.cadastrar(this.meta);
   this.resetMeta();

@@ -87,12 +87,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let meta of metas" class="col-lg-12">
+                            <tr *ngFor="let meta of metas; index as index" class="col-lg-12">
                                 <td class="text-centert tdRadiusLeft col-lg-6 colorTd">
                                     {{ meta.dsRecompensa }}
                                 </td>
                                 <td class="text-center tdRadiusRight col-lg-6 colorTd">
                                     <input  [(ngModel)]="meta.dtFim" type="checkbox">
+                                </td>
+                                <td class="tdRadiusRight colorTd" style="width: 15%;">
+                                    <button type="button" class="btn" (click)="editMeta(index)">
+                                        <img src="../../../assets/images/icones/editar.png" style="height: 20px; width: 20px;">
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

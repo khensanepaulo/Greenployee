@@ -49,6 +49,15 @@ export class MetaService {
     }
   }
 
+  public async update(meta: Meta): Promise<void> {
+    try {
+      await this.axiosClient.put('/', meta, { headers: { 'Authorization': `Bearer ${this.token}` } });
+      console.log("Meta atualizada com sucesso!");
+    } catch (error: any) {
+      return Promise.reject("Não foi possível atualizar a meta! :" + error);
+    }
+  }
+
   public async findByUserId(id: number): Promise<Meta[]> {
     try {
       return (await this.axiosClient.get<Meta[]>(`/Usuario/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
