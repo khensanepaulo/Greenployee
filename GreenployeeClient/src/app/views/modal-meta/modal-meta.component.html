@@ -31,7 +31,7 @@
                     <div *ngIf="!verificarUser()" class="col-lg-2 form-group">
                         <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Data de
                             Término</label>
-                        <input [(ngModel)]="meta.dtFim" type="date" placeholder="Nome do Funcionário..."
+                        <input  type="date" placeholder="Nome do Funcionário..."
                             class="form-control inputCinza" id="">
                     </div>
                     <div *ngIf="!verificarUser()" class="col-lg-3 form-group">
@@ -73,30 +73,30 @@
                     </div>
                     <hr *ngIf="!verificarUser()">
                 </div>
-                <div class="table-responsive d-flex justify-content-center mt3"
+                <div class="table-responsive d-flex justify-content-start mt3"
                     style="max-height: 380px; overflow-y: scroll;">
                     <table class="table table-borderless table-hover">
                         <thead style="background-color: #C9D7D0;">
                             <tr class="col-lg-12" style="background-color: #C9D7D0;">
-                                <th class="text-center col-lg-1"  style="background-color: #C9D7D0;">
+                                <th class="text-center col-lg-6"  style="background-color: #C9D7D0;">
                                     <strong>Descrição da Meta</strong>
                                 </th>
-                                <th class="text-center col-lg-2"  style="background-color: #C9D7D0;">
+                                <th class="text-center col-lg-6"  style="background-color: #C9D7D0;">
                                     <strong style="margin-right: 3vw;">Meta Concluída?</strong>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let meta of metas; index as index" class="col-lg-12">
-                                <td class="text-centert tdRadiusLeft col-lg-6 colorTd">
+                                <td class="text-center col-lg-6 tdRadiusLeft col-lg-6 colorTd">
                                     {{ meta.dsRecompensa }}
                                 </td>
-                                <td class="text-center tdRadiusRight col-lg-6 colorTd">
-                                    <input  [(ngModel)]="meta.dtFim" type="checkbox">
-                                </td>
-                                <td class="tdRadiusRight colorTd" style="width: 15%;">
+                                <td class="text-center col-lg-6 tdRadiusRight colorTd">
                                     <button type="button" class="btn" (click)="editMeta(index)">
-                                        <img src="../../../assets/images/icones/editar.png" style="height: 20px; width: 20px;">
+                                        ✔
+                                    </button>
+                                    <button type="button" class="btn" (click)="this.delete(index)">
+                                        <img src="../../../assets/images/icones/excluir.png" style="height: 20px; width: 20px;">
                                     </button>
                                 </td>
                             </tr>

@@ -34,6 +34,10 @@ export class OrdemServicoService {
     try {
       await this.axiosClient.post('/', ordemServico, { headers: { 'Authorization': `Bearer ${this.token}` } });
       console.log("OrdemServico cadastrada com sucesso!");
+      return new Promise<void>((resolve, reject) => {
+        // Após cadastrar a meta com sucesso
+        resolve();
+      });
     } catch (error: any) {
       return Promise.reject("Não foi possível cadastrar a ordemServico! :" + error);
     }

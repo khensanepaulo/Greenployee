@@ -38,28 +38,28 @@
                     <table class="table-borderless table-hover colorTd">
                         <thead>
                             <tr class="col-lg-12">
-                                <th class="text-left" style="width: 10%;">
+                                <th class="text-left" style="width: 9%;">
                                     <strong>N° Ordem</strong>
                                 </th>
-                                <th class="text-left" style="width: 10%;">
+                                <th class="text-left d flex justify-content-start" style="width: 20%;">
                                     <strong>Cliente</strong>
                                 </th>
-                                <th class="text-left" style="width: 10%;">
+                                <th class="text-left" style="width: 22%;">
                                     <strong>Funcionário</strong>
                                 </th>
                                 <th class="text-right" style="width: 10%;">
                                     <strong>Valor</strong>
                                 </th>
-                                <th class="text-right" style="width: 8%;">
+                                <th class="text-right" style="width: 19%;">
                                     <strong>Data</strong>
                                 </th>
-                                <th class="text-center" style="width: 15%;">
+                                <th class="text-left" style="width: 5%;">
                                     <strong>Ações</strong>
                                 </th>
                             </tr>
                         </thead>
                     </table>
-                    <div class="table-responsive d-flex justify-content-center mt3"
+                    <div class="table-responsive  mt3"
                         style="max-height: 380px; overflow-y: scroll;">
                         <table class="table table-borderless table-hover ">
                             <tbody>
@@ -79,11 +79,11 @@
                                     <td class="text-right colorTd" style="width: 15%;">
                                         {{ ordemServico.dtCadastro | date: 'dd/MM/yyyy HH:mm'}}
                                     </td>
-                                    <td class="tdRadiusRight colorTd" style="width: 15%;">
-                                        <button type="button" class="btn" data-bs-toggle="modal"  data-bs-target="#ordemServicoEditar" (click)="openEditModal(index)">
+                                    <td class="tdRadiusRight colorTd text-end" style="width: 15%;">
+                                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#ordemServicoEditar" (click)="openEditModal(index)">
                                             <img src="../../../assets/images/icones/editar.png" style="height: 20px; width: 20px;">
                                         </button>
-                                        <button  type="button" class="btn" (click)="this.delete(index)">
+                                        <button type="button" class="btn" (click)="this.delete(index)">
                                             <img src="../../../assets/images/icones/excluir.png" style="height: 20px; width: 20px;">
                                         </button>
                                     </td>
@@ -95,8 +95,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer" style="background-color: #C9D7D0;">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn gradiente" style="color:white">Salvar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Sair</button>
                 </div>
             </div>
         </div>

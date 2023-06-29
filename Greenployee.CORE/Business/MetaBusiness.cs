@@ -60,6 +60,7 @@ namespace Greenployee.CORE.Business
         public async Task<Meta> Update(Meta meta)
         {
             meta.dtAtualizado = DateTime.Now;
+             
             db.Metas.Update(meta);
             await db.SaveChangesAsync();
             return meta;

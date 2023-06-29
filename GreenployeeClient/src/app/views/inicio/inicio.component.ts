@@ -45,6 +45,10 @@ export class InicioComponent {
     this.listarOrdemServico();
   }
 
+  ngOnChanges(): void{
+    this.listarOrdemServico();
+  }
+
   
   
   public addMeta(): void {

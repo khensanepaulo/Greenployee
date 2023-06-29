@@ -148,19 +148,6 @@ export class ModalRelatorioComponent {
   }
 
   
-
-public addItem(): void{
-  debugger;
-  this.meta.pessoasMeta.push(cloneDeep(this.pessoaMeta));
-  console.log(this.meta.pessoasMeta);
-}
-
-public addMeta(): void {
-  this.metaService.cadastrar(this.meta);
-  this.resetMeta();
-  this.listarMetas();
-}
-
 public resetMeta(): void {
   this.meta = new Meta();
   this.pessoaMeta = new PessoaMeta();

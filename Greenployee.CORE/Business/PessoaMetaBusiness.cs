@@ -46,6 +46,14 @@ namespace Greenployee.CORE.Business
 
         public async Task<PessoaMeta> Update(PessoaMeta pessoaMeta)
         {
+            pessoaMeta.dtAtualizado = DateTime.Now;
+
+            if (pessoaMeta.flConcluido == false)
+            {   
+                pessoaMeta.flConcluido = true;
+                pessoaMeta.dtConcluido = DateTime.Now;
+            }
+
             db.PessoaMetas.Update(pessoaMeta);
             await db.SaveChangesAsync();
             return pessoaMeta;

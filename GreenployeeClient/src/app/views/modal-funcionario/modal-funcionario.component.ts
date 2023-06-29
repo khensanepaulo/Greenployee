@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 import { Pessoa } from 'src/app/model/pessoa';
 import { Usuario } from 'src/app/model/usuario';
+import { MetaService } from 'src/app/service/meta.service';
 import { PessoaService } from 'src/app/service/pessoa.service';
+import { UserDataService } from 'src/app/service/userDataService';
 
 @Component({
   selector: 'app-modal-funcionario',
@@ -10,14 +13,22 @@ import { PessoaService } from 'src/app/service/pessoa.service';
 })
 export class ModalFuncionarioComponent {
 
+  public quantidadeMetasConcluida!: number;
+  public quantidadeMetasNaoConcluida!: number;
   public pessoa! : Pessoa;
-  public pessoas: Pessoa[] = [];
+ pessoas: Pessoa[] = [];
+  metas: Meta[] = [];  
+  public meta!: Meta;
   
-  constructor(private pessoaService: PessoaService){}
+  constructor(private pessoaService: PessoaService,
+    public userDataService: UserDataService,
+    public metaService: MetaService){}
   
   ngOnInit(): void {
     this.listarPessoas();
+    
     this.pessoa = new Pessoa();
+    
     this.pessoa.usuario = new Usuario();
     
   }
@@ -39,6 +50,10 @@ export class ModalFuncionarioComponent {
       }
     });
   }
+
+
+
+
 
    listarPessoas(): void {
   this.pessoaService.findAll()

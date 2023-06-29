@@ -46,6 +46,7 @@ export class ModalNovaOrdemComponent implements OnInit{
 
   ngOnChanges(): void{
     this.ordemServico = this.ordemServicoObtida ? this.ordemServicoObtida : new OrdemServico();
+    this.listarOrdemServicosInicio;
     this.setItens();
     this.cdr.detectChanges();
   }
@@ -106,13 +107,14 @@ export class ModalNovaOrdemComponent implements OnInit{
   public resetItemModal(): void {
     debugger;
     this.ordemServicoItem = new OrdemServicoItem ();
+    this.listarOrdemServicosInicio();
     this.cdr.detectChanges();
   }
 
   public verificarUser(): boolean {
 
     this.verificaUser = this.userDataService.userCredentials.permissions; 
-    return this.verificaUser != 'User';
+    return this.verificaUser != 'Admin';
  
   }
 
@@ -157,9 +159,10 @@ export class ModalNovaOrdemComponent implements OnInit{
     if (this.userDataService.userCredentials.permissions === 'Admin') {
       this.ordemServicoService.cadastrar(this.ordemServico).then(() => {
         this.mensagem = ' Ordem de serviço adicionada com sucesso!';
-        this.resetItemModal();
+        this.resetItemModal();        
         this.showAndHideMessage(3000);
         this.cdr.detectChanges();
+        this.listarOrdemServicosInicio;
       }).catch((error) => {
         this.mensagemErro = error;
         this.showAndHideMessage(3000);
@@ -169,7 +172,6 @@ export class ModalNovaOrdemComponent implements OnInit{
         if (pessoa !== null) {
           this.ordemServico.funcionario = pessoa;
           return this.ordemServicoService.cadastrar(this.ordemServico);
-          console.log(this.ordemServico);
         } else {
           throw new Error('Pessoa não encontrada.'); 
         }
@@ -177,6 +179,7 @@ export class ModalNovaOrdemComponent implements OnInit{
       .then(() => {
         this.mensagem = 'Ordem de serviço adicionada com sucesso!';
         this.resetItemModal();
+        this.listarOrdemServicosInicio;
         this.showAndHideMessage(3000);
         this.cdr.detectChanges();
       })
@@ -199,8 +202,10 @@ export class ModalNovaOrdemComponent implements OnInit{
     this.cdr.detectChanges();
   }
 
+  
+
   public refresh(): void {
-    this.listarOrdemServicos();
+    this.listarOrdemServicosInicio();
   }
 
   public listarPessoas(): void {
@@ -219,23 +224,28 @@ export class ModalNovaOrdemComponent implements OnInit{
     }
   }
    
-  public listarOrdemServicos(): void {
+  public listarOrdemServicosInicio(): void {
+
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
-    if (this.userDataService.userCredentials.permissions === 'Admin') {
-      this.ordemServicoService.findAll().then((ordemServicos: any[]) => {
-        this.ordemServicos = ordemServicos;
+  
+    if(this.userDataService.userCredentials.permissions == 'Admin'){
+      this.ordemServicoService.findAll().then((ordemServicos: OrdemServico[]) => {
+        this.ordemServicos = ordemServicos.slice(0, 10); 
         console.log(this.ordemServicos);
-      }).catch((error) => {
-        console.error('Erro ao obter as ordens de serviço:', error);
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as pessoas.');
       });
-    } else {
-      this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: any[]) => {
-        this.ordemServicos = ordemServicos; 
-      }).catch((error) => {
-        console.error('Erro ao obter as ordens de serviço:', error);
+    } else{
+      this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: OrdemServico[]) => {
+        this.ordemServicos = ordemServicos.slice(0, 10); 
+        console.log(this.ordemServicos);
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as Ordens de serviço.');
       });
     }
   }
-
+      
 }

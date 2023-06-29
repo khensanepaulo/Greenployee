@@ -6,7 +6,10 @@ export class PessoaMeta extends BaseClass {
 
     pessoa!: Pessoa;
     meta!: Meta;
-
+    flConcluido!: boolean;
+    vlAlcancado!: number;
+    dtConcluido!: Date;
+   
 constructor() {
     super();
     this.pessoa = new Pessoa();
