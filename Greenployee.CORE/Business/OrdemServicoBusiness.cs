@@ -111,9 +111,11 @@ namespace Greenployee.CORE.Business
                               group o by new { o.dtCadastro.Year, o.dtCadastro.Month } into g
                               select new
                               {
-                                  nmMes = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMMM yyyy"),
+                                  nmMes = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMMM yyyy").ToUpper(),
                                   vlTotal = g.Sum(os => os.vlTotal),
-                                  //ordensServico = g.ToList()
+                                  dtOrdem = g.Select(x => x.dtCadastro),
+                                  vlOrdem = g.Select(x => x.vlTotal),
+                                  ordensServico = g.ToList()
                               }).ToListAsync();
 
             return list;
@@ -126,8 +128,10 @@ namespace Greenployee.CORE.Business
                               group o by new { o.dtCadastro.Year, o.dtCadastro.Month } into g
                               select new
                               {
-                                  Mes = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMMM yyyy"),
-                                  vlTotal = g.Sum(os => os.vlTotal) /** 0.07*/,
+                                  nmMes = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMMM yyyy").ToUpper(),
+                                  vlTotal = g.Sum(os => os.vlTotal),
+                                  dtOrdem = g.Select(x => x.dtCadastro),
+                                  vlOrdem = g.Select(x => x.vlTotal),
                                   OrdensServico = g.ToList()
                               }).ToListAsync();
 

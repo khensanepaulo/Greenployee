@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosInstance } from "axios";
 import { OrdemServico } from 'src/app/model/ordemServico';
+import { ComissoesPorPeriodo } from '../model/comissoesPorPeriodo';
 @Injectable({
   providedIn: 'root'
 })
@@ -80,17 +81,17 @@ export class OrdemServicoService {
     }
   }
 
-  public async FindBycommissionsByMonthById(id: number): Promise<[]> {
+  public async FindBycommissionsByMonthById(id: number): Promise<[ComissoesPorPeriodo]> {
     try {
-      return (await this.axiosClient.get<[]>(`/OrdemPorMes/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
+      return (await this.axiosClient.get<[ComissoesPorPeriodo]>(`/OrdemPorMes/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
     } catch (error: any) {
       return Promise.reject(error.response);
     }
   }
 
-  public async FindByCommissionsByMonthAll(): Promise<[]> {
+  public async FindByCommissionsByMonthAll(): Promise<[ComissoesPorPeriodo]> {
     try {
-      return (await this.axiosClient.get<[]>('/OrdemPorMes', { headers: this.getHeaders() })).data; // Passa os headers na requisição
+      return (await this.axiosClient.get<[ComissoesPorPeriodo]>('/OrdemPorMes', { headers: this.getHeaders() })).data; // Passa os headers na requisição
     } catch (error: any) {
       return Promise.reject(error.response);
     }

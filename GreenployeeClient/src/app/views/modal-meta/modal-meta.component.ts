@@ -40,15 +40,34 @@ public addItem(): void{
   console.log(this.meta.pessoasMeta);
 }
 
-public addMeta(): void {
-  this.metaService.cadastrar(this.meta);
+public editMeta(index: number): void {
+  debugger;
+  this.meta = this.metas[index]; 
+  this.metaService.update(this.meta);
   this.resetMeta();
-  this.listarMetas();
+}
+
+public addMeta(): void {
+  this.metaService.cadastrar(this.meta)
+  .then(() => {
+    this.resetMeta();
+    this.listarMetas();
+  });
 }
 
 public resetMeta(): void {
   this.meta = new Meta();
   this.pessoaMeta = new PessoaMeta();
+}
+
+public delete(index: number): void{
+  debugger;
+  this.metaService.delete(this.metas[index].id).then(value => {
+    debugger;
+    if(value){
+      this.listarMetas();
+    }
+  });
 }
 
 public listarMetas(): void {
