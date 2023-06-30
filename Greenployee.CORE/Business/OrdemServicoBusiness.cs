@@ -4,7 +4,8 @@ using Greenployee.MODELS.Model;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-
+using Greenployee.CORE.Page;
+using Greenployee.CORE.Filters;
 
 namespace Greenployee.CORE.Business
 {
@@ -19,6 +20,8 @@ namespace Greenployee.CORE.Business
         string GetSequenceNrOrdem();
         Task<IEnumerable<dynamic>> FindBycommissionsByMonthById(int id);
         Task<IEnumerable<dynamic>> FindByCommissionsByMonthAll();
+
+        Task<PagedBaseResponse<OrdemServico>> GetPagedAsync(OrdemServicoFilter request);
 
     }
 
@@ -150,6 +153,32 @@ namespace Greenployee.CORE.Business
             return list;
         }
 
+        public async Task<PagedBaseResponse<OrdemServico>> GetPagedAsync(OrdemServicoFilter request)
+        {
+            var ordens = db.OrdensServicos.Include(x => x.Funcionario).Include(x => x.OrdemServicoItem).AsQueryable();
 
+            if (request.dtInicio != null)
+            {
+                ordens = ordens.Where(x => x.dtCadastro >= request.dtInicio);
+            }
+            if (request.dtFim != null)
+            {
+                ordens = ordens.Where(x => x.dtCadastro <= request.dtFim);
+            }
+            if (!string.IsNullOrEmpty(request.nrOrdem))
+            {
+                ordens = ordens.Where(x => x.nrOrdem.Contains(request.nrOrdem));
+            }
+            if (!string.IsNullOrEmpty(request.nmCliente))
+            {
+                ordens = ordens.Where(x => x.nmCliente.Contains(request.nmCliente));
+            }
+            if (!string.IsNullOrEmpty(request.nmFuncionario))
+            {
+                ordens = ordens.Where(x => x.Funcionario.nmPessoa.Contains(request.nmFuncionario));
+            }
+
+            return await PageBaseResponseHelper.GetResponseAsync<PagedBaseResponse<OrdemServico>, OrdemServico>(ordens, request);
+        }
     }
 }

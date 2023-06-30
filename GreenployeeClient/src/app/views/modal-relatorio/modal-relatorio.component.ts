@@ -40,7 +40,7 @@ export class ModalRelatorioComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   ngOnInit(): void {
-    
+
     this.listarMetas();
     this.listarPessoas();
     this.listaComissoesPorMes();
@@ -51,7 +51,7 @@ export class ModalRelatorioComponent {
     this.pessoaMeta = new PessoaMeta();
     this.meta = new Meta();
     this.pessoa = new Pessoa();
-  
+
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -110,7 +110,7 @@ export class ModalRelatorioComponent {
       legend: {
         display: true,
         position: 'bottom',
-        
+
       },
       datalabels: {
         formatter: (value: any, ctx: any) => {
@@ -139,7 +139,7 @@ export class ModalRelatorioComponent {
       },
     },
   };
-  
+
   public get pieChartData(): ChartData<'pie', number[], string | string[]> {
     return {
       labels: ['Concluídas', 'Não Concluídas'],
@@ -213,160 +213,110 @@ export class ModalRelatorioComponent {
     this.chart?.render();
   }
 
-  
-public resetMeta(): void {
-  this.meta = new Meta();
-  this.pessoaMeta = new PessoaMeta();
-}
 
-public listarMetas(): void {
-
-  const userId = this.userDataService.userCredentials.userId;
-  const parsedUserId = parseInt(userId, 10);
-  if(this.userDataService.userCredentials.permissions == 'Admin'){
-    this.metaService.findAll().then((metas: Meta[]) => {
-      debugger;
-      this.metas = metas; // Armazena a lista completa de pessoas
-      console.log(metas);
-      this.contagemMetas();
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as pessoas:', error);
-    });
-  } else{
-    this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
-      this.metas = metas; // Armazena a lista completa de metas
-      this.contagemMetas();
-      console.log(metas);
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as metas:', error);
-    });
+  public resetMeta(): void {
+    this.meta = new Meta();
+    this.pessoaMeta = new PessoaMeta();
   }
-}
 
-public contagemMetas(): void {
-  const metasComDataNull = this.metas.filter(item => item.dtAtualizado === null);
-  this.quantidadeMetasNaoConcluida = metasComDataNull.length;
+  public listarMetas(): void {
 
-  const metasComData = this.metas.filter(item => item.dtAtualizado != null);
-  this.quantidadeMetasConcluida = metasComData.length;
-}
-
-
-
-public verificarUser(): boolean {
-
-  this.verificaUser = this.userDataService.userCredentials.permissions; 
-  return this.verificaUser != 'Admin';
-
-}
-
-  
-public resetMeta(): void {
-  this.meta = new Meta();
-  this.pessoaMeta = new PessoaMeta();
-}
-
-public listarMetas(): void {
-
-  const userId = this.userDataService.userCredentials.userId;
-  const parsedUserId = parseInt(userId, 10);
-  if(this.userDataService.userCredentials.permissions == 'Admin'){
-    this.metaService.findAll().then((metas: Meta[]) => {
-      this.metas = metas; // Armazena a lista completa de pessoas
-      console.log(metas);
-      this.contagemMetas();
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as pessoas:', error);
-    });
-  } else{
-    this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
-      this.metas = metas; // Armazena a lista completa de metas
-      this.contagemMetas();
-      console.log(metas);
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as metas:', error);
-    });
+    const userId = this.userDataService.userCredentials.userId;
+    const parsedUserId = parseInt(userId, 10);
+    if(this.userDataService.userCredentials.permissions == 'Admin'){
+      this.metaService.findAll().then((metas: Meta[]) => {
+        debugger;
+        this.metas = metas; // Armazena a lista completa de pessoas
+        console.log(metas);
+        this.contagemMetas();
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as pessoas:', error);
+      });
+    } else{
+      this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
+        this.metas = metas; // Armazena a lista completa de metas
+        this.contagemMetas();
+        console.log(metas);
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as metas:', error);
+      });
+    }
   }
-}
 
-public contagemMetas(): void {
-  const metasComDataNull = this.metas.filter(item => item.dtAtualizado === null);
-  this.quantidadeMetasNaoConcluida = metasComDataNull.length;
+  public contagemMetas(): void {
+    const metasComDataNull = this.metas.filter(item => item.dtAtualizado === null);
+    this.quantidadeMetasNaoConcluida = metasComDataNull.length;
 
-  const metasComData = this.metas.filter(item => item.dtAtualizado != null);
-  this.quantidadeMetasConcluida = metasComData.length;
-}
+    const metasComData = this.metas.filter(item => item.dtAtualizado != null);
+    this.quantidadeMetasConcluida = metasComData.length;
+  }
 
+  public verificarUser(): boolean {
 
+    this.verificaUser = this.userDataService.userCredentials.permissions;
+    return this.verificaUser != 'Admin';
 
-public verificarUser(): boolean {
+  }
 
-  this.verificaUser = this.userDataService.userCredentials.permissions; 
-  return this.verificaUser != 'Admin';
+  public verificarAdmin(): boolean {
+    this.verificaUser = this.userDataService.userCredentials.permissions;
+    return this.verificaUser != 'User';
 
-}
+  }
 
-public verificarAdmin(): boolean {
-  this.verificaUser = this.userDataService.userCredentials.permissions; 
-  return this.verificaUser != 'User';
+  public listarPessoas(): void {
+    this.pessoaService.findAll()
+      .then((pessoas: Pessoa[]) => {
+        this.pessoas = pessoas; // Armazena a lista completa de metas
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as metas:', error);
+      });
+  }
 
-}
+  public resetItem(): void{
+    this.pessoaMeta = new PessoaMeta();
+    this.meta = new Meta();
+  }
 
-public listarPessoas(): void {
-  this.pessoaService.findAll()
-    .then((pessoas: Pessoa[]) => {
-      this.pessoas = pessoas; // Armazena a lista completa de metas
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as metas:', error);
-    });
-}
+  public removeItem( sinal: string, index: number): void{
+    if(sinal == '-'){
+      this.meta.pessoasMeta.splice(index,1);
+    }else{
+      return;
+    }
+  }
 
-public resetItem(): void{
-  this.pessoaMeta = new PessoaMeta();
-  this.meta = new Meta();
- }
+  public listaComissoesPorMes(): void {
 
- public removeItem( sinal: string, index: number): void{
-  if(sinal == '-'){
-    this.meta.pessoasMeta.splice(index,1);
-  }else{
-     return;
-  } 
-}
-
-public listaComissoesPorMes(): void {
-
-  const userId = this.userDataService.userCredentials.userId;
-  const parsedUserId = parseInt(userId, 10);
-  if(this.userDataService.userCredentials.permissions == 'Admin'){
-    debugger;
-     this.ordemServicoService.FindByCommissionsByMonthAll().then((comissoesPorData: ComissoesPorPeriodo[]) => {
+    const userId = this.userDataService.userCredentials.userId;
+    const parsedUserId = parseInt(userId, 10);
+    if(this.userDataService.userCredentials.permissions == 'Admin'){
       debugger;
-     this.comissoesPorData = comissoesPorData.slice(0, 10);
-     this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());
-     this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
-      console.log(this.comissoesPorData);
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as Comissoes.');
-    });
-  } else{
-    debugger
-    this.ordemServicoService.FindBycommissionsByMonthById(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
-      this.comissoesPorData = comissoesPorData.slice(0, 10); 
+      this.ordemServicoService.FindByCommissionsByMonthAll().then((comissoesPorData: ComissoesPorPeriodo[]) => {
+        debugger;
+      this.comissoesPorData = comissoesPorData.slice(0, 10);
       this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());
       this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
-      console.log(this.comissoesPorData);
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as Comissoes.');
-    });
+        console.log(this.comissoesPorData);
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as Comissoes.');
+      });
+    } else{
+      debugger
+      this.ordemServicoService.FindBycommissionsByMonthById(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
+        this.comissoesPorData = comissoesPorData.slice(0, 10);
+        this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());
+        this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
+        console.log(this.comissoesPorData);
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as Comissoes.');
+      });
+    }
   }
-}
 
 }
