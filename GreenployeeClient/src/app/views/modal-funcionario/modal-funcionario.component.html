@@ -24,14 +24,8 @@
                     <table class="table-borderless table-hover ">
                         <thead>
                             <tr style="background-color: #C9D7D0 !important;" class="trCor col-lg-12">
-                                <th class="col-lg-2">
-                                    <strong style="margin-left: 4vw;">Nome</strong>
-                                </th>
-                                <th class="text-center col-lg-3">
-                                    <strong style="margin-right: 1vw;">Ordens Vinculadas</strong>
-                                </th>
-                                <th class="text-center col-lg-3">
-                                    <strong style="margin-right: 2vw;">Metas Concluidas</strong>
+                                <th class="text-left col-lg-8">
+                                    <strong>Nome</strong>
                                 </th>
                                 <th class="text-center col-lg-2">
                                     <strong style="margin-right: 3vw;">Contratação</strong>
@@ -47,14 +41,8 @@
                         <table class="table table-borderless table-hover ">
                             <tbody>
                                 <tr *ngFor="let pessoa of pessoas ; index as index" class="trCor col-lg-12">
-                                    <td class="text-center tdRadiusLeft  col-lg-2 colorTd">
+                                    <td class="tdRadiusLeft col-lg-8 colorTd">
                                         {{ pessoa.nmPessoa }}
-                                    </td>
-                                    <td class="text-center col-lg-3 colorTd">
-                                        <!-- {{ pessoa. }} -->
-                                    </td>
-                                    <td class="text-center col-lg-3 colorTd">
-                                        <!-- {{ item.valor }} -->
                                     </td>
                                     <td class="text-center  col-lg-2 colorTd">
                                         <p class="colorData">{{ pessoa.dtAdmissao  | date: 'dd/MM/yyyy HH:mm' }}</p>

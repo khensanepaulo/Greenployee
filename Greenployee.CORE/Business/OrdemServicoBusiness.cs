@@ -62,6 +62,16 @@ namespace Greenployee.CORE.Business
                 db.OrdemServicoItens.Add(osItem);
             }
 
+            var metas = db.PessoaMetas.Where(x => x.idPessoa == ordemServico.idFuncionario && x.flConcluido == false).ToList();
+            if(metas.Count() > 0)
+            {
+                foreach(var meta in metas)
+                {
+                    meta.vlAlcancado += ordemServico.vlTotal ?? 0;
+                    db.PessoaMetas.Update(meta);
+                }
+            }
+
             await db.SaveChangesAsync();
             return ordemServico;
         }
@@ -108,6 +118,7 @@ namespace Greenployee.CORE.Business
         public async Task<IEnumerable<dynamic>> FindByCommissionsByMonthAll()
         {
             var list = await (from o in db.OrdensServicos
+                              where o.dtExcluido == null
                               group o by new { o.dtCadastro.Year, o.dtCadastro.Month } into g
                               select new
                               {
@@ -124,7 +135,8 @@ namespace Greenployee.CORE.Business
         public async Task<IEnumerable<dynamic>> FindBycommissionsByMonthById(int id)
         {
             var list = await (from o in db.OrdensServicos
-                              where o.Funcionario != null && o.Funcionario.Usuario != null && o.Funcionario.Usuario.id == id
+                              where o.Funcionario != null && o.Funcionario.Usuario != null && o.Funcionario.Usuario.id == id &&
+                              o.dtExcluido == null
                               group o by new { o.dtCadastro.Year, o.dtCadastro.Month } into g
                               select new
                               {

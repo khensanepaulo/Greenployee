@@ -46,6 +46,7 @@ export class InicioComponent {
     this.getPessoa();    
     this.verificarUser();
     this.listarOrdemServico();
+    this.listaComissoesPorMes();
   }
 
   
@@ -127,10 +128,8 @@ public listarOrdemServico(): void {
   const parsedUserId = parseInt(userId, 10);
 
   if(this.userDataService.userCredentials.permissions == 'Admin'){
-    debugger
     this.ordemServicoService.findAll().then((ordemServicos: OrdemServico[]) => {
       this.ordemServicos = ordemServicos.slice(0, 10); 
-      this.listaComissoesPorMes();
       console.log(this.ordemServicos);
     })
     .catch((error) => {
@@ -151,9 +150,7 @@ public listaComissoesPorMes(): void {
 
   const userId = this.userDataService.userCredentials.userId;
   const parsedUserId = parseInt(userId, 10);
-
   if(this.userDataService.userCredentials.permissions == 'Admin'){
-    debugger
      this.ordemServicoService.FindByCommissionsByMonthAll().then((comissoesPorData: ComissoesPorPeriodo[]) => {
      this.comissoesPorData = comissoesPorData.slice(0, 10); 
       console.log(this.comissoesPorData);
@@ -162,9 +159,8 @@ public listaComissoesPorMes(): void {
       console.error('Erro ao obter as Comissoes.');
     });
   } else{
-    debugger
-    this.ordemServicoService.FindBycommissionsByMonthById(parsedUserId).then((ordemServicosPorData: ComissoesPorPeriodo[]) => {
-      this.comissoesPorData = ordemServicosPorData.slice(0, 10); 
+    this.ordemServicoService.FindBycommissionsByMonthById(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
+      this.comissoesPorData = comissoesPorData.slice(0, 10); 
       console.log(this.comissoesPorData);
     })
     .catch((error) => {

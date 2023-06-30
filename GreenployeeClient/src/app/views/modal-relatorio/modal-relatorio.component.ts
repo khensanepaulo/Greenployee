@@ -10,6 +10,8 @@ import { MetaService } from 'src/app/service/meta.service';
 import { PessoaService } from 'src/app/service/pessoa.service';
 import { cloneDeep } from 'lodash';
 import { UserDataService } from 'src/app/service/userDataService';
+import { ComissoesPorPeriodo } from 'src/app/model/comissoesPorPeriodo';
+import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
 
 @Component({
   selector: 'app-modal-relatorio',
@@ -18,6 +20,7 @@ import { UserDataService } from 'src/app/service/userDataService';
 })
 export class ModalRelatorioComponent {
 
+  comissoesPorData: ComissoesPorPeriodo [] = [];
   public quantidadeMetasConcluida!: number;
   public quantidadeMetasNaoConcluida!: number;
   verificaUser!: string;
@@ -26,19 +29,77 @@ export class ModalRelatorioComponent {
   public pessoaMeta!: PessoaMeta;
   pessoas : Pessoa [] = [];
   metas: Meta[] = [];
+  public listaNomesMes: string [] = [];
+  public listaValores: number [] = [];
 
   constructor(public metaService: MetaService,
     public pessoaService: PessoaService,
-    public userDataService: UserDataService){}
+    public userDataService: UserDataService,
+    public ordemServicoService: OrdemServicoService,){}
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   ngOnInit(): void {
+    
     this.listarMetas();
     this.listarPessoas();
+    this.listaComissoesPorMes();
+    this.barChartData.labels = this.listaNomesMes;
+
+    // Atribuir os valores à lista de valores (data)
+    this.barChartData.datasets[0].data = this.listaValores;
     this.pessoaMeta = new PessoaMeta();
     this.meta = new Meta();
     this.pessoa = new Pessoa();
+  
+  }
+
+  public barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      x: {},
+      y: {
+        min: 10
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+      datalabels: {
+        anchor: 'end',
+        align: 'end'
+      }
+    }
+  };
+  public barChartType: ChartType = 'bar';
+  public barChartPlugins = [
+    DatalabelsPlugin
+  ];
+
+  public barChartData: ChartData<'bar'> = {
+    labels: this.listaNomesMes,
+    datasets: [
+      { data: this.listaValores, label: 'Ordens Serviço' },
+      // { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Series B' }
+    ]
+  };
+
+  // events
+
+  public randomize(): void {
+    // Only Change 3 values
+    this.barChartData.datasets[0].data = [
+      Math.round(Math.random() * 100),
+      59,
+      80,
+      Math.round(Math.random() * 100),
+      56,
+      Math.round(Math.random() * 100),
+      40 ];
+
+    this.chart?.update();
   }
 
 
@@ -95,9 +156,14 @@ export class ModalRelatorioComponent {
     console.log(event, active);
   }
 
-  public chartHovered({ event, active }: { event: ChartEvent, active: {}[] }): void {
+  public chartHoveredBar({ event, active }: { event: ChartEvent, active: {}[] }): void {
     console.log(event, active);
   }
+
+  public chartHoveredPie({ event, active }: { event: ChartEvent, active: {}[] }): void {
+    console.log(event, active);
+  }
+
 
   changeLabels(): void {
     const words = ['hen', 'variable', 'embryo', 'instal', 'pleasant', 'physical', 'bomber', 'army', 'add', 'film',
@@ -159,7 +225,6 @@ public listarMetas(): void {
   const parsedUserId = parseInt(userId, 10);
   if(this.userDataService.userCredentials.permissions == 'Admin'){
     this.metaService.findAll().then((metas: Meta[]) => {
-      debugger;
       this.metas = metas; // Armazena a lista completa de pessoas
       console.log(metas);
       this.contagemMetas();
@@ -223,6 +288,36 @@ public resetItem(): void{
   }else{
      return;
   } 
+}
+
+public listaComissoesPorMes(): void {
+
+  const userId = this.userDataService.userCredentials.userId;
+  const parsedUserId = parseInt(userId, 10);
+  if(this.userDataService.userCredentials.permissions == 'Admin'){
+    debugger;
+     this.ordemServicoService.FindByCommissionsByMonthAll().then((comissoesPorData: ComissoesPorPeriodo[]) => {
+      debugger;
+     this.comissoesPorData = comissoesPorData.slice(0, 10);
+     this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());
+     this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
+      console.log(this.comissoesPorData);
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as Comissoes.');
+    });
+  } else{
+    debugger
+    this.ordemServicoService.FindBycommissionsByMonthById(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
+      this.comissoesPorData = comissoesPorData.slice(0, 10); 
+      this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());
+      this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
+      console.log(this.comissoesPorData);
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as Comissoes.');
+    });
+  }
 }
 
 }

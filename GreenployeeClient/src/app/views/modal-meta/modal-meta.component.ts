@@ -17,6 +17,7 @@ export class ModalMetaComponent {
   verificaUser!: string;
   public pessoa!: Pessoa;
   public meta! : Meta;
+  public metaConcluida! : Meta;
   public pessoaMeta!: PessoaMeta;
   pessoas : Pessoa [] = [];
   metas: Meta[] = [];
@@ -30,21 +31,21 @@ export class ModalMetaComponent {
     this.listarPessoas();
     this.pessoaMeta = new PessoaMeta();
     this.meta = new Meta();
+    this.metaConcluida = new Meta();
     this.pessoa = new Pessoa();
     
   }
 
 public addItem(): void{
-  debugger;
   this.meta.pessoasMeta.push(cloneDeep(this.pessoaMeta));
   console.log(this.meta.pessoasMeta);
 }
 
 public editMeta(index: number): void {
-  debugger;
-  this.meta = this.metas[index]; 
-  this.metaService.update(this.meta);
+  this.metaConcluida = this.metas[index]; 
+  this.metaService.update(this.metaConcluida);
   this.resetMeta();
+  this.listarMetas();
 }
 
 public addMeta(): void {
@@ -61,9 +62,7 @@ public resetMeta(): void {
 }
 
 public delete(index: number): void{
-  debugger;
   this.metaService.delete(this.metas[index].id).then(value => {
-    debugger;
     if(value){
       this.listarMetas();
     }

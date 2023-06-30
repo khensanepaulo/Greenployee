@@ -54,7 +54,6 @@ export class ModalNovaOrdemComponent implements OnInit{
     if (!this.ordemServicoItem.nmProduto || !this.ordemServicoItem.vlUnitario && isNaN(this.ordemServicoItem.vlUnitario)) {
       return;
     }
-    debugger;
     this.ordemServicoItem.nrQuantidade = 1;
     this.ordemServicoItem.vlTotal = this.ordemServicoItem.vlUnitario;
     this.ordemServico.ordemServicoItem.push(cloneDeep(this.ordemServicoItem));
@@ -104,15 +103,15 @@ export class ModalNovaOrdemComponent implements OnInit{
 
 
   public resetItemModal(): void {
-    debugger;
     this.ordemServicoItem = new OrdemServicoItem ();
+    this.ordemServico = new OrdemServico();
     this.cdr.detectChanges();
   }
 
-  public verificarUser(): boolean {
+  public isAdmin(): boolean {
 
     this.verificaUser = this.userDataService.userCredentials.permissions; 
-    return this.verificaUser != 'User';
+    return this.verificaUser == 'Admin';
  
   }
 
