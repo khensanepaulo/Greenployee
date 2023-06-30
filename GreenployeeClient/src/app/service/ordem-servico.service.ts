@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import axios, { AxiosInstance } from "axios";
 import { OrdemServico } from 'src/app/model/ordemServico';
 import { ComissoesPorPeriodo } from '../model/comissoesPorPeriodo';
+import { OrdemServicoFilter } from '../filters/ordemServicoFilter';
 @Injectable({
   providedIn: 'root'
 })
@@ -100,6 +101,39 @@ export class OrdemServicoService {
       return Promise.reject(error.response);
     }
   }
+
+  public async findAllPaginado(filter?: OrdemServicoFilter): Promise<OrdemServicoFilter[]> {
+    try {
+      let url = '/OrdemServico/paged';
+  
+      if (filter) {
+        const params: any = {};
+  
+        if (filter.dtInicio) {
+          params.dtInicio = filter.dtInicio.toISOString();
+        }
+        if (filter.dtFim) {
+          params.dtFim = filter.dtFim.toISOString();
+        }
+        if (filter.nrOrdem) {
+          params.nrOrdem = filter.nrOrdem;
+        }
+        if (filter.nmCliente) {
+          params.nmCliente = filter.nmCliente;
+        }
+        if (filter.nmFuncionario) {
+          params.nmFuncionario = filter.nmFuncionario;
+        }
+  
+        url += '?' + new URLSearchParams(params).toString();
+      }
+  
+      return (await this.axiosClient.get<OrdemServicoFilter[]>(url, { headers: this.getHeaders() })).data;
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+
 
 }
 
