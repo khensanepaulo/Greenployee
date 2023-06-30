@@ -17,6 +17,8 @@ namespace Greenployee.CORE.Business
         Task<bool> Delete(int id);
         Task<IEnumerable<dynamic>> FindByUserId(int id);
         string GetSequenceNrOrdem();
+        Task<IEnumerable<dynamic>> FindBycommissionsByMonthById(int id);
+        Task<IEnumerable<dynamic>> FindByCommissionsByMonthAll();
 
     }
 
@@ -58,6 +60,16 @@ namespace Greenployee.CORE.Business
                 osItem.idOrdemServico = ordemServico.id;
                 osItem.OrdemServico = null;
                 db.OrdemServicoItens.Add(osItem);
+            }
+
+            var metas = db.PessoaMetas.Where(x => x.idPessoa == ordemServico.idFuncionario && x.flConcluido == false).ToList();
+            if(metas.Count() > 0)
+            {
+                foreach(var meta in metas)
+                {
+                    meta.vlAlcancado += ordemServico.vlTotal ?? 0;
+                    db.PessoaMetas.Update(meta);
+                }
             }
 
             await db.SaveChangesAsync();
@@ -102,5 +114,42 @@ namespace Greenployee.CORE.Business
             var nrOrdem = lastNrOrdem.ToString("00000");
             return nrOrdem;
         }
+
+        public async Task<IEnumerable<dynamic>> FindByCommissionsByMonthAll()
+        {
+            var list = await (from o in db.OrdensServicos
+                              where o.dtExcluido == null
+                              group o by new { o.dtCadastro.Year, o.dtCadastro.Month } into g
+                              select new
+                              {
+                                  nmMes = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMMM yyyy").ToUpper(),
+                                  vlTotal = g.Sum(os => os.vlTotal),
+                                  dtOrdem = g.Select(x => x.dtCadastro),
+                                  vlOrdem = g.Select(x => x.vlTotal),
+                                  ordensServico = g.ToList()
+                              }).ToListAsync();
+
+            return list;
+        }
+
+        public async Task<IEnumerable<dynamic>> FindBycommissionsByMonthById(int id)
+        {
+            var list = await (from o in db.OrdensServicos
+                              where o.Funcionario != null && o.Funcionario.Usuario != null && o.Funcionario.Usuario.id == id &&
+                              o.dtExcluido == null
+                              group o by new { o.dtCadastro.Year, o.dtCadastro.Month } into g
+                              select new
+                              {
+                                  nmMes = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMMM yyyy").ToUpper(),
+                                  vlTotal = g.Sum(os => os.vlTotal),
+                                  dtOrdem = g.Select(x => x.dtCadastro),
+                                  vlOrdem = g.Select(x => x.vlTotal),
+                                  OrdensServico = g.ToList()
+                              }).ToListAsync();
+
+            return list;
+        }
+
+
     }
 }

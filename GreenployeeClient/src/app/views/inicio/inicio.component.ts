@@ -8,15 +8,17 @@ import { PessoaService } from 'src/app/service/pessoa.service';
 import { Router } from '@angular/router';
 import { OrdemServicoItem } from 'src/app/model/ordemServicoItem';
 import { OrdemServico } from 'src/app/model/ordemServico';
+import { ComissoesPorPeriodo } from 'src/app/model/comissoesPorPeriodo';
 import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
+
 
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
 })
-export class InicioComponent {
 
+export class InicioComponent {
   verificaUser!: string;
   public pessoa!: Pessoa;
   ordemServico!: OrdemServico;
@@ -25,6 +27,7 @@ export class InicioComponent {
   pessoas: Pessoa[] = [];
   metas: Meta[] = [];
   ordemServicos: OrdemServico [] = [];
+  comissoesPorData: ComissoesPorPeriodo [] = [];
   permissao!: string;
 
   constructor(public metaService: MetaService,
@@ -43,6 +46,7 @@ export class InicioComponent {
     this.getPessoa();    
     this.verificarUser();
     this.listarOrdemServico();
+    this.listaComissoesPorMes();
   }
 
   ngOnChanges(): void{
@@ -61,7 +65,6 @@ export class InicioComponent {
     return this.verificaUser != 'Admin';
  
   }
-
  
   public resetItemOrdemServico(): void{
     this.ordemServico = new OrdemServico();
@@ -143,6 +146,29 @@ public listarOrdemServico(): void {
     })
     .catch((error) => {
       console.error('Erro ao obter as Ordens de serviço.');
+    });
+  }
+}
+
+public listaComissoesPorMes(): void {
+
+  const userId = this.userDataService.userCredentials.userId;
+  const parsedUserId = parseInt(userId, 10);
+  if(this.userDataService.userCredentials.permissions == 'Admin'){
+     this.ordemServicoService.FindByCommissionsByMonthAll().then((comissoesPorData: ComissoesPorPeriodo[]) => {
+     this.comissoesPorData = comissoesPorData.slice(0, 10); 
+      console.log(this.comissoesPorData);
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as Comissoes.');
+    });
+  } else{
+    this.ordemServicoService.FindBycommissionsByMonthById(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
+      this.comissoesPorData = comissoesPorData.slice(0, 10); 
+      console.log(this.comissoesPorData);
+    })
+    .catch((error) => {
+      console.error('Erro ao obter as Comissoes.');
     });
   }
 }

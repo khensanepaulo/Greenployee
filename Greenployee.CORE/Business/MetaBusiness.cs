@@ -60,7 +60,13 @@ namespace Greenployee.CORE.Business
         public async Task<Meta> Update(Meta meta)
         {
             meta.dtAtualizado = DateTime.Now;
-             
+            foreach (var item in meta.PessoasMeta)
+            {
+                item.dtAtualizado = DateTime.Now;
+                item.dtConcluido = DateTime.Now;
+                item.flConcluido = true;
+            }
+            
             db.Metas.Update(meta);
             await db.SaveChangesAsync();
             return meta;

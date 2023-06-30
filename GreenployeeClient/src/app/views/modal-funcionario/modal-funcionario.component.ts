@@ -43,7 +43,6 @@ export class ModalFuncionarioComponent {
   }
 
   public delete(index: number): void{
-    debugger;
     this.pessoaService.delete(this.pessoas[index].id).then(value => {
       if(value){
         this.listarPessoas();

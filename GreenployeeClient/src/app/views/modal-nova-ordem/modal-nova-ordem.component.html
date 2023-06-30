@@ -21,7 +21,7 @@
                                         <input type="text" id="nrOrdem" name="nmOrdem" class="form-control inputCinza" placeholder="00000" [disabled]="true"
                                             [(ngModel)]="ordemServico.nrOrdem">
                                     </div>
-                                    <div *ngIf="!verificarUser()" class="col-lg-9 form-group">
+                                    <div *ngIf="isAdmin()" class="col-lg-9 form-group">
                                         <label  class="textoPadrao d-flex justify-content-start">Funcionário</label>
                                         <select name="permissaoPessoa" [(ngModel)]="ordemServico.funcionario" name="ordemServicoFuncionario" class="form-control inputCinza" id="pessoa">
                                             <option selected value="" style="font-weight: bold;">Selecione um Funcionário</option>
@@ -157,7 +157,7 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer" style="background-color: #C9D7D0;">
-                <button (click)="resetItemModal()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button (click)="resetItemModal()" type="button" class="btn btn-danger">Cancelar</button>
                 <button (click)="addOrdemServico()" type="button" class="btn gradiente" style="color:white">Salvar</button>
             </div>
         </div>

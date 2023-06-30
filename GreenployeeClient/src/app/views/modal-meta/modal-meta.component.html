@@ -92,8 +92,8 @@
                                     {{ meta.dsRecompensa }}
                                 </td>
                                 <td class="text-center col-lg-6 tdRadiusRight colorTd">
-                                    <button type="button" class="btn" (click)="editMeta(index)">
-                                        ✔
+                                    <button type="button" class="btn gradiente" style="color: white; margin-bottom: 5px;" (click)="editMeta(index)" [disabled]="this.metas[index].dtAtualizado">
+                                        {{this.metas[index].dtAtualizado ? "Concluído" : "Concluir"}}
                                     </button>
                                     <button type="button" class="btn" (click)="this.delete(index)">
                                         <img src="../../../assets/images/icones/excluir.png" style="height: 20px; width: 20px;">

@@ -62,9 +62,7 @@ export class ModalOrdemServicoComponent {
   }
 
   public delete(index: number): void{
-    debugger;
     this.ordemServicoService.delete(this.ordemServicos[index].id).then(value => {
-      debugger;
       if(value){
         this.refresh();
       }
