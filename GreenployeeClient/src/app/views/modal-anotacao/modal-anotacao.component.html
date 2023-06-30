@@ -10,18 +10,19 @@
             <div class="modal-body" style="background-color: #C9D7D0;">
                 <div class="row">
                     <div class="col-lg-12 form-group">
-                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Nova anotação</label>
+                        <label class="textoPadrao row justify-content-start" style="margin-left: 6px;">Nova
+                            anotação</label>
                         <!-- <input type="text" placeholder="Nova anotação..." class="form-control inputCinza" id="" style="height: 10vh;"> -->
-                        <textarea [(ngModel)]="anotacao.dsMensagem" placeholder="Digite sua anotação..."  class="texto-comeca-no-topo form-control inputCinza" ></textarea>
+                        <textarea [(ngModel)]="anotacao.dsMensagem" placeholder="Digite sua anotação..."
+                            class="texto-comeca-no-topo form-control inputCinza"></textarea>
                     </div>
                     <div class="form-switch col-lg-2 mt3" style="margin-left: 1vw; margin-bottom: 2vh;">
                         <style>
-                            .form-check-input {
-                            }
+                            .form-check-input {}
 
                             .form-check-input:checked {
-                                background: rgb(54,130,94);
-                                background: linear-gradient(209deg, rgba(54,130,94,1) 0%, rgba(71, 145, 111, 0.705) 29%, rgba(54,130,94,1) 100%);
+                                background: rgb(54, 130, 94);
+                                background: linear-gradient(209deg, rgba(54, 130, 94, 1) 0%, rgba(71, 145, 111, 0.705) 29%, rgba(54, 130, 94, 1) 100%);
                             }
                         </style>
                     </div>
@@ -31,16 +32,17 @@
                     font-size: 16px; 
                     font-weight: lighter ;">
                         {{ mensagem }}
-                      </div>
-                      <div *ngIf="mensagemErro" style="color: rgb(161, 19, 40); 
+                    </div>
+                    <div *ngIf="mensagemErro" style="color: rgb(161, 19, 40); 
                      font-family: 'Inter', sans-serif; 
                     font-style: normal; 
                     font-size: 16px; 
                     font-weight: lighter ;">
                         {{ mensagemErro }}
-                      </div>
+                    </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
-                        <button (click)="addAnotacao()" type="button" class="btn gradiente" style="color:white">Salvar</button>
+                        <button (click)="addAnotacao()" type="button" class="btn gradiente"
+                            style="color:white">Salvar</button>
                     </div>
                     <hr>
                     <table class="table-borderless table-hover ">
@@ -62,10 +64,10 @@
                                 </thead>
                                 <tr *ngFor="let anotacao of anotacoes" class="trCor col-lg-12">
                                     <td class="text-center col-lg-6 colorTd">
-                                      {{ anotacao.dsMensagem }}
+                                        {{ anotacao.dsMensagem }}
                                     </td>
-                                    
-                                  </tr>
+
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -73,6 +75,28 @@
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Sair</button>
                     </div>
                 </div>
+                <!-- Contador de página -->
+                <nav aria-label="Navegação de página exemplo">
+                    <ul class="pagination ">
+                        <li class="page-item">
+                            <a class="page-link gradiente" href="#" aria-label="Anterior" style="color: white;">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                        </li>
+                        <li class="page-item gradiente"><a class="page-link gradiente" href="#"
+                                style="color: white;">1</a></li>
+                        <li class="page-item gradiente"><a class="page-link gradiente" href="#"
+                                style="color: white;">2</a></li>
+                        <li class="page-item"><a class="page-link gradiente" href="#" style="color: white;">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link gradiente" href="#" aria-label="Próximo" style="color: white;">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Próximo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
