@@ -1,10 +1,10 @@
 <!-- Funcionários - modal -->
 <app-modal-permissao-usuario></app-modal-permissao-usuario>
 
-
 <div *ngIf="this.pessoa">
     <app-modal-funcionario-cadastro [objeto]="pessoa"></app-modal-funcionario-cadastro>
 </div>
+
 <div class="modal modal-xl" id="funcionario">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -12,15 +12,18 @@
             <div class="modal-header" style="background-color: #C9D7D0;">
                 <h4 class="modal-title textoPadrao">Funcionários</h4>
                 <div>
-                        <button (click)="listarPessoas()" class="btn refreshColor" type="button" style="color:white">⟲</button>
-                        <button type="button" class="btn gradiente ml3" data-bs-toggle="modal" data-bs-target="#funcionarioCadastro" style="color:white">Cadastrar</button>
-                        <button (click)="listarPessoas()" type="button" class="btn ml3 secondButtonColor" data-bs-toggle="modal" data-bs-target="#funcionarioPermissao" style="color:white">Permissão</button>
+                    <button (click)="listarPessoas()" class="btn refreshColor" type="button"
+                        style="color:white">⟲</button>
+                    <button type="button" class="btn gradiente ml3" data-bs-toggle="modal"
+                        data-bs-target="#funcionarioCadastro" style="color:white">Cadastrar</button>
+                    <button (click)="listarPessoas()" type="button" class="btn ml3 secondButtonColor"
+                        data-bs-toggle="modal" data-bs-target="#funcionarioPermissao"
+                        style="color:white">Permissão</button>
                 </div>
             </div>
             <!-- Modal body -->
             <div class="modal-body" style="background-color: #C9D7D0;">
                 <div class="row">
-
                     <table class="table-borderless table-hover ">
                         <thead>
                             <tr style="background-color: #C9D7D0 !important;" class="trCor col-lg-12">
@@ -40,19 +43,22 @@
                         style="max-height: 380px; overflow-y: scroll;">
                         <table class="table table-borderless table-hover ">
                             <tbody>
-                                <tr *ngFor="let pessoa of pessoas ; index as index" class="trCor col-lg-12">
+                                <tr *ngFor="let pessoa of pessoas; index as index" class="trCor col-lg-12">
                                     <td class="tdRadiusLeft col-lg-8 colorTd">
                                         {{ pessoa.nmPessoa }}
                                     </td>
                                     <td class="text-center  col-lg-2 colorTd">
-                                        <p class="colorData">{{ pessoa.dtAdmissao  | date: 'dd/MM/yyyy HH:mm' }}</p>
+                                        <p class="colorData">{{ pessoa.dtAdmissao | date: 'dd/MM/yyyy HH:mm' }}</p>
                                     </td>
                                     <td class="tdRadiusRight colorTd" style="width: 15%;">
-                                        <button type="button" class="btn" data-bs-toggle="modal"  data-bs-target="#funcionarioEditar" (click)="openEditModal(index)">
-                                            <img src="../../../assets/images/icones/editar.png" style="height: 20px; width: 20px;">
+                                        <button type="button" class="btn" data-bs-toggle="modal"
+                                            data-bs-target="#funcionarioEditar" (click)="openEditModal(index)">
+                                            <img src="../../../assets/images/icones/editar.png"
+                                                style="height: 20px; width: 20px;">
                                         </button>
                                         <button type="button" class="btn" (click)="this.delete(index)">
-                                            <img src="../../../assets/images/icones/excluir.png" style="height: 20px; width: 20px;">
+                                            <img src="../../../assets/images/icones/excluir.png"
+                                                style="height: 20px; width: 20px;">
                                         </button>
                                     </td>
                                 </tr>
@@ -60,10 +66,29 @@
                         </table>
                     </div>
                 </div>
-                <!-- Modal footer -->
-                <div class="modal-footer" style="background-color: #C9D7D0;">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Sair</button>
-                </div>
+                <!-- Contador de página -->
+                <nav aria-label="Navegação de página exemplo">
+                    <ul class="pagination ">
+                        <li class="page-item">
+                            <a class="page-link gradiente" href="#" aria-label="Anterior" style="color: white;">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                        </li>
+                        <li class="page-item gradiente"><a class="page-link gradiente" href="#"
+                                style="color: white;">1</a></li>
+                        <li class="page-item gradiente"><a class="page-link gradiente" href="#"
+                                style="color: white;">2</a></li>
+                        <li class="page-item"><a class="page-link gradiente" href="#" style="color: white;">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link gradiente" href="#" aria-label="Próximo" style="color: white;">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Próximo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
             </div>
         </div>
     </div>

@@ -20,26 +20,27 @@ import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
 })
 export class ModalRelatorioComponent {
 
-  comissoesPorData: ComissoesPorPeriodo [] = [];
+  comissoesPorData: ComissoesPorPeriodo[] = [];
   public quantidadeMetasConcluida!: number;
   public quantidadeMetasNaoConcluida!: number;
   verificaUser!: string;
   public pessoa!: Pessoa;
-  public meta! : Meta;
+  public meta!: Meta;
   public pessoaMeta!: PessoaMeta;
-  pessoas : Pessoa [] = [];
+  pessoas: Pessoa[] = [];
   metas: Meta[] = [];
-  public listaNomesMes: string [] = [];
-  public listaValores: number [] = [];
+  public listaNomesMes: string[] = [];
+  public listaValores: number[] = [];
 
   constructor(public metaService: MetaService,
     public pessoaService: PessoaService,
     public userDataService: UserDataService,
-    public ordemServicoService: OrdemServicoService,){}
+    public ordemServicoService: OrdemServicoService,) { }
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   ngOnInit(): void {
+
 
     this.listarMetas();
     this.listarPessoas();
@@ -97,7 +98,7 @@ export class ModalRelatorioComponent {
       Math.round(Math.random() * 100),
       56,
       Math.round(Math.random() * 100),
-      40 ];
+      40];
 
     this.chart?.update();
   }
@@ -144,7 +145,7 @@ export class ModalRelatorioComponent {
     return {
       labels: ['Concluídas', 'Não Concluídas'],
       datasets: [{
-        data: [this.quantidadeMetasConcluida, this.quantidadeMetasNaoConcluida  ]
+        data: [this.quantidadeMetasConcluida, this.quantidadeMetasNaoConcluida]
       }]
     };
   }
@@ -214,6 +215,12 @@ export class ModalRelatorioComponent {
   }
 
 
+
+
+
+
+
+
   public resetMeta(): void {
     this.meta = new Meta();
     this.pessoaMeta = new PessoaMeta();
@@ -223,25 +230,24 @@ export class ModalRelatorioComponent {
 
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
-    if(this.userDataService.userCredentials.permissions == 'Admin'){
+    if (this.userDataService.userCredentials.permissions == 'Admin') {
       this.metaService.findAll().then((metas: Meta[]) => {
-        debugger;
         this.metas = metas; // Armazena a lista completa de pessoas
         console.log(metas);
         this.contagemMetas();
       })
-      .catch((error) => {
-        console.error('Erro ao obter as pessoas:', error);
-      });
-    } else{
+        .catch((error) => {
+          console.error('Erro ao obter as pessoas:', error);
+        });
+    } else {
       this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
         this.metas = metas; // Armazena a lista completa de metas
         this.contagemMetas();
         console.log(metas);
       })
-      .catch((error) => {
-        console.error('Erro ao obter as metas:', error);
-      });
+        .catch((error) => {
+          console.error('Erro ao obter as metas:', error);
+        });
     }
   }
 
@@ -252,6 +258,8 @@ export class ModalRelatorioComponent {
     const metasComData = this.metas.filter(item => item.dtAtualizado != null);
     this.quantidadeMetasConcluida = metasComData.length;
   }
+
+
 
   public verificarUser(): boolean {
 
@@ -276,15 +284,15 @@ export class ModalRelatorioComponent {
       });
   }
 
-  public resetItem(): void{
+  public resetItem(): void {
     this.pessoaMeta = new PessoaMeta();
     this.meta = new Meta();
   }
 
-  public removeItem( sinal: string, index: number): void{
-    if(sinal == '-'){
-      this.meta.pessoasMeta.splice(index,1);
-    }else{
+  public removeItem(sinal: string, index: number): void {
+    if (sinal == '-') {
+      this.meta.pessoasMeta.splice(index, 1);
+    } else {
       return;
     }
   }
@@ -293,19 +301,19 @@ export class ModalRelatorioComponent {
 
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
-    if(this.userDataService.userCredentials.permissions == 'Admin'){
+    if (this.userDataService.userCredentials.permissions == 'Admin') {
       debugger;
       this.ordemServicoService.FindByCommissionsByMonthAll().then((comissoesPorData: ComissoesPorPeriodo[]) => {
         debugger;
-      this.comissoesPorData = comissoesPorData.slice(0, 10);
-      this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());
-      this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
+        this.comissoesPorData = comissoesPorData.slice(0, 10);
+        this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());
+        this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
         console.log(this.comissoesPorData);
       })
-      .catch((error) => {
-        console.error('Erro ao obter as Comissoes.');
-      });
-    } else{
+        .catch((error) => {
+          console.error('Erro ao obter as Comissoes.');
+        });
+    } else {
       debugger
       this.ordemServicoService.FindBycommissionsByMonthById(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
         this.comissoesPorData = comissoesPorData.slice(0, 10);
@@ -313,9 +321,9 @@ export class ModalRelatorioComponent {
         this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
         console.log(this.comissoesPorData);
       })
-      .catch((error) => {
-        console.error('Erro ao obter as Comissoes.');
-      });
+        .catch((error) => {
+          console.error('Erro ao obter as Comissoes.');
+        });
     }
   }
 
