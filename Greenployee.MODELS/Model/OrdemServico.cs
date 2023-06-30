@@ -10,8 +10,6 @@ namespace Greenployee.MODELS.Model
 {
     public class OrdemServico : BaseClass
     {
-
-        
         [StringLength(15)]
         public string nrOrdem { get; set; } = string.Empty;
 

@@ -41,6 +41,7 @@ export class ModalRelatorioComponent {
 
   ngOnInit(): void {
 
+
     this.listarMetas();
     this.listarPessoas();
     this.listaComissoesPorMes();
