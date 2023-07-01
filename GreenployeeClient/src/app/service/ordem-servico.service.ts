@@ -102,9 +102,9 @@ export class OrdemServicoService {
     }
   }
 
-  public async findAllPaginado(filter?: OrdemServicoFilter): Promise<OrdemServicoFilter[]> {
+  public async getPagedAsync(filter?: OrdemServicoFilter,): Promise<OrdemServico[]> {
     try {
-      let url = '/OrdemServico/paged';
+      let url = '/paged';
   
       if (filter) {
         const params: any = {};
@@ -128,7 +128,39 @@ export class OrdemServicoService {
         url += '?' + new URLSearchParams(params).toString();
       }
   
-      return (await this.axiosClient.get<OrdemServicoFilter[]>(url, { headers: this.getHeaders() })).data;
+      return (await this.axiosClient.get<OrdemServico[]>(url, { headers: this.getHeaders() })).data;
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+
+  public async getPagedByUserIdAsync(filter?: OrdemServicoFilter): Promise<OrdemServico[]> {
+    try {
+      let url = '/OrdemServico/paged';
+  
+      if (filter) {
+        const params: any = {};
+
+        if (filter.dtInicio) {
+          params.dtInicio = filter.dtInicio.toISOString();
+        }
+        if (filter.dtFim) {
+          params.dtFim = filter.dtFim.toISOString();
+        }
+        if (filter.nrOrdem) {
+          params.nrOrdem = filter.nrOrdem;
+        }
+        if (filter.nmCliente) {
+          params.nmCliente = filter.nmCliente;
+        }
+        if (filter.nmFuncionario) {
+          params.nmFuncionario = filter.nmFuncionario;
+        }
+  
+        url += '?' + new URLSearchParams(params).toString();
+      }
+  
+      return (await this.axiosClient.get<OrdemServico[]>(url, { headers: this.getHeaders() })).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }

@@ -302,9 +302,9 @@ export class ModalRelatorioComponent {
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
     if (this.userDataService.userCredentials.permissions == 'Admin') {
-      debugger;
+   
       this.ordemServicoService.FindByCommissionsByMonthAll().then((comissoesPorData: ComissoesPorPeriodo[]) => {
-        debugger;
+   
         this.comissoesPorData = comissoesPorData.slice(0, 10);
         this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());
         this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
@@ -314,7 +314,7 @@ export class ModalRelatorioComponent {
           console.error('Erro ao obter as Comissoes.');
         });
     } else {
-      debugger
+   
       this.ordemServicoService.FindBycommissionsByMonthById(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
         this.comissoesPorData = comissoesPorData.slice(0, 10);
         this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());

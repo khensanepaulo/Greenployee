@@ -117,14 +117,37 @@ export class ModalOrdemServicoComponent {
     };
   }
 
+  // public listarOrdemServico(): void {
+  //   const userId = this.userDataService.userCredentials.userId;
+  //   const parsedUserId = parseInt(userId, 10);
+  //   if (this.userDataService.userCredentials.permissions === 'Admin') {
+  //     this.ordemServicoService.findAll().then((ordemServicos: any[]) => {
+  //       this.ordemServicos = ordemServicos;
+  //       this.ordemServicosState = cloneDeep(ordemServicos);
+  //       this.cdr.detectChanges();
+  //       console.log(this.ordemServicos);
+  //     }).catch((error) => {
+  //       console.error('Erro ao obter as ordens de serviço:', error);
+  //     });
+  //   } else {
+  //     this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: any[]) => {
+  //       this.ordemServicos = ordemServicos;
+  //       this.ordemServicosState = cloneDeep(ordemServicos); 
+  //     }).catch((error) => {
+  //       console.error('Erro ao obter as ordens de serviço:', error);
+  //     });
+  //   }
+  // }
+
   public listarOrdemServico(): void {
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
+
     if (this.userDataService.userCredentials.permissions === 'Admin') {
-      this.ordemServicoService.findAll().then((ordemServicos: any[]) => {
+      this.ordemServicoService.getPagedAsync().then((ordemServicos: any[]) => {
+        debugger;
         this.ordemServicos = ordemServicos;
         this.ordemServicosState = cloneDeep(ordemServicos);
-        this.cdr.detectChanges();
         console.log(this.ordemServicos);
       }).catch((error) => {
         console.error('Erro ao obter as ordens de serviço:', error);
@@ -138,5 +161,6 @@ export class ModalOrdemServicoComponent {
       });
     }
   }
+
 
 }
