@@ -1,4 +1,6 @@
-﻿using Greenployee.MODELS.Data;
+﻿using Greenployee.CORE.Filters;
+using Greenployee.CORE.Page;
+using Greenployee.MODELS.Data;
 using Greenployee.MODELS.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +15,7 @@ namespace Greenployee.CORE.Business
         Task<bool> Delete(int id);
         Task<Pessoa> FindByUserId(int id);
         Task<IEnumerable<Pessoa>> FindAllWithUsuarios();
+        Task<PagedBaseResponse<Pessoa>> GetPagedAsync(PessoaFilter request);
 
     }
 
@@ -72,6 +75,58 @@ namespace Greenployee.CORE.Business
             IEnumerable<Pessoa> list = await db.Pessoas.Include(p => p.Usuario).ToListAsync();
             return list;
         }
+
+        public async Task<PagedBaseResponse<Pessoa>> GetPagedAsync(PessoaFilter request)
+        {
+            var pessoas = db.Pessoas.Where(x => x.dtExcluido == null).AsQueryable();
+
+            if (request.dtInicio != null)
+            {
+                pessoas = pessoas.Where(x => x.dtAdmissao >= request.dtInicio);
+            }
+            if (request.dtFim != null)
+            {
+                pessoas = pessoas.Where(x => x.dtAdmissao <= request.dtFim);
+            }
+
+            if (!string.IsNullOrEmpty(request.nmPessoa))
+            {
+                pessoas = pessoas.Where(x => x.nmPessoa.Contains(request.nmPessoa));
+            }
+
+            if (!string.IsNullOrEmpty(request.nrCPF))
+            {
+                pessoas = pessoas.Where(x => x.nrCPF.Contains(request.nrCPF));
+            }
+
+            if (!string.IsNullOrEmpty(request.nrRG))
+            {
+                pessoas = pessoas.Where(x => x.nrRG.Contains(request.nrRG));
+            }
+
+            if (!string.IsNullOrEmpty(request.dsEmail))
+            {
+                pessoas = pessoas.Where(x => x.dsEmail.Contains(request.dsEmail));
+            }
+
+            if (!string.IsNullOrEmpty(request.nrTelefone))
+            {
+                pessoas = pessoas.Where(x => x.nrTelefone.Contains(request.nrTelefone));
+            }
+
+            if (!string.IsNullOrEmpty(request.flSituacao))
+            {
+                pessoas = pessoas.Where(x => x.flSituacao.Contains(request.flSituacao));
+            }
+
+            if (!string.IsNullOrEmpty(request.nrPIS))
+            {
+                pessoas = pessoas.Where(x => x.nrPIS.Contains(request.nrPIS));
+            }
+
+            return await PageBaseResponseHelper.GetResponseAsync<PagedBaseResponse<Pessoa>, Pessoa>(pessoas, request);
+        }
+
 
     }
 

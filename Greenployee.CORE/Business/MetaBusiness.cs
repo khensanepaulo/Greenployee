@@ -1,4 +1,6 @@
-﻿using Greenployee.MODELS.Data;
+﻿using Greenployee.CORE.Filters;
+using Greenployee.CORE.Page;
+using Greenployee.MODELS.Data;
 using Greenployee.MODELS.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,6 +20,7 @@ namespace Greenployee.CORE.Business
         Task<Meta> Update(Meta meta);
         Task<bool> Delete(int id);
         Task<IEnumerable<Meta>> FindByUserId(int id);
+        Task<PagedBaseResponse<Meta>> GetPagedAsync(MetaFilter request); 
     }
 
     public class MetaBusiness : IMetaBusiness
@@ -91,6 +94,38 @@ namespace Greenployee.CORE.Business
                                                          .OrderByDescending(x => x.dtCadastro)
                                                          .ToListAsync();
             return list;
+        }
+
+        public async Task<PagedBaseResponse<Meta>> GetPagedAsync(MetaFilter request)
+        {
+            var metas = db.Metas.Include(x => x.PessoasMeta).Where(x => x.dtExcluido == null).AsQueryable();
+
+            if (request.dtInicio != null)
+            {
+                metas = metas.Where(x => x.dtCadastro >= request.dtInicio);
+            }
+            if (request.dtFim != null)
+            {
+                metas = metas.Where(x => x.dtCadastro <= request.dtFim);
+            }
+            if (!string.IsNullOrEmpty(request.dsRecompensa))
+            {
+                metas = metas.Where(x => x.dsRecompensa.Contains(request.dsRecompensa));
+            }
+
+            if (!string.IsNullOrEmpty(request.flConcluida))
+            {
+               if (request.flConcluida == "sim")
+                {
+                    metas = metas.Where(x => x.PessoasMeta.Any(pm => pm.flConcluido == true));
+                }
+                else if (request.flConcluida == "nao")
+                {
+                    metas = metas.Where(x => !x.PessoasMeta.Any(pm => pm.flConcluido == true));
+                }
+            }
+
+            return await PageBaseResponseHelper.GetResponseAsync<PagedBaseResponse<Meta>, Meta>(metas.OrderByDescending(x => x.dtCadastro), request);
         }
     }
 }

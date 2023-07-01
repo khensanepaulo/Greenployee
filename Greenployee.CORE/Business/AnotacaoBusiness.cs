@@ -1,4 +1,6 @@
-﻿using Greenployee.MODELS.Data;
+﻿using Greenployee.CORE.Filters;
+using Greenployee.CORE.Page;
+using Greenployee.MODELS.Data;
 using Greenployee.MODELS.DTO;
 using Greenployee.MODELS.DTO.Anotacao;
 using Greenployee.MODELS.DTO.PermissaoUsuario;
@@ -20,6 +22,7 @@ namespace Greenployee.CORE.Business
         Task<Anotacao> Update(Anotacao anotacao);
         Task<bool> Delete(int id);
         Task<IEnumerable<Anotacao>> FindByUserId(int id);
+        Task<PagedBaseResponse<Anotacao>> GetPagedAsync(AnotacaoFilter request);
     }
 
     public class AnotacaoBusiness : IAnotacaoBusiness
@@ -77,6 +80,32 @@ namespace Greenployee.CORE.Business
                                                            .Where(x => x.dtExcluido == null && x.Pessoa != null && x.Pessoa.Usuario != null && x.Pessoa.Usuario.id == id)
                                                            .ToListAsync();
             return list;
+        }
+
+        public async Task<PagedBaseResponse<Anotacao>> GetPagedAsync(AnotacaoFilter request)
+        {
+            var anotacoes = db.Anotacoes.Where(x => x.dtExcluido == null).AsQueryable();
+
+            if (request.dtInicio != null)
+            {
+                anotacoes = anotacoes.Where(x => x.dtCadastro >= request.dtInicio);
+            }
+            if (request.dtFim != null)
+            {
+                anotacoes = anotacoes.Where(x => x.dtCadastro <= request.dtFim);
+            }
+            if (!string.IsNullOrEmpty(request.nmPessoa))
+            {
+                anotacoes = anotacoes.Where(x => x.Pessoa.nmPessoa.Contains(request.nmPessoa));
+            }
+
+            if (!string.IsNullOrEmpty(request.dsMensagem))
+            {
+                anotacoes = anotacoes.Where(x => x.dsMensagem.Contains(request.dsMensagem));
+            }
+
+
+            return await PageBaseResponseHelper.GetResponseAsync<PagedBaseResponse<Anotacao>, Anotacao>(anotacoes.OrderByDescending(x => x.dtCadastro), request);
         }
     }
 }

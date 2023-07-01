@@ -1,6 +1,8 @@
 ﻿using Greenployee.API.Controllers;
 using Greenployee.CORE.Business;
+using Greenployee.CORE.Filters;
 using Greenployee.MODELS.Authentication;
+using Greenployee.MODELS.DTO;
 using Greenployee.MODELS.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -138,6 +140,31 @@ namespace Greenployee.Controllers
             catch (Exception exception)
             {
                 throw exception;
+            }
+        }
+
+
+        [HttpGet]
+        [Route("paged")]
+        public async Task<ActionResult<PagedBaseRespondeDTO<Meta>>> GetPagedAsync([FromQuery] MetaFilter request)
+        {
+            try
+            {
+                _permissionNeeded.Add("Admin");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                {
+                    return NotFound();
+                }
+
+                var metaPaged = await _business.GetPagedAsync(request);
+                var result = new PagedBaseRespondeDTO<Meta>(metaPaged.TotalRegisters, new List<Meta>(metaPaged.Data));
+
+                if (result == null) return NotFound("Não foi possível encontrar as Metas!");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
