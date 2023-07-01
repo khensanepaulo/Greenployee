@@ -118,11 +118,11 @@ export class OrdemServicoService {
           params.idUsuario = filter.idUsuario;
           url = '/usuario/paged';
         }
-        if (filter.dtInicio) {
-          params.dtInicio = filter.dtInicio.toISOString();
+        if (filter.dtInicio && filter.dtFim) {
+          params.dtInicio = filter.dtInicio.toString();
         }
-        if (filter.dtFim) {
-          params.dtFim = filter.dtFim.toISOString();
+        if (filter.dtInicio && filter.dtFim) {
+          params.dtFim = filter.dtFim.toString();
         }
         if (filter.nrOrdem) {
           params.nrOrdem = filter.nrOrdem;

@@ -95,20 +95,6 @@ export class ModalOrdemServicoComponent {
     });
   }
 
-  public filtrarFuncionario(): void {
-    this.ordemServicos = this.ordemServicosState.filter(item => {
-      const nmFuncionario = item.funcionario.nmPessoa.toUpperCase();
-      return nmFuncionario.includes(this.filtro.nmFuncionario.toUpperCase());
-    });
-  }
-
-  public filtrarCliente(): void {
-    this.ordemServicos = this.ordemServicosState.filter(item => {
-      const nmCliente = item.nmCliente.toUpperCase();
-      return nmCliente.includes(this.filtro.nmCliente.toUpperCase());
-    });
-  }
-
   public filtrarLista(): void {
     if (this.filtro.dtInicio && this.filtro.dtFim){
       this.filtrarData();

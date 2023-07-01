@@ -163,11 +163,11 @@ namespace Greenployee.CORE.Business
             }
             if (request.dtInicio != null)
             {
-                ordens = ordens.Where(x => x.dtCadastro >= request.dtInicio);
+                ordens = ordens.Where(x => x.dtCadastro >= Convert.ToDateTime(request.dtInicio));
             }
             if (request.dtFim != null)
             {
-                ordens = ordens.Where(x => x.dtCadastro <= request.dtFim);
+                ordens = ordens.Where(x => x.dtCadastro <= Convert.ToDateTime(request.dtFim));
             }
             if (!string.IsNullOrEmpty(request.nrOrdem))
             {

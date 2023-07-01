@@ -12,28 +12,28 @@
                     <div class="form-group">
                         <label class="textoPadrao text-left" style="margin-bottom: 5px;">Cliente</label>
                         <input name="cliente" type="text" class="form-control inputCinza"
-                            [(ngModel)]="this.filtro.nmCliente" (ngModelChange)="filtrarCliente()">
+                            [(ngModel)]="this.filtro.nmCliente" (ngModelChange)="listarOrdemServico()">
                     </div>
                     <div class="form-group" *ngIf="this.isAdmin()">
                         <label class="textoPadrao text-left" style="margin-bottom: 5px;">Funcionário</label>
                         <input name="funcionario" type="text" class="form-control inputCinza"
-                            [(ngModel)]="this.filtro.nmFuncionario" (ngModelChange)="filtrarFuncionario()">
+                            [(ngModel)]="this.filtro.nmFuncionario" (ngModelChange)="listarOrdemServico()">
                     </div>
                     <div class="form-group">
                         <label class="textoPadrao text-left" style="margin-bottom: 5px;">Data de</label>
                         <input name="dataDe" type="date" class="form-control inputCinza"
-                            [(ngModel)]="this.filtro.dtInicio">
+                            [(ngModel)]="this.filtro.dtInicio" (ngModelChange)="listarOrdemServico()">
                     </div>
                     <div class="form-group">
                         <label class="textoPadrao text-left" style="margin-bottom: 5px;">Data até</label>
                         <input name="dataDe" type="date" class="form-control inputCinza"
-                            [(ngModel)]="this.filtro.dtFim">
+                            [(ngModel)]="this.filtro.dtFim" (ngModelChange)="listarOrdemServico()">
                     </div>
                     <div>
                         <label class="textoPadrao text-left" style="margin-bottom: 5px; margin-top: 36px;">
                             <p>&nbsp;</p>
                         </label>
-                        <button (click)="filtrarLista()" type="button" class="btn refreshColor"
+                        <button (click)="listarOrdemServico()" type="button" class="btn refreshColor"
                             style="color: white; margin-left: 10px;"><i class='fas fa-filter'></i></button>
                     </div>
                 </div>
