@@ -4,5 +4,5 @@ export class MetaFilter {
     dtFim !: Date 
     dsRecompensa!: string 
     flConcluida !: string 
-
+    idUsuario !: number
 }

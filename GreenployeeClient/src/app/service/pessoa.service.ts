@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { Pessoa } from 'src/app/model/pessoa';
 import { PessoaFilter } from '../filters/pessoaFilter';
+import { Observable } from 'rxjs';
+import { Pageable } from '../model/pageable';
 
 @Injectable({
   providedIn: 'root'
@@ -88,50 +90,58 @@ export class PessoaService {
       return Promise.reject(error.response);
     }
   }
-
   
-  public async getPagedAsync(filter?: PessoaFilter,): Promise<Pessoa[]> {
-    try {
+  public getPaged(filter: PessoaFilter): Observable<Pageable<Pessoa>> {
+    return new Observable((observer) => {
       let url = '/paged';
-  
+      const params: any = {};
+
       if (filter) {
-        const params: any = {};
-        
-      if (filter.dtInicio) {
-        params.dtInicio = filter.dtInicio.toISOString();
+        if (filter.idUsuario || filter.idUsuario > 0) {
+          params.idUsuario = filter.idUsuario;
+          url = '/usuario/paged';
+        }
+        if (filter.dtInicio) {
+          params.dtInicio = filter.dtInicio.toISOString();
+        }
+        if (filter.dtFim) {
+          params.dtFim = filter.dtFim.toISOString();
+        }
+        if (filter.nmPessoa) {
+          params.nmPessoa = filter.nmPessoa;
+        }
+        if (filter.nrCPF) {
+          params.nrCPF = filter.nrCPF;
+        }
+        if (filter.nrRG) {
+          params.nrRG = filter.nrRG;
+        }
+        if (filter.dsEmail) {
+          params.dsEmail = filter.dsEmail;
+        }
+        if (filter.nrTelefone) {
+          params.nrTelefone = filter.nrTelefone;
+        }
+        if (filter.flSituacao) {
+          params.flSituacao = filter.flSituacao;
+        }
+        if (filter.nrPIS) {
+          params.nrPIS = filter.nrPIS;
+        }
       }
-      if (filter.dtFim) {
-        params.dtFim = filter.dtFim.toISOString();
-      }
-      if (filter.nmPessoa) {
-        params.nmPessoa = filter.nmPessoa;
-      }
-      if (filter.nrCPF) {
-        params.nrCPF = filter.nrCPF;
-      }
-      if (filter.nrRG) {
-        params.nrRG = filter.nrRG;
-      }
-      if (filter.dsEmail) {
-        params.dsEmail = filter.dsEmail;
-      }
-      if (filter.nrTelefone) {
-        params.nrTelefone = filter.nrTelefone;
-      }
-      if (filter.flSituacao) {
-        params.flSituacao = filter.flSituacao;
-      }
-      if (filter.nrPIS) {
-        params.nrPIS = filter.nrPIS;
-      }
-        url += '?' + new URLSearchParams(params).toString();
-      }
-  
-      return (await this.axiosClient.get<Pessoa[]>(url, { headers: this.getHeaders() })).data;
-    } catch (error: any) {
-      return Promise.reject(error.response);
-    }
+
+      url += '?' + new URLSearchParams(params).toString();
+      this.axiosClient.get<Pageable<Pessoa>>(url, { headers: this.getHeaders() })
+        .then((response: AxiosResponse<Pageable<Pessoa>>) => {
+          observer.next(response.data);
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
+    });
   }
+
 
 
 

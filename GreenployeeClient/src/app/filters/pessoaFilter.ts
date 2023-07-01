@@ -9,6 +9,7 @@ export class PessoaFilter {
     nrTelefone!: string 
     flSituacao !: string 
     nrPIS !: string 
+    idUsuario !: number
 
 }
 

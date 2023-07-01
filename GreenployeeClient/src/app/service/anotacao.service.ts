@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { Anotacao } from 'src/app/model/anotacao';
 import { AnotacaoFilter } from '../filters/anotacaoFilter';
+import { Pageable } from '../model/pageable';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -63,37 +65,41 @@ export class AnotacaoService {
       return Promise.reject(error.response);
     }
   }
-
-  public async getPagedAsync(filter?: AnotacaoFilter,): Promise<Anotacao[]> {
-    try {
-      let url = '/paged';
   
+  public getPaged(filter: AnotacaoFilter): Observable<Pageable<Anotacao>> {
+    return new Observable((observer) => {
+      let url = '/paged';
+      const params: any = {};
+
       if (filter) {
-        const params: any = {};
-        
-      if (filter.dtInicio) {
-        params.dtInicio = filter.dtInicio.toISOString();
+        if (filter.idUsuario || filter.idUsuario > 0) {
+          params.idUsuario = filter.idUsuario;
+          url = '/usuario/paged';
+        }
+        if (filter.dtInicio) {
+          params.dtInicio = filter.dtInicio.toISOString();
+        }
+        if (filter.dtFim) {
+          params.dtFim = filter.dtFim.toISOString();
+        }
+        if (filter.dsMensagem) {
+          params.dsMensagem = filter.dsMensagem;
+        }
+        if (filter.nmPessoa) {
+          params.nmPessoa = filter.nmPessoa;
+        }
       }
-      if (filter.dtFim) {
-        params.dtFim = filter.dtFim.toISOString();
-      }
-      if (filter.dsMensagem) {
-        params.dsMensagem = filter.dsMensagem;
-      }
-      if (filter.nmPessoa) {
-        params.nmPessoa = filter.nmPessoa;
 
       url += '?' + new URLSearchParams(params).toString();
-    }
-  
-        url += '?' + new URLSearchParams(params).toString();
-      }
-  
-      return (await this.axiosClient.get<Anotacao[]>(url, { headers: this.getHeaders() })).data;
-    } catch (error: any) {
-      return Promise.reject(error.response);
-    }
+      this.axiosClient.get<Pageable<Anotacao>>(url, { headers: this.getHeaders() })
+        .then((response: AxiosResponse<Pageable<Anotacao>>) => {
+          observer.next(response.data);
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
+    });
   }
-
 }
 

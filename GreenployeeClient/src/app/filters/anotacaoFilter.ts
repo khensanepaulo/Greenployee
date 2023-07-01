@@ -5,5 +5,6 @@ export class AnotacaoFilter {
     dtFim !: Date 
     dsMensagem!: string 
     nmPessoa !: string 
+    idUsuario !: number
 
 }

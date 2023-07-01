@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { Meta } from 'src/app/model/meta';
 import { Pessoa } from '../model/pessoa';
 import { MetaFilter } from '../filters/metaFilter';
+import { Observable } from 'rxjs';
+import { Pageable } from '../model/pageable';
 
 @Injectable({
   providedIn: 'root'
@@ -89,38 +91,40 @@ export class MetaService {
     }
   }
   
-  
-  public async getPagedAsync(filter?: MetaFilter,): Promise<Meta[]> {
-    try {
+  public getPaged(filter: MetaFilter): Observable<Pageable<Meta>> {
+    return new Observable((observer) => {
       let url = '/paged';
-  
+      const params: any = {};
+
       if (filter) {
-        const params: any = {};
-        
-      if (filter.dtInicio) {
-        params.dtInicio = filter.dtInicio.toISOString();
+        if (filter.idUsuario || filter.idUsuario > 0) {
+          params.idUsuario = filter.idUsuario;
+          url = '/usuario/paged';
+        }
+        if (filter.dtInicio) {
+          params.dtInicio = filter.dtInicio.toISOString();
+        }
+        if (filter.dtFim) {
+          params.dtFim = filter.dtFim.toISOString();
+        }
+        if (filter.flConcluida) {
+          params.flConcluida = filter.flConcluida;
+        }
+        if (filter.flConcluida) {
+          params.flConcluida = filter.flConcluida;
       }
-      if (filter.dtFim) {
-        params.dtFim = filter.dtFim.toISOString();
-      }
-      if (filter.flConcluida) {
-        params.flConcluida = filter.flConcluida;
-      }
-      if (filter.flConcluida) {
-        params.flConcluida = filter.flConcluida;
 
       url += '?' + new URLSearchParams(params).toString();
-    }
-  
-        url += '?' + new URLSearchParams(params).toString();
-      }
-  
-      return (await this.axiosClient.get<Meta[]>(url, { headers: this.getHeaders() })).data;
-    } catch (error: any) {
-      return Promise.reject(error.response);
-    }
+      this.axiosClient.get<Pageable<Meta>>(url, { headers: this.getHeaders() })
+        .then((response: AxiosResponse<Pageable<Meta>>) => {
+          observer.next(response.data);
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
+    }});
   }
-
 
 
 }
