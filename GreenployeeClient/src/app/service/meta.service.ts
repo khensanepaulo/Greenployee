@@ -32,12 +32,10 @@ export class MetaService {
   }
 
   public async cadastrar(meta: Meta): Promise<void> {
-    console.log(meta);
     try {
       await this.axiosClient.post('/', meta, { headers: { 'Authorization': `Bearer ${this.token}` } });
-      console.log("Meta cadastrada com sucesso!");
+      alert("Meta cadastrada com sucesso!");
       return new Promise<void>((resolve, reject) => {
-        // Após cadastrar a meta com sucesso
         resolve();
       });
     } catch (error: any) {
@@ -47,8 +45,7 @@ export class MetaService {
 
   public async findById(id: number): Promise<Meta> {
     try {
-      return (await this.axiosClient.get<Meta>(`/${id}`, { headers: this.getHeaders() })).data; 
-      // Passa os headers na requisição
+      return (await this.axiosClient.get<Meta>(`/${id}`, { headers: this.getHeaders() })).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -57,7 +54,7 @@ export class MetaService {
   public async update(meta: Meta): Promise<void> {
     try {
       await this.axiosClient.put('/', meta, { headers: { 'Authorization': `Bearer ${this.token}` } });
-      console.log("Meta atualizada com sucesso!");
+      alert("Meta atualizada com sucesso!");
     } catch (error: any) {
       return Promise.reject("Não foi possível atualizar a meta! :" + error);
     }
@@ -65,8 +62,11 @@ export class MetaService {
 
   public async delete(id: number): Promise<boolean> {
     try {
-      return (await this.axiosClient.delete<boolean>(`/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
-      console.log("Meta deletada com sucesso!");
+      var response = (await this.axiosClient.delete<boolean>(`/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
+      if (response) {
+        alert("Meta deletada com sucesso!");
+      }
+      return response;
     } catch (error: any) {
       return Promise.reject(error.response);
     }

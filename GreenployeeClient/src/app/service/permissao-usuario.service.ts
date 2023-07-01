@@ -21,7 +21,6 @@ export class PermissaoUsuarioService {
   public getTokenLocalStorage(): string | null {
     var user = JSON.parse(localStorage.getItem('userCredentials') || "");
     this.token = user.token;
-    console.log(user);
     return user.token;
   }
 
@@ -35,7 +34,7 @@ export class PermissaoUsuarioService {
   public async cadastrar(permissaoUsuario: PermissaoUsuario): Promise<void> {
     try {
       await this.axiosClient.post('/', permissaoUsuario, { headers: this.getHeaders() });
-      console.log("PermissaoUsuario cadastrada com sucesso!");
+      alert("Permissão de Usuario cadastrada com sucesso!");
     } catch (error: any) {
       return Promise.reject("Não foi possível cadastrar a permissaoUsuario! :" + error);
     }

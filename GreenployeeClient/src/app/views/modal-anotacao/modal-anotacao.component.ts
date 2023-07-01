@@ -19,8 +19,6 @@ export class ModalAnotacaoComponent {
   public anotacao! : Anotacao;
   public pessoa! : Pessoa;
   anotacoes: Anotacao[] = [];
-  pessoas: Pessoa [] = [];
-
 
   constructor(
     private anotacaoService: AnotacaoService,
@@ -29,23 +27,20 @@ export class ModalAnotacaoComponent {
     public userDataService: UserDataService,
     public localStorageService: LocalStorageService,
     ){}
-  
+
   ngOnInit(): void {
     this.listarAnotacoes();
-    this.selectPessoas();
     this.anotacao = new Anotacao();
     this.pessoa = new Pessoa();
-    
   }
-  
+
   public addAnotacao(): void {
     this.getPessoa().then((idPessoa: number) => {
       this.anotacao.idPessoa = idPessoa;
       this.anotacaoService.cadastrar(this.anotacao).then(() => {
-        this.mensagem = 'Anotação adicionada com sucesso!';
         this.resetItem();
         this.listarAnotacoes();
-        this.showAndHideMessage(3000); // Exibe a mensagem por 3 segundos (3000 ms)
+        alert("Anotação cadastrada com sucesso.")
       }).catch((error) => {
         this.mensagemErro = error;
         this.showAndHideMessage(3000); // Exibe a mensagem de erro por 3 segundos (3000 ms)
@@ -55,22 +50,19 @@ export class ModalAnotacaoComponent {
 
   private showAndHideMessage(duration: number): void {
     setTimeout(() => {
-      this.mensagem = ''; 
+      this.mensagem = '';
       this.mensagemErro = '';// Limpa a mensagem após o tempo especificado
     }, duration);
   }
 
   public resetItem(): void{
     this.anotacao = new Anotacao();
-   }
-  
-  
+  }
 
   public getPessoa(): Promise<number> {
     return new Promise<number>((resolve, reject) => {
       const userId = this.userDataService.userCredentials.userId;
-      console.log(userId);
-  
+
       if (this.userDataService.userCredentials.permissions == 'Admin') {
         const nomePessoaElement = document.getElementById('nomePessoa');
         if (nomePessoaElement) {
@@ -81,7 +73,6 @@ export class ModalAnotacaoComponent {
         const parsedUserId = parseInt(userId, 10);
         this.pessoaService.findByUserId(parsedUserId)
           .then((pessoa: Pessoa) => {
-            console.log(pessoa, parsedUserId);
             const idPessoaRetornado = pessoa.id;
             resolve(idPessoaRetornado);
           }).catch((error) => {
@@ -95,36 +86,23 @@ export class ModalAnotacaoComponent {
     });
   }
 
-  selectPessoas(): void {
-    this.pessoaService.findAll()
-      .then((pessoas: Pessoa[]) => {
-        this.pessoas = pessoas; 
-      })
-      .catch((error) => {
-        console.error('Erro ao obter as anotacaos:', error);
-      });
-  }
-
   public listarAnotacoes(): void {
-
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
-  
+
     if(this.userDataService.userCredentials.permissions == 'Admin'){
       this.anotacaoService.findAll().then((anotacoes: Anotacao[]) => {
-        this.anotacoes = anotacoes; // Armazena a lista completa de pessoas
-        console.log(anotacoes);
+        this.anotacoes = anotacoes;
       })
       .catch((error) => {
-        console.error('Erro ao obter as pessoas:', error);
+        alert('Erro ao obter as Anotacoes:' + error);
       });
     } else{
       this.anotacaoService.findByUserId(parsedUserId).then((anotacoes: Anotacao[]) => {
-        this.anotacoes = anotacoes; // Armazena a lista completa de anotacoes
-        console.log(anotacoes);
+        this.anotacoes = anotacoes;
       })
       .catch((error) => {
-        console.error('Erro ao obter as anotacoes:', error);
+        alert('Erro ao obter as Anotacoes:' + error);
       });
     }
   }

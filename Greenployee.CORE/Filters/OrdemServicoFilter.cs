@@ -9,6 +9,7 @@ namespace Greenployee.CORE.Filters
 {
     public class OrdemServicoFilter : PagedBaseRequest
     {
+        public int? idUsuario { get; set; }
         public DateTime? dtInicio { get; set; }
         public DateTime? dtFim { get; set; }
         public string? nrOrdem { get; set; }

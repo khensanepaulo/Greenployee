@@ -217,5 +217,29 @@ namespace Greenployee.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("usuario/paged")]
+        public async Task<ActionResult<PagedBaseRespondeDTO<OrdemServico>>> GetPagedByUserIdAsync([FromQuery] OrdemServicoFilter ordemServicoFilter)
+        {
+            try
+            {
+                _permissionNeeded.Add("User");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                {
+                    return NotFound();
+                }
+
+                var ordensPaged = await _business.GetPagedAsync(ordemServicoFilter);
+                var result = new PagedBaseRespondeDTO<OrdemServico>(ordensPaged.TotalRegisters, new List<OrdemServico>(ordensPaged.Data));
+
+                if (result == null) return NotFound("Não foi possível encontrar as ordens de serviço!");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

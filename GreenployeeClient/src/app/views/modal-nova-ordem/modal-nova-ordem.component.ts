@@ -18,7 +18,7 @@ export class ModalNovaOrdemComponent implements OnInit{
 
   public mensagem: string = '';
   public mensagemErro: string = "";
-  public verificaUser: string = "";  
+  public verificaUser: string = "";
 
   @Input("objeto") ordemServicoObtida!: any;
 
@@ -60,7 +60,6 @@ export class ModalNovaOrdemComponent implements OnInit{
     this.ordemServico.ordemServicoItem.push(cloneDeep(this.ordemServicoItem));
     this.changeValorTotal();
     this.resetItem();
-    console.log()
   }
 
   public resetItem(): void {
@@ -69,8 +68,7 @@ export class ModalNovaOrdemComponent implements OnInit{
 
   public async getPessoa(): Promise<Pessoa | null> {
     const userId = this.userDataService.userCredentials.userId;
-    console.log(userId);
-  
+
     if (this.userDataService.userCredentials.permissions === 'Admin') {
       const nomePessoaElement = document.getElementById('nomePessoa');
       if (nomePessoaElement) {
@@ -78,27 +76,25 @@ export class ModalNovaOrdemComponent implements OnInit{
       }
       return null;
     }
-  
+
     if (userId) {
       const parsedUserId = parseInt(userId, 10);
       try {
         const pessoa: Pessoa = await this.pessoaService.findByUserId(parsedUserId);
-        console.log(pessoa, parsedUserId);
-  
+
         const nomePessoaElement = document.getElementById('nomePessoa');
         if (nomePessoaElement) {
           nomePessoaElement.textContent = pessoa.nmPessoa;
-          console.log(pessoa.nmPessoa);
         }
-  
+
         return pessoa;
       } catch (error) {
         console.error('Erro ao obter a pessoa:', error);
-        throw error; 
+        throw error;
       }
     } else {
       console.error('ID do usuário não encontrado no local storage.');
-      throw new Error('ID do usuário não encontrado no local storage.'); 
+      throw new Error('ID do usuário não encontrado no local storage.');
     }
   }
 
@@ -111,9 +107,9 @@ export class ModalNovaOrdemComponent implements OnInit{
 
   public isAdmin(): boolean {
 
-    this.verificaUser = this.userDataService.userCredentials.permissions; 
+    this.verificaUser = this.userDataService.userCredentials.permissions;
     return this.verificaUser == 'Admin';
- 
+
   }
 
   public changeQuantidade(sinal: string, index: number): void {
@@ -150,14 +146,14 @@ export class ModalNovaOrdemComponent implements OnInit{
   }
 
   public addOrdemServico(): void {
-    
+
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
 
     if (this.userDataService.userCredentials.permissions === 'Admin') {
       this.ordemServicoService.cadastrar(this.ordemServico).then(() => {
         this.mensagem = ' Ordem de serviço adicionada com sucesso!';
-        this.resetItemModal();        
+        this.resetItemModal();
         this.showAndHideMessage(3000);
         this.cdr.detectChanges();
         this.listarOrdemServicosInicio;
@@ -171,7 +167,7 @@ export class ModalNovaOrdemComponent implements OnInit{
           this.ordemServico.funcionario = pessoa;
           return this.ordemServicoService.cadastrar(this.ordemServico);
         } else {
-          throw new Error('Pessoa não encontrada.'); 
+          throw new Error('Pessoa não encontrada.');
         }
       })
       .then(() => {
@@ -190,7 +186,7 @@ export class ModalNovaOrdemComponent implements OnInit{
 
    private showAndHideMessage(duration: number): void {
     setTimeout(() => {
-      this.mensagem = ''; 
+      this.mensagem = '';
       this.mensagemErro = '';
     }, duration);
   }
@@ -200,7 +196,7 @@ export class ModalNovaOrdemComponent implements OnInit{
     this.cdr.detectChanges();
   }
 
-  
+
 
   public refresh(): void {
     this.listarOrdemServicosInicio();
@@ -221,29 +217,27 @@ export class ModalNovaOrdemComponent implements OnInit{
       return;
     }
   }
-   
+
   public listarOrdemServicosInicio(): void {
 
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
-  
+
     if(this.userDataService.userCredentials.permissions == 'Admin'){
       this.ordemServicoService.findAll().then((ordemServicos: OrdemServico[]) => {
-        this.ordemServicos = ordemServicos.slice(0, 10); 
-        console.log(this.ordemServicos);
+        this.ordemServicos = ordemServicos.slice(0, 10);
       })
       .catch((error) => {
         console.error('Erro ao obter as pessoas.');
       });
     } else{
       this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: OrdemServico[]) => {
-        this.ordemServicos = ordemServicos.slice(0, 10); 
-        console.log(this.ordemServicos);
+        this.ordemServicos = ordemServicos.slice(0, 10);
       })
       .catch((error) => {
         console.error('Erro ao obter as Ordens de serviço.');
       });
     }
   }
-      
+
 }

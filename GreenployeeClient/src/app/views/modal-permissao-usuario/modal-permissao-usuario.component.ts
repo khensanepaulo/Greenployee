@@ -19,42 +19,39 @@ export class ModalPermissaoUsuarioComponent {
   public usuario! : Usuario;
   public permissao! : Permissao;
   public pessoa! : Pessoa;
-  pessoas: Pessoa[] = [];
+  public pessoas: Pessoa[] = [];
   public permissaoUsuario! : PermissaoUsuario;
 
-  
-  constructor(private pessoaService: PessoaService,
-    public permissaoUsuarioService: PermissaoUsuarioService,
-    public usuarioService: UsuarioService,
-    ){}
-  
+  constructor(public pessoaService: PessoaService,
+              public permissaoUsuarioService: PermissaoUsuarioService,
+              public usuarioService: UsuarioService,
+  ){}
+
   ngOnInit(): void {
-    this.listarPessoas();
+    this.findAllPessoas();
     this.permissaoUsuario = new PermissaoUsuario();
     this.permissao = new Permissao();
     this.usuario = new Usuario();
   }
 
-  public addPermissao(): void {
+  public savePermissao(): void {
     this.permissaoUsuarioService.cadastrar(this.permissaoUsuario);
-    this.resetItem();
+    this.resetPermissao();
   }
 
-  public resetItem(): void {
+  public resetPermissao(): void {
     this.permissaoUsuario = new PermissaoUsuario();
-    this.listarPessoas();
+    this.findAllPessoas();
   }
 
- 
-  public listarPessoas(): void {
+  public findAllPessoas(): void {
     this.pessoaService.findAll()
       .then((pessoas: Pessoa[]) => {
-        this.pessoas = pessoas;
+        this.pessoas = pessoas.filter(item => item.usuario != null);
       })
       .catch((error) => {
         console.error('Erro ao obter as pessoas:', error);
       });
   }
-
 
 }

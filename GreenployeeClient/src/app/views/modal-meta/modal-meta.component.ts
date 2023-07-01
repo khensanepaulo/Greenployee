@@ -25,7 +25,7 @@ export class ModalMetaComponent {
   constructor(public metaService: MetaService,
     public pessoaService: PessoaService,
     public userDataService: UserDataService){}
-  
+
   ngOnInit(): void {
     this.listarMetas();
     this.listarPessoas();
@@ -33,16 +33,15 @@ export class ModalMetaComponent {
     this.meta = new Meta();
     this.metaConcluida = new Meta();
     this.pessoa = new Pessoa();
-    
+
   }
 
 public addItem(): void{
   this.meta.pessoasMeta.push(cloneDeep(this.pessoaMeta));
-  console.log(this.meta.pessoasMeta);
 }
 
 public editMeta(index: number): void {
-  this.metaConcluida = this.metas[index]; 
+  this.metaConcluida = this.metas[index];
   this.metaService.update(this.metaConcluida);
   this.resetMeta();
   this.listarMetas();
@@ -77,7 +76,6 @@ public listarMetas(): void {
   if(this.userDataService.userCredentials.permissions == 'Admin'){
     this.metaService.findAll().then((metas: Meta[]) => {
       this.metas = metas; // Armazena a lista completa de pessoas
-      console.log(metas);
     })
     .catch((error) => {
       console.error('Erro ao obter as pessoas:', error);
@@ -85,7 +83,6 @@ public listarMetas(): void {
   } else{
     this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
       this.metas = metas; // Armazena a lista completa de metas
-      console.log(metas);
     })
     .catch((error) => {
       console.error('Erro ao obter as metas:', error);
@@ -95,13 +92,13 @@ public listarMetas(): void {
 
 public verificarUser(): boolean {
 
-  this.verificaUser = this.userDataService.userCredentials.permissions; 
+  this.verificaUser = this.userDataService.userCredentials.permissions;
   return this.verificaUser != 'Admin';
 
 }
 
 public verificarAdmin(): boolean {
-  this.verificaUser = this.userDataService.userCredentials.permissions; 
+  this.verificaUser = this.userDataService.userCredentials.permissions;
   return this.verificaUser != 'User';
 
 }
@@ -126,6 +123,6 @@ public resetItem(): void{
     this.meta.pessoasMeta.splice(index,1);
   }else{
      return;
-  } 
+  }
 }
 }

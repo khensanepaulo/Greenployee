@@ -233,7 +233,6 @@ export class ModalRelatorioComponent {
     if (this.userDataService.userCredentials.permissions == 'Admin') {
       this.metaService.findAll().then((metas: Meta[]) => {
         this.metas = metas; // Armazena a lista completa de pessoas
-        console.log(metas);
         this.contagemMetas();
       })
         .catch((error) => {
@@ -243,7 +242,6 @@ export class ModalRelatorioComponent {
       this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
         this.metas = metas; // Armazena a lista completa de metas
         this.contagemMetas();
-        console.log(metas);
       })
         .catch((error) => {
           console.error('Erro ao obter as metas:', error);
@@ -298,28 +296,23 @@ export class ModalRelatorioComponent {
   }
 
   public listaComissoesPorMes(): void {
-
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
     if (this.userDataService.userCredentials.permissions == 'Admin') {
-   
-      this.ordemServicoService.FindByCommissionsByMonthAll().then((comissoesPorData: ComissoesPorPeriodo[]) => {
-   
+
+      this.ordemServicoService.findAllCommissionsByMonth().then((comissoesPorData: ComissoesPorPeriodo[]) => {
         this.comissoesPorData = comissoesPorData.slice(0, 10);
         this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());
         this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
-        console.log(this.comissoesPorData);
       })
         .catch((error) => {
           console.error('Erro ao obter as Comissoes.');
         });
     } else {
-   
-      this.ordemServicoService.FindBycommissionsByMonthById(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
+      this.ordemServicoService.findCommissionsByMonthByUserId(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
         this.comissoesPorData = comissoesPorData.slice(0, 10);
         this.listaNomesMes = comissoesPorData.map(comissao => comissao.nmMes.toString());
         this.listaValores = comissoesPorData.map(comissao => comissao.vlTotal);
-        console.log(this.comissoesPorData);
       })
         .catch((error) => {
           console.error('Erro ao obter as Comissoes.');

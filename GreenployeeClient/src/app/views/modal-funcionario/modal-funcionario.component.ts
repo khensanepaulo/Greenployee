@@ -17,25 +17,24 @@ export class ModalFuncionarioComponent {
   public quantidadeMetasNaoConcluida!: number;
   public pessoa! : Pessoa;
  pessoas: Pessoa[] = [];
-  metas: Meta[] = [];  
+  metas: Meta[] = [];
   public meta!: Meta;
-  
+
   constructor(private pessoaService: PessoaService,
     public userDataService: UserDataService,
     public metaService: MetaService){}
-  
+
   ngOnInit(): void {
     this.listarPessoas();
-    
+
     this.pessoa = new Pessoa();
-    
+
     this.pessoa.usuario = new Usuario();
-    
+
   }
 
   public addPessoa(): void {
     this.pessoaService.cadastrar(this.pessoa);
-    console.log(this.pessoa);
   }
 
   public openEditModal(index: number): void {

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, NgModule } from '@angular/core';
 import { disableDebugTools } from '@angular/platform-browser';
 import { cloneDeep } from 'lodash';
+import { OrdemServicoFilter } from 'src/app/filters/ordemServicoFilter';
 import { OrdemServico } from 'src/app/model/ordemServico';
 import { OrdemServicoItem } from 'src/app/model/ordemServicoItem';
 import { Pessoa } from 'src/app/model/pessoa';
@@ -20,28 +21,25 @@ export class ModalOrdemServicoComponent {
   public ordemServico! : OrdemServico;
   ordemServicos: OrdemServico[] = [];
   OrdemServicoItem: OrdemServicoItem[] = [];
-  public filtro = {
-    dtInicio: new Date(),
-    dtFim: new Date(),
-    nmFuncionario: "",
-    nmCliente: "",
-  };
+  public filtro!: OrdemServicoFilter;
+  public totalRegisters!: number;
   // public dtInicio!: Date;
   // public dtFim!: Date;
 
   constructor(public ordemServicoService: OrdemServicoService,
               public userDataService: UserDataService,
               public cdr: ChangeDetectorRef){}
-  
+
   ngOnInit(): void {
-    this.listarOrdemServico();
     this.ordemServico = new OrdemServico();
+    this.filtro = new OrdemServicoFilter();
+    this.listarOrdemServico();
   }
 
   ngOnChanges(): void {
     this.listarOrdemServico();
   }
-  
+
   public addOrdemServico(): void {
     this.ordemServicoService.cadastrar(this.ordemServico).then(value => {
       if(value != null){
@@ -52,9 +50,9 @@ export class ModalOrdemServicoComponent {
 
   public isAdmin(): boolean {
 
-    this.verificaUser = this.userDataService.userCredentials.permissions; 
+    this.verificaUser = this.userDataService.userCredentials.permissions;
     return this.verificaUser == 'Admin';
- 
+
   }
 
   public openEditModal(index: number): void {
@@ -77,7 +75,7 @@ export class ModalOrdemServicoComponent {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = String(date.getFullYear());
-  
+
     return `${day}/${month}/${year}`;
   }
 
@@ -132,7 +130,7 @@ export class ModalOrdemServicoComponent {
   //   } else {
   //     this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: any[]) => {
   //       this.ordemServicos = ordemServicos;
-  //       this.ordemServicosState = cloneDeep(ordemServicos); 
+  //       this.ordemServicosState = cloneDeep(ordemServicos);
   //     }).catch((error) => {
   //       console.error('Erro ao obter as ordens de serviço:', error);
   //     });
@@ -142,23 +140,29 @@ export class ModalOrdemServicoComponent {
   public listarOrdemServico(): void {
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
-
+    debugger;
     if (this.userDataService.userCredentials.permissions === 'Admin') {
-      this.ordemServicoService.getPagedAsync().then((ordemServicos: any[]) => {
-        debugger;
-        this.ordemServicos = ordemServicos;
-        this.ordemServicosState = cloneDeep(ordemServicos);
-        console.log(this.ordemServicos);
-      }).catch((error) => {
-        console.error('Erro ao obter as ordens de serviço:', error);
-      });
+      this.filtro.idUsuario = 0;
+      this.ordemServicoService.getPaged(this.filtro).subscribe(
+        (response) => {
+          this.ordemServicos = response.data;
+          this.totalRegisters = response.totalRegisters;
+        },
+        (error) => {
+          console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
+        }
+      );
     } else {
-      this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: any[]) => {
-        this.ordemServicos = ordemServicos;
-        this.ordemServicosState = cloneDeep(ordemServicos); 
-      }).catch((error) => {
-        console.error('Erro ao obter as ordens de serviço:', error);
-      });
+      this.filtro.idUsuario = parsedUserId;
+      this.ordemServicoService.getPaged(this.filtro).subscribe(
+        (response) => {
+          this.ordemServicos = response.data;
+          this.totalRegisters = response.totalRegisters;
+        },
+        (error) => {
+          console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
+        }
+      );
     }
   }
 

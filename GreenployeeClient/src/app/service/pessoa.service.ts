@@ -31,28 +31,30 @@ export class PessoaService {
   }
 
   public async cadastrar(pessoa: Pessoa): Promise<void> {
-    console.log(pessoa);
     try {
       await this.axiosClient.post('/', pessoa, { headers: { 'Authorization': `Bearer ${this.token}` } });
-      console.log("Pessoa cadastrada com sucesso!");
+      alert("Funcionário cadastrada com sucesso!");
     } catch (error: any) {
-      return Promise.reject("Não foi possível cadastrar a pessoa!");
+      return Promise.reject("Não foi possível cadastrar o Funcionário!");
     }
   }
 
   public async update(pessoa: Pessoa): Promise<void> {
     try {
       await this.axiosClient.put('/', pessoa, { headers: { 'Authorization': `Bearer ${this.token}` } });
-      console.log("Pessoa atualizada com sucesso!");
+      alert("Funcionário atualizada com sucesso!");
     } catch (error: any) {
-      return Promise.reject("Não foi possível atualizar a pessoa! :" + error);
+      return Promise.reject("Não foi possível atualizar o Funcionário! :" + error);
     }
   }
 
   public async delete(id: number): Promise<boolean> {
     try {
-      return (await this.axiosClient.delete<boolean>(`/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
-      console.log("Pessoa deletada com sucesso!");
+      var response = (await this.axiosClient.delete<boolean>(`/${id}`, { headers: this.getHeaders() })).data; // Passa os headers na requisição
+      if (response) {
+        alert("Pessoa deletada com sucesso!");
+      }
+      return response;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -76,7 +78,7 @@ export class PessoaService {
     }
   }
 
-  
+
 
   public async findAll(): Promise<Pessoa[]> {
     try {
@@ -87,9 +89,9 @@ export class PessoaService {
   }
 
 
-  
 
-  
+
+
 
 }
 

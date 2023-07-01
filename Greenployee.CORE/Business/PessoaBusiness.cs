@@ -46,6 +46,11 @@ namespace Greenployee.CORE.Business
 
         public async Task<Pessoa> Update(Pessoa pessoa)
         {
+            if(pessoa.Usuario != null && pessoa.Usuario.id == 0)
+            {
+                db.Usuarios.Add(pessoa.Usuario);
+            }
+
             db.Pessoas.Update(pessoa);
             await db.SaveChangesAsync();
             return pessoa;

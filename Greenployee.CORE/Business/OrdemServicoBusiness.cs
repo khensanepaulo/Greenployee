@@ -155,8 +155,12 @@ namespace Greenployee.CORE.Business
 
         public async Task<PagedBaseResponse<OrdemServico>> GetPagedAsync(OrdemServicoFilter request)
         {
-            var ordens = db.OrdensServicos.Include(x => x.Funcionario).Include(x => x.OrdemServicoItem).AsQueryable();
+            var ordens = db.OrdensServicos.Include(x => x.OrdemServicoItem).Include(x => x.Funcionario).ThenInclude(x => x.Usuario).AsQueryable();
 
+            if (request.idUsuario != null)
+            {
+                ordens = ordens.Where(x => x.Funcionario != null && x.Funcionario.Usuario != null && x.Funcionario.Usuario.id == request.idUsuario);
+            }
             if (request.dtInicio != null)
             {
                 ordens = ordens.Where(x => x.dtCadastro >= request.dtInicio);

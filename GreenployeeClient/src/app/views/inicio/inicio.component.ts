@@ -19,16 +19,16 @@ import { OrdemServicoService } from 'src/app/service/ordem-servico.service';
 })
 
 export class InicioComponent {
-  verificaUser!: string;
+  public verificaUser!: string;
   public pessoa!: Pessoa;
-  ordemServico!: OrdemServico;
-  ordemServicoItem!: OrdemServicoItem;
+  public ordemServico!: OrdemServico;
+  public ordemServicoItem!: OrdemServicoItem;
   public meta! : Meta;
-  pessoas: Pessoa[] = [];
-  metas: Meta[] = [];
-  ordemServicos: OrdemServico [] = [];
-  comissoesPorData: ComissoesPorPeriodo [] = [];
-  permissao!: string;
+  public pessoas: Pessoa[] = [];
+  public metas: Meta[] = [];
+  public ordemServicos: OrdemServico [] = [];
+  public comissoesPorData: ComissoesPorPeriodo[] = [];
+  public permissao!: string;
 
   constructor(public metaService: MetaService,
     public localStorageService: LocalStorageService,
@@ -39,11 +39,10 @@ export class InicioComponent {
     ){
 
   }
-  
-  ngOnInit(): void {   
+
+  ngOnInit(): void {
     this.userDataService.userCredentials = this.localStorageService.getObject("userCredentials");
-    console.log(this.userDataService.userCredentials = this.localStorageService.getObject("userCredentials"));
-    this.getPessoa();    
+    this.getPessoa();
     this.verificarUser();
     this.listarOrdemServico();
     this.listaComissoesPorMes();
@@ -53,53 +52,41 @@ export class InicioComponent {
     this.listarOrdemServico();
   }
 
-  
-  
-  public addMeta(): void {
-    this.metaService.cadastrar(this.meta);
-  }
-
   public verificarUser(): boolean {
-
-    this.verificaUser = this.userDataService.userCredentials.permissions; 
+    this.verificaUser = this.userDataService.userCredentials.permissions;
     return this.verificaUser != 'Admin';
- 
   }
- 
+
   public resetItemOrdemServico(): void{
     this.ordemServico = new OrdemServico();
-   }
+  }
 
-   public resetItemMeta(): void{
-    this.meta = new Meta();
-   }
+  public resetItemMeta(): void{
+  this.meta = new Meta();
+  }
 
   public getPessoa(): void {
     const userId = this.userDataService.userCredentials.userId;
-    console.log(userId);
 
     if(this.userDataService.userCredentials.permissions == 'Admin'){
       const nomePessoaElement = document.getElementById('nomePessoa');
       if (nomePessoaElement) {
         nomePessoaElement.textContent = 'Administrador';
       }
-      return; 
+      return;
     }
     if (userId) {
       const parsedUserId = parseInt(userId, 10);
-      this.pessoaService.findByUserId(parsedUserId)
-        .then((pessoa: Pessoa) => {
-          console.log(pessoa, parsedUserId);
-          const nomePessoaElement = document.getElementById('nomePessoa');
-          if (nomePessoaElement) {
-            nomePessoaElement.textContent = pessoa.nmPessoa;
-            console.log(pessoa.nmPessoa);
-          }
-        }).catch((error) => {
-          console.error('Erro ao obter a pessoa:', error);
-        });
+      this.pessoaService.findByUserId(parsedUserId).then((pessoa: Pessoa) => {
+        const nomePessoaElement = document.getElementById('nomePessoa');
+        if (nomePessoaElement) {
+          nomePessoaElement.textContent = pessoa.nmPessoa;
+        }
+      }).catch((error) => {
+        alert('Erro ao obter o Funcionário: ' + error);
+      });
     } else {
-      console.error('ID do usuário não encontrado no local storage.');
+      alert('ID do Usuário não encontrado no local storage.');
     }
   }
 
@@ -109,82 +96,74 @@ export class InicioComponent {
 
     if(this.userDataService.userCredentials.permissions == 'Admin'){
       this.metaService.findAll().then((metas: Meta[]) => {
-        this.metas = metas; // Armazena a lista completa de pessoas
-        console.log(metas);
+        this.metas = metas;
       })
       .catch((error) => {
-        console.error('Erro ao obter as pessoas:', error);
+        alert('Erro ao obter as Metas:' + error.toString());
       });
     } else{
       this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
-        this.metas = metas; // Armazena a lista completa de metas
-        console.log(metas);
+        this.metas = metas;
       })
       .catch((error) => {
-        console.error('Erro ao obter as metas:', error);
+        alert('Erro ao obter as Metas:' + error.toString());
       });
+    }
   }
-}
 
-public listarOrdemServico(): void {
+  public listarOrdemServico(): void {
 
-  const userId = this.userDataService.userCredentials.userId;
-  const parsedUserId = parseInt(userId, 10);
+    const userId = this.userDataService.userCredentials.userId;
+    const parsedUserId = parseInt(userId, 10);
 
-  if(this.userDataService.userCredentials.permissions == 'Admin'){
-    this.ordemServicoService.findAll().then((ordemServicos: OrdemServico[]) => {
-      this.ordemServicos = ordemServicos.slice(0, 10); 
-      console.log(this.ordemServicos);
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as pessoas.');
-    });
-  } else{
-    this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: OrdemServico[]) => {
-      this.ordemServicos = ordemServicos.slice(0, 10); 
-      console.log(this.ordemServicos);
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as Ordens de serviço.');
-    });
+    if(this.userDataService.userCredentials.permissions == 'Admin'){
+      this.ordemServicoService.findAll().then((ordemServicos: OrdemServico[]) => {
+        this.ordemServicos = ordemServicos.slice(0, 10);
+      })
+      .catch((error) => {
+        alert('Erro ao obter as Ordens de Serviço.');
+      });
+    } else{
+      this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: OrdemServico[]) => {
+        this.ordemServicos = ordemServicos.slice(0, 10);
+      })
+      .catch((error) => {
+        alert('Erro ao obter as Ordens de Serviço.');
+      });
+    }
   }
-}
 
-public listaComissoesPorMes(): void {
+  public listaComissoesPorMes(): void {
 
-  const userId = this.userDataService.userCredentials.userId;
-  const parsedUserId = parseInt(userId, 10);
-  if(this.userDataService.userCredentials.permissions == 'Admin'){
-     this.ordemServicoService.FindByCommissionsByMonthAll().then((comissoesPorData: ComissoesPorPeriodo[]) => {
-     this.comissoesPorData = comissoesPorData.slice(0, 10); 
-      console.log(this.comissoesPorData);
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as Comissoes.');
-    });
-  } else{
-    this.ordemServicoService.FindBycommissionsByMonthById(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
-      this.comissoesPorData = comissoesPorData.slice(0, 10); 
-      console.log(this.comissoesPorData);
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as Comissoes.');
-    });
+    const userId = this.userDataService.userCredentials.userId;
+    const parsedUserId = parseInt(userId, 10);
+    if(this.userDataService.userCredentials.permissions == 'Admin'){
+      this.ordemServicoService.findAllCommissionsByMonth().then((comissoesPorData: ComissoesPorPeriodo[]) => {
+      this.comissoesPorData = comissoesPorData.slice(0, 10) as [];
+      })
+      .catch((error) => {
+        alert('Erro ao obter as Comissões.');
+      });
+    } else{
+      this.ordemServicoService.findCommissionsByMonthByUserId(parsedUserId).then((comissoesPorData: ComissoesPorPeriodo[]) => {
+        this.comissoesPorData = comissoesPorData.slice(0, 10) as [];
+      })
+      .catch((error) => {
+        alert('Erro ao obter as Comissões.');
+      });
+    }
   }
-}
-    
 
+  logout(): void {
+    // Limpar o registro do local storage
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId'); // ou outros dados relacionados ao usuário, se necessário
+    localStorage.removeItem('userCredentials'); // ou outros dados relacionados ao usuário, se necessário
 
-logout(): void {
-  // Limpar o registro do local storage
-  localStorage.removeItem('token');
-  localStorage.removeItem('userId'); // ou outros dados relacionados ao usuário, se necessário
-  localStorage.removeItem('userCredentials'); // ou outros dados relacionados ao usuário, se necessário
+    // Redirecionar para a página de login
+    this.router.navigate(['/']);
+  }
 
-  // Redirecionar para a página de login
-  this.router.navigate(['/']);
-}
- 
 }
 
 

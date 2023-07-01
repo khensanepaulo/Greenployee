@@ -31,10 +31,9 @@ export class AnotacaoService {
   }
 
   public async cadastrar(anotacao: Anotacao): Promise<void> {
-    console.log(anotacao);
     try {
       await this.axiosClient.post('/', anotacao, { headers: { 'Authorization': `Bearer ${this.token}` } });
-      console.log("Anotacao cadastrada com sucesso!");
+      alert("Anotacao cadastrada com sucesso!");
     } catch (error: any) {
       return Promise.reject("Não foi possível cadastrar a anotacao!");
     }
