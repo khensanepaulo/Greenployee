@@ -146,7 +146,6 @@ namespace Greenployee.Controllers
             }
         }
 
-
         [HttpGet]
         [Route("paged")]
         public async Task<ActionResult<PagedBaseRespondeDTO<Pessoa>>> GetPagedAsync([FromQuery] PessoaFilter request)
@@ -163,6 +162,30 @@ namespace Greenployee.Controllers
                 var result = new PagedBaseRespondeDTO<Pessoa>(pessoaPaged.TotalRegisters, new List<Pessoa>(pessoaPaged.Data));
 
                 if (result == null) return NotFound("Não foi possível encontrar a Pessoa!");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        [Route("usuario/paged")]
+        public async Task<ActionResult<PagedBaseRespondeDTO<OrdemServico>>> GetPagedByUserIdAsync([FromQuery] PessoaFilter request)
+        {
+            try
+            {
+                _permissionNeeded.Add("User");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                {
+                    return NotFound();
+                }
+
+                var pessoaPaged = await _business.GetPagedAsync(request);
+                var result = new PagedBaseRespondeDTO<Pessoa>(pessoaPaged.TotalRegisters, new List<Pessoa>(pessoaPaged.Data));
+
+                if (result == null) return NotFound("Não foi possível encontrar Pessoa!");
                 return Ok(result);
             }
             catch (Exception)

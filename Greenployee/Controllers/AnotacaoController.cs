@@ -4,12 +4,10 @@ using Greenployee.CORE.Filters;
 using Greenployee.MODELS.Authentication;
 using Greenployee.MODELS.DTO;
 using Greenployee.MODELS.DTO.Anotacao;
-using Greenployee.MODELS.DTO.Anotacao;
 using Greenployee.MODELS.Model;
 using Greenployee.MODELS.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Greenployee.CORE.Filters;
 
 
 namespace Greenployee.Controllers
@@ -166,6 +164,30 @@ namespace Greenployee.Controllers
                 var result = new PagedBaseRespondeDTO<Anotacao>(anotacaoPaged.TotalRegisters, new List<Anotacao>(anotacaoPaged.Data));
 
                 if (result == null) return NotFound("Não foi possível encontrar as Anotações!");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        [Route("usuario/paged")]
+        public async Task<ActionResult<PagedBaseRespondeDTO<OrdemServico>>> GetPagedByUserIdAsync([FromQuery] AnotacaoFilter request)
+        {
+            try
+            {
+                _permissionNeeded.Add("User");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                {
+                    return NotFound();
+                }
+
+                var anotacaoPaged = await _business.GetPagedAsync(request);
+                var result = new PagedBaseRespondeDTO<Anotacao>(anotacaoPaged.TotalRegisters, new List<Anotacao>(anotacaoPaged.Data));
+
+                if (result == null) return NotFound("Não foi possível encontrar as Anotaçôes!");
                 return Ok(result);
             }
             catch (Exception)

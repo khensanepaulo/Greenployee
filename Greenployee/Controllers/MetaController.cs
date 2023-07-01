@@ -167,5 +167,31 @@ namespace Greenployee.Controllers
                 throw;
             }
         }
+
+           [HttpGet]
+        [Route("usuario/paged")]
+        public async Task<ActionResult<PagedBaseRespondeDTO<OrdemServico>>> GetPagedByUserIdAsync([FromQuery] MetaFilter request)
+        {
+            try
+            {
+                _permissionNeeded.Add("User");
+                if (!ValidatePermission(_permissionNeeded, _permissionUser))
+                {
+                    return NotFound();
+                }
+
+                var metaPaged = await _business.GetPagedAsync(request);
+                var result = new PagedBaseRespondeDTO<Meta>(metaPaged.TotalRegisters, new List<Meta>(metaPaged.Data));
+
+                if (result == null) return NotFound("Não foi possível encontrar as metas!");
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
+
+
 }
