@@ -125,6 +125,11 @@ namespace Greenployee.CORE.Business
                 }
             }
 
+            if (request.idUsuario != null)
+            {
+                metas = metas.Where(x => x.PessoasMeta.Any(pm => pm != null && pm.Pessoa != null && pm.Pessoa.Usuario.id == request.idUsuario)); 
+            }
+
             return await PageBaseResponseHelper.GetResponseAsync<PagedBaseResponse<Meta>, Meta>(metas.OrderByDescending(x => x.dtCadastro), request);
         }
     }

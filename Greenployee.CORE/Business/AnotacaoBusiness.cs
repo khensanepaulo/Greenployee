@@ -104,6 +104,11 @@ namespace Greenployee.CORE.Business
                 anotacoes = anotacoes.Where(x => x.dsMensagem.Contains(request.dsMensagem));
             }
 
+            if (request.idUsuario != null)
+            {
+                anotacoes = anotacoes.Where(x => x.Pessoa != null && x.Pessoa.Usuario != null && x.Pessoa.Usuario.id == request.idUsuario);
+            }
+
 
             return await PageBaseResponseHelper.GetResponseAsync<PagedBaseResponse<Anotacao>, Anotacao>(anotacoes.OrderByDescending(x => x.dtCadastro), request);
         }

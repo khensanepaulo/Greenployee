@@ -15,5 +15,6 @@ namespace Greenployee.CORE.Filters
         public DateTime dtFim { get; set; }
         public string dsMensagem { get; set; }
         public string nmPessoa { get; set; }
+        public int? idUsuario { get; set; }
     }
 }

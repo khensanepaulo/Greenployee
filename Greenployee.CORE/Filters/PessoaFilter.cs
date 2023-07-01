@@ -10,6 +10,7 @@ namespace Greenployee.CORE.Filters
 {
     public class PessoaFilter : PagedBaseRequest
     {
+        public int? idUsuario { get; set; }
         public string nmPessoa { get; set; } 
         public string nrCPF { get; set; } 
         public string nrRG { get; set; } 

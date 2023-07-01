@@ -9,6 +9,7 @@ namespace Greenployee.CORE.Filters
 {
     public class MetaFilter : PagedBaseRequest
     {
+        public int? idUsuario { get; set; }
         public string dsRecompensa { get; set; }
         public DateTime dtInicio { get; set; }
         public DateTime dtFim { get; set; }

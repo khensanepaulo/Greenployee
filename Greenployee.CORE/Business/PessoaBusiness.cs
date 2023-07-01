@@ -129,6 +129,11 @@ namespace Greenployee.CORE.Business
                 pessoas = pessoas.Where(x => x.nrPIS.Contains(request.nrPIS));
             }
 
+            if (request.idUsuario != null)
+            {
+                pessoas = pessoas.Where(x => x.Usuario != null && x.Usuario.id == request.idUsuario);
+            }
+
             return await PageBaseResponseHelper.GetResponseAsync<PagedBaseResponse<Pessoa>, Pessoa>(pessoas, request);
         }
 
