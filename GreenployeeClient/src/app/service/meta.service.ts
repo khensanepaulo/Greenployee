@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import axios, { AxiosInstance } from "axios";
 import { Meta } from 'src/app/model/meta';
 import { Pessoa } from '../model/pessoa';
+import { MetaFilter } from '../filters/metaFilter';
 
 @Injectable({
   providedIn: 'root'
@@ -83,6 +84,38 @@ export class MetaService {
   public async findAll(): Promise<Meta[]> {
     try {
       return (await this.axiosClient.get<Meta[]>('/', { headers: this.getHeaders() })).data; // Passa os headers na requisição
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+  
+  
+  public async getPagedAsync(filter?: MetaFilter,): Promise<Meta[]> {
+    try {
+      let url = '/paged';
+  
+      if (filter) {
+        const params: any = {};
+        
+      if (filter.dtInicio) {
+        params.dtInicio = filter.dtInicio.toISOString();
+      }
+      if (filter.dtFim) {
+        params.dtFim = filter.dtFim.toISOString();
+      }
+      if (filter.flConcluida) {
+        params.flConcluida = filter.flConcluida;
+      }
+      if (filter.flConcluida) {
+        params.flConcluida = filter.flConcluida;
+
+      url += '?' + new URLSearchParams(params).toString();
+    }
+  
+        url += '?' + new URLSearchParams(params).toString();
+      }
+  
+      return (await this.axiosClient.get<Meta[]>(url, { headers: this.getHeaders() })).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }

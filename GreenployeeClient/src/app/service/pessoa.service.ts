@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosInstance } from "axios";
 import { Pessoa } from 'src/app/model/pessoa';
+import { PessoaFilter } from '../filters/pessoaFilter';
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +89,49 @@ export class PessoaService {
     }
   }
 
+  
+  public async getPagedAsync(filter?: PessoaFilter,): Promise<Pessoa[]> {
+    try {
+      let url = '/paged';
+  
+      if (filter) {
+        const params: any = {};
+        
+      if (filter.dtInicio) {
+        params.dtInicio = filter.dtInicio.toISOString();
+      }
+      if (filter.dtFim) {
+        params.dtFim = filter.dtFim.toISOString();
+      }
+      if (filter.nmPessoa) {
+        params.nmPessoa = filter.nmPessoa;
+      }
+      if (filter.nrCPF) {
+        params.nrCPF = filter.nrCPF;
+      }
+      if (filter.nrRG) {
+        params.nrRG = filter.nrRG;
+      }
+      if (filter.dsEmail) {
+        params.dsEmail = filter.dsEmail;
+      }
+      if (filter.nrTelefone) {
+        params.nrTelefone = filter.nrTelefone;
+      }
+      if (filter.flSituacao) {
+        params.flSituacao = filter.flSituacao;
+      }
+      if (filter.nrPIS) {
+        params.nrPIS = filter.nrPIS;
+      }
+        url += '?' + new URLSearchParams(params).toString();
+      }
+  
+      return (await this.axiosClient.get<Pessoa[]>(url, { headers: this.getHeaders() })).data;
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
 
 
 
