@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import axios, { AxiosInstance, AxiosResponse  } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { OrdemServico } from 'src/app/model/ordemServico';
 import { ComissoesPorPeriodo } from '../model/comissoesPorPeriodo';
 import { OrdemServicoFilter } from '../filters/ordemServicoFilter';
@@ -16,7 +16,7 @@ export class OrdemServicoService {
   constructor() {
     this.axiosClient = axios.create({
       baseURL: 'https://localhost:5000/api/OrdemServico',
-      headers: {'Content-type' : 'application/json'}
+      headers: { 'Content-type': 'application/json' }
     });
     this.token = ''; // Inicialize com o token vazio
   }
@@ -119,7 +119,11 @@ export class OrdemServicoService {
           params.idUsuario = filter.idUsuario;
           url = '/usuario/paged';
         }
-        if (filter.dtInicio && filter.dtFim) {
+        if (filter.dtInicio) {
+          debugger
+          if (!filter.dtFim) {
+            params.dtFim = new Date().toISOString();
+          }
           params.dtInicio = filter.dtInicio.toString();
         }
         if (filter.dtInicio && filter.dtFim) {
