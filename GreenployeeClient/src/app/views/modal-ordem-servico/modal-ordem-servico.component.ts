@@ -16,9 +16,9 @@ import { UserDataService } from 'src/app/service/userDataService';
 
 export class ModalOrdemServicoComponent {
 
-  ordemServicosState: OrdemServico [] = [];
+  ordemServicosState: OrdemServico[] = [];
   verificaUser!: string;
-  public ordemServico! : OrdemServico;
+  public ordemServico!: OrdemServico;
   ordemServicos: OrdemServico[] = [];
   OrdemServicoItem: OrdemServicoItem[] = [];
   public filtro!: OrdemServicoFilter;
@@ -33,20 +33,20 @@ export class ModalOrdemServicoComponent {
 
 
   constructor(public ordemServicoService: OrdemServicoService,
-              public userDataService: UserDataService,
-              public cdr: ChangeDetectorRef){}
+    public userDataService: UserDataService,
+    public cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.ordemServico = new OrdemServico();
     this.filtro = new OrdemServicoFilter();
     this.listarOrdemServico();
-    
+
   }
 
 
   public addOrdemServico(): void {
     this.ordemServicoService.cadastrar(this.ordemServico).then(value => {
-      if(value != null){
+      if (value != null) {
         this.refresh();
       }
     });
@@ -63,9 +63,9 @@ export class ModalOrdemServicoComponent {
     this.ordemServico = this.ordemServicos[index];
   }
 
-  public delete(index: number): void{
+  public delete(index: number): void {
     this.ordemServicoService.delete(this.ordemServicos[index].id).then(value => {
-      if(value){
+      if (value) {
         this.refresh();
       }
     });
@@ -100,7 +100,7 @@ export class ModalOrdemServicoComponent {
   }
 
   public filtrarLista(): void {
-    if (this.filtro.dtInicio && this.filtro.dtFim){
+    if (this.filtro.dtInicio && this.filtro.dtFim) {
       this.filtrarData();
     };
   }
@@ -136,9 +136,9 @@ export class ModalOrdemServicoComponent {
       this.ordemServicoService.getPaged(this.filtro).subscribe(
         (response) => {
           this.ordemServicos = response.data;
-          this.totalRegisters = response.t  otalRegisters;
+          this.totalRegisters = response.totalRegisters;
           this.totalPaginas = Math.ceil(this.totalRegisters / 10);
-          this.paginas = Array.from({length: this.totalPaginas}, (_, i) => i + 1);
+          this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
         },
         (error) => {
           console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
@@ -151,7 +151,7 @@ export class ModalOrdemServicoComponent {
           this.ordemServicos = response.data;
           this.totalRegisters = response.totalRegisters;
           this.totalPaginas = Math.ceil(this.totalRegisters / 10);
-          this.paginas = Array.from({length: this.totalPaginas}, (_, i) => i + 1);
+          this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
         },
         (error) => {
           console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
@@ -159,27 +159,27 @@ export class ModalOrdemServicoComponent {
       );
     }
   }
-//  Botoes de paginação //
-  
+  //  Botoes de paginação //
+
   public selecionarPagina(pagina: number): void {
-    
+
     this.paginaAtual = pagina;
     this.listarOrdemServico();
   }
 
-public proximaPagina(): void {
-  debugger;
+  public proximaPagina(): void {
+    debugger;
     if (this.paginaAtual < this.totalPaginas) {
-        this.paginaAtual++;
-        this.listarOrdemServico();
+      this.paginaAtual++;
+      this.listarOrdemServico();
     }
   }
 
-public paginaAnterior(): void {
-  debugger;
+  public paginaAnterior(): void {
+    debugger;
     if (this.paginaAtual > 1) {
-        this.paginaAtual--;
-        this.listarOrdemServico();
+      this.paginaAtual--;
+      this.listarOrdemServico();
     }
   }
 

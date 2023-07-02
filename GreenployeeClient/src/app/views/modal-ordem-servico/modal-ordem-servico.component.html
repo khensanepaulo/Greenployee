@@ -8,7 +8,10 @@
             <!-- Modal Header -->
             <div class="modal-header d-flex justify-content-between" style="background-color: #C9D7D0;">
                 <h4 class="modal-title textoPadrao">Ordens de Serviços</h4>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center" *ngIf="ordemServicos.length == 0">
+                    Sem Ordens de Serviço Localizadas!
+                </div>
+                <div class="d-flex justify-content-center" *ngIf="ordemServicos.length > 0">
                     <div class="form-group">
                         <label class="textoPadrao text-left" style="margin-bottom: 5px;">Cliente</label>
                         <input name="cliente" type="text" class="form-control inputCinza"
@@ -26,8 +29,8 @@
                     </div>
                     <div class="form-group">
                         <label class="textoPadrao text-left" style="margin-bottom: 5px;">Data até</label>
-                        <input name="dataDe" type="date" class="form-control inputCinza"
-                            [(ngModel)]="this.filtro.dtFim" (ngModelChange)="listarOrdemServico()">
+                        <input name="dataDe" type="date" class="form-control inputCinza" [(ngModel)]="this.filtro.dtFim"
+                            (ngModelChange)="listarOrdemServico()">
                     </div>
                     <div>
                         <label class="textoPadrao text-left" style="margin-bottom: 5px; margin-top: 36px;">
@@ -39,7 +42,7 @@
                 </div>
             </div>
             <!-- Modal body -->
-            <div class="modal-body" style="background-color: #C9D7D0;">
+            <div class="modal-body" style="background-color: #C9D7D0;" *ngIf="ordemServicos.length > 0">
                 <div class="row">
                     <table class="table-borderless table-hover colorTd">
                         <thead>
@@ -105,16 +108,20 @@
                 <nav aria-label="Navegação de página exemplo">
                     <ul class="pagination">
                         <li class="page-item">
-                            <button class="page-link" style="background-color: #a7afab; color: black;" aria-label="Anterior" (click)="paginaAnterior()">
+                            <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
+                                aria-label="Anterior" (click)="paginaAnterior()">
                                 <span aria-hidden="true">&laquo;</span>
                                 <span class="sr-only">Anterior</span>
                             </button>
                         </li>
-                        <li class="page-item gradiente" *ngFor="let pagina of paginas" [class.active]="pagina === paginaAtual">
-                            <button class="page-link" style="background-color: #a7afab; color: black;" (click)="selecionarPagina(pagina)">{{ pagina }}</button>
+                        <li class="page-item gradiente" *ngFor="let pagina of paginas"
+                            [class.active]="pagina === paginaAtual">
+                            <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
+                                (click)="selecionarPagina(pagina)">{{ pagina }}</button>
                         </li>
                         <li class="page-item">
-                            <button class="page-link" aria-label="Próximo" style="background-color: #a7afab; color: black;" (click)="proximaPagina()">
+                            <button class="page-link btn-sm" aria-label="Próximo"
+                                style="background-color: #a7afab; color: black;" (click)="proximaPagina()">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only">Próximo</span>
                             </button>

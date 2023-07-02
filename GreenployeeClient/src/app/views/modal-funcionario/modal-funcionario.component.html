@@ -11,29 +11,27 @@
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #C9D7D0;">
                 <h4 class="modal-title textoPadrao">Funcionários</h4>
-                    <div class="form-group">
-                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">Cliente</label>
-                        <input name="cliente" type="text" class="form-control inputCinza"
-                            [(ngModel)]="this.filtro.nmPessoa" (ngModelChange)="listarPessoas()">
-                    </div>
-                    <div class="form-group">
-                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">CPF</label>
-                        <input name="funcionario" type="text" class="form-control inputCinza"
-                            [(ngModel)]="this.filtro.nrCPF" (ngModelChange)="listarPessoas()">
-                    </div>
-                    <button (click)="listarPessoas()" class="btn refreshColor" type="button"
-                        style="color:white">⟲</button>
-                    <button type="button" class="btn gradiente ml3" data-bs-toggle="modal"
-                        data-bs-target="#funcionarioCadastro" style="color:white">Cadastrar</button>
-                    <button (click)="listarPessoas()" type="button" class="btn ml3 secondButtonColor"
-                        data-bs-toggle="modal" data-bs-target="#funcionarioPermissao"
-                        style="color:white">Permissão</button>
-                
+                <div class="form-group">
+                    <label class="textoPadrao text-left" style="margin-bottom: 5px;">Cliente</label>
+                    <input name="cliente" type="text" class="form-control inputCinza" [(ngModel)]="this.filtro.nmPessoa"
+                        (ngModelChange)="listarPessoas()">
+                </div>
+                <div class="form-group">
+                    <label class="textoPadrao text-left" style="margin-bottom: 5px;">CPF</label>
+                    <input name="funcionario" type="text" class="form-control inputCinza"
+                        [(ngModel)]="this.filtro.nrCPF" (ngModelChange)="listarPessoas()">
+                </div>
+                <button (click)="listarPessoas()" class="btn refreshColor" type="button" style="color:white">⟲</button>
+                <button type="button" class="btn gradiente ml3" data-bs-toggle="modal"
+                    data-bs-target="#funcionarioCadastro" style="color:white">Cadastrar</button>
+                <button (click)="listarPessoas()" type="button" class="btn ml3 secondButtonColor" data-bs-toggle="modal"
+                    data-bs-target="#funcionarioPermissao" style="color:white">Permissão</button>
+
             </div>
             <!-- Modal body -->
             <div class="modal-body" style="background-color: #C9D7D0;">
                 <div class="row">
-                    <table class="table-borderless table-hover ">
+                    <table class="table-borderless table-hover " *ngIf="pessoas.length > 0">
                         <thead>
                             <tr style="background-color: #C9D7D0 !important;" class="trCor col-lg-12">
                                 <th class="text-left col-lg-5">
@@ -51,7 +49,8 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="table-responsive d-flex justify-content-center mt3"
+                    <div [ngClass]="{'table-scroll': pessoas && pessoas.length > 10}"
+                        class="table-responsive d-flex justify-content-center mt3"
                         style="max-height: 380px; overflow-y: scroll;">
                         <table class="table table-borderless table-hover ">
                             <tbody>
@@ -81,7 +80,7 @@
                         </table>
                     </div>
                 </div>
-                <nav aria-label="Navegação de página exemplo">
+                <nav aria-label="Navegação de página exemplo" *ngIf="pessoas.length > 10">
                     <ul class="pagination ">
                         <li class="page-item">
                             <a class="page-link" style="background-color: #a7afab; color: black;" href="#"
