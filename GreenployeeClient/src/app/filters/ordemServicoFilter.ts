@@ -7,4 +7,5 @@ export class OrdemServicoFilter {
     nmCliente!: string 
     nmFuncionario !: string 
     idUsuario!: number;
+    page!: number;
 }

@@ -6,6 +6,7 @@ import { PessoaService } from 'src/app/service/pessoa.service';
 import { InicioComponent } from '../inicio/inicio.component';
 import { UserDataService } from 'src/app/service/userDataService';
 import { LocalStorageService } from 'src/app/service/localStorage.service';
+import { AnotacaoFilter } from 'src/app/filters/anotacaoFilter';
 
 @Component({
   selector: 'app-modal-anotacao',
@@ -19,6 +20,8 @@ export class ModalAnotacaoComponent {
   public anotacao! : Anotacao;
   public pessoa! : Pessoa;
   anotacoes: Anotacao[] = [];
+  public filtro!: AnotacaoFilter;
+  public totalRegisters!: number;
 
   constructor(
     private anotacaoService: AnotacaoService,
@@ -29,9 +32,10 @@ export class ModalAnotacaoComponent {
     ){}
 
   ngOnInit(): void {
-    this.listarAnotacoes();
     this.anotacao = new Anotacao();
     this.pessoa = new Pessoa();
+    this.filtro = new AnotacaoFilter();
+    this.listarAnotacoes();
   }
 
   public addAnotacao(): void {
@@ -89,21 +93,28 @@ export class ModalAnotacaoComponent {
   public listarAnotacoes(): void {
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
-
-    if(this.userDataService.userCredentials.permissions == 'Admin'){
-      this.anotacaoService.findAll().then((anotacoes: Anotacao[]) => {
-        this.anotacoes = anotacoes;
-      })
-      .catch((error) => {
-        alert('Erro ao obter as Anotacoes:' + error);
-      });
-    } else{
-      this.anotacaoService.findByUserId(parsedUserId).then((anotacoes: Anotacao[]) => {
-        this.anotacoes = anotacoes;
-      })
-      .catch((error) => {
-        alert('Erro ao obter as Anotacoes:' + error);
-      });
+    if (this.userDataService.userCredentials.permissions === 'Admin') {
+      this.filtro.idUsuario = 0;
+      this.anotacaoService.getPaged(this.filtro).subscribe(
+        (response) => {
+          this.anotacoes = response.data;
+          this.totalRegisters = response.totalRegisters;
+        },
+        (error) => {
+          console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
+        }
+      );
+    } else {
+      this.filtro.idUsuario = parsedUserId;
+      this.anotacaoService.getPaged(this.filtro).subscribe(
+        (response) => {
+          this.anotacoes = response.data;
+          this.totalRegisters = response.totalRegisters;
+        },
+        (error) => {
+          console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
+        }
+      );
     }
   }
 

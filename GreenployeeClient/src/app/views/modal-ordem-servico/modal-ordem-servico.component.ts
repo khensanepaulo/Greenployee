@@ -26,6 +26,12 @@ export class ModalOrdemServicoComponent {
   // public dtInicio!: Date;
   // public dtFim!: Date;
 
+  public paginaAtual: number = 1;
+  public totalPaginas: number = 1;
+  public paginas: number[] = [];
+  public page!: number; // Adicione esta linha
+
+
   constructor(public ordemServicoService: OrdemServicoService,
               public userDataService: UserDataService,
               public cdr: ChangeDetectorRef){}
@@ -34,11 +40,9 @@ export class ModalOrdemServicoComponent {
     this.ordemServico = new OrdemServico();
     this.filtro = new OrdemServicoFilter();
     this.listarOrdemServico();
+    
   }
 
-  ngOnChanges(): void {
-    this.listarOrdemServico();
-  }
 
   public addOrdemServico(): void {
     this.ordemServicoService.cadastrar(this.ordemServico).then(value => {
@@ -126,13 +130,15 @@ export class ModalOrdemServicoComponent {
   public listarOrdemServico(): void {
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
-    debugger;
     if (this.userDataService.userCredentials.permissions === 'Admin') {
       this.filtro.idUsuario = 0;
+      this.filtro.page = this.page; // Adicione esta linha
       this.ordemServicoService.getPaged(this.filtro).subscribe(
         (response) => {
           this.ordemServicos = response.data;
-          this.totalRegisters = response.totalRegisters;
+          this.totalRegisters = response.t  otalRegisters;
+          this.totalPaginas = Math.ceil(this.totalRegisters / 10);
+          this.paginas = Array.from({length: this.totalPaginas}, (_, i) => i + 1);
         },
         (error) => {
           console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
@@ -144,6 +150,8 @@ export class ModalOrdemServicoComponent {
         (response) => {
           this.ordemServicos = response.data;
           this.totalRegisters = response.totalRegisters;
+          this.totalPaginas = Math.ceil(this.totalRegisters / 10);
+          this.paginas = Array.from({length: this.totalPaginas}, (_, i) => i + 1);
         },
         (error) => {
           console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
@@ -151,6 +159,28 @@ export class ModalOrdemServicoComponent {
       );
     }
   }
+//  Botoes de paginação //
+  
+  public selecionarPagina(pagina: number): void {
+    
+    this.paginaAtual = pagina;
+    this.listarOrdemServico();
+  }
 
+public proximaPagina(): void {
+  debugger;
+    if (this.paginaAtual < this.totalPaginas) {
+        this.paginaAtual++;
+        this.listarOrdemServico();
+    }
+  }
+
+public paginaAnterior(): void {
+  debugger;
+    if (this.paginaAtual > 1) {
+        this.paginaAtual--;
+        this.listarOrdemServico();
+    }
+  }
 
 }

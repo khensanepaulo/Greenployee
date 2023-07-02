@@ -11,10 +11,10 @@ namespace Greenployee.CORE.Filters
 {
     public class AnotacaoFilter : PagedBaseRequest
     {
-        public DateTime dtInicio { get; set; }
-        public DateTime dtFim { get; set; }
-        public string dsMensagem { get; set; }
-        public string nmPessoa { get; set; }
+        public DateTime? dtInicio { get; set; }
+        public DateTime? dtFim { get; set; }
+        public string? dsMensagem { get; set; }
+        public string? nmPessoa { get; set; }
         public int? idUsuario { get; set; }
     }
 }

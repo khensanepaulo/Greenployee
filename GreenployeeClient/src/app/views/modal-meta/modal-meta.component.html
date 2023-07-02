@@ -68,6 +68,21 @@
                         </div>
                     </div>
                     <div class="modal-footer" style="margin-top: 1vh;">
+                        <div class="form-group">
+                            <label class="textoPadrao text-left" style="margin-bottom: 5px;">Pesquisar</label>
+                            <input name="pesquisar" type="text" class="form-control inputCinza"
+                                [(ngModel)]="this.filtro.dsRecompensa" (ngModelChange)="listarMetas()">
+                        </div>
+                        <div class="form-group">
+                            <label class="textoPadrao text-left" style="margin-bottom: 5px;">Data de</label>
+                            <input name="dataDe" type="date" class="form-control inputCinza"
+                                [(ngModel)]="this.filtro.dtInicio" (ngModelChange)="listarMetas()">
+                        </div>
+                        <div class="form-group">
+                            <label class="textoPadrao text-left" style="margin-bottom: 5px;">Data até</label>
+                            <input name="dataDe" type="date" class="form-control inputCinza"
+                                [(ngModel)]="this.filtro.dtFim" (ngModelChange)="listarMetas()">
+                        </div>
                         <button (click)="resetItem()" *ngIf="!verificarUser()" type="button"
                             class="btn btn-danger ml3">Cancelar</button>
                         <button *ngIf="!verificarUser()" (click)="addMeta()" type="button" class="btn gradiente ml3"
@@ -75,6 +90,12 @@
                     </div>
                     <hr *ngIf="!verificarUser()">
                 </div>
+                    <!-- falta fazer o filtro de flCOncluida -->
+                    <!-- <div>
+                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">Concluidas?</label>
+                        <input name="flConcluida" type="checkbox" class=""
+                            [(ngModel)]="this.filtro.flConcluida" (ngModelChange)="listarMetas()">
+                    </div> -->
                 <div class="table-responsive d-flex justify-content-start mt3"
                     style="max-height: 380px; overflow-y: scroll;">
                     <table class="table table-borderless table-hover">
@@ -84,7 +105,7 @@
                                     <strong>Descrição da Meta</strong>
                                 </th>
                                 <th class="text-center col-lg-6" style="background-color: #C9D7D0;">
-                                    <strong style="margin-right: 3vw;">Meta Concluída?</strong>
+                                    <strong style="margin-right: 3vw;">Status</strong>
                                 </th>
                             </tr>
                         </thead>

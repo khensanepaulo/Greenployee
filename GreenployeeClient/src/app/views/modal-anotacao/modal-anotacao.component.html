@@ -19,28 +19,17 @@
                     <div class="form-switch col-lg-2 mt3" style="margin-left: 1vw; margin-bottom: 2vh;">
                         <style>
                             .form-check-input {}
-
                             .form-check-input:checked {
                                 background: rgb(54, 130, 94);
                                 background: linear-gradient(209deg, rgba(54, 130, 94, 1) 0%, rgba(71, 145, 111, 0.705) 29%, rgba(54, 130, 94, 1) 100%);
                             }
                         </style>
                     </div>
-                    <div *ngIf="mensagem" style="color: rgb(54,130,94); 
-                     font-family: 'Inter', sans-serif; 
-                    font-style: normal; 
-                    font-size: 16px; 
-                    font-weight: lighter ;">
-                        {{ mensagem }}
-                    </div>
-                    <div *ngIf="mensagemErro" style="color: rgb(161, 19, 40); 
-                     font-family: 'Inter', sans-serif; 
-                    font-style: normal; 
-                    font-size: 16px; 
-                    font-weight: lighter ;">
-                        {{ mensagemErro }}
-                    </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
+                        <div class="col-lg-2">
+                            <label class="textoPadrao text-left" style="margin-bottom: 5px;">Pesquisar</label>
+                            <input name="cliente" type="text" class="form-control inputCinza" [(ngModel)]="this.filtro.dsMensagem" (ngModelChange)="listarAnotacoes()">
+                        </div>
                         <button (click)="addAnotacao()" type="button" class="btn gradiente"
                             style="color:white">Salvar</button>
                     </div>
@@ -51,6 +40,7 @@
                             </tr>
                         </thead>
                     </table>
+                    
                     <div class="table-responsive d-flex justify-content-center mt3"
                         style="max-height: 380px; overflow-y: scroll;">
                         <table class="table table-borderless table-hover ">

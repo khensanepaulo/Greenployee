@@ -118,9 +118,9 @@ namespace Greenployee.Controllers
                 if (!status) return BadRequest("Não foi possível deletar a meta!");
                 return Ok(status);
             }
-            catch (Exception exception) 
-            { 
-                throw exception; 
+            catch (Exception exception)
+            {
+                throw exception;
             }
         }
 
@@ -168,7 +168,7 @@ namespace Greenployee.Controllers
             }
         }
 
-           [HttpGet]
+        [HttpGet]
         [Route("usuario/paged")]
         public async Task<ActionResult<PagedBaseRespondeDTO<OrdemServico>>> GetPagedByUserIdAsync([FromQuery] MetaFilter request)
         {
@@ -191,7 +191,5 @@ namespace Greenployee.Controllers
                 throw;
             }
         }
-    }
-
-
+    }  
 }

@@ -11,7 +11,16 @@
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #C9D7D0;">
                 <h4 class="modal-title textoPadrao">Funcionários</h4>
-                <div>
+                    <div class="form-group">
+                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">Cliente</label>
+                        <input name="cliente" type="text" class="form-control inputCinza"
+                            [(ngModel)]="this.filtro.nmPessoa" (ngModelChange)="listarPessoas()">
+                    </div>
+                    <div class="form-group">
+                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">CPF</label>
+                        <input name="funcionario" type="text" class="form-control inputCinza"
+                            [(ngModel)]="this.filtro.nrCPF" (ngModelChange)="listarPessoas()">
+                    </div>
                     <button (click)="listarPessoas()" class="btn refreshColor" type="button"
                         style="color:white">⟲</button>
                     <button type="button" class="btn gradiente ml3" data-bs-toggle="modal"
@@ -19,7 +28,7 @@
                     <button (click)="listarPessoas()" type="button" class="btn ml3 secondButtonColor"
                         data-bs-toggle="modal" data-bs-target="#funcionarioPermissao"
                         style="color:white">Permissão</button>
-                </div>
+                
             </div>
             <!-- Modal body -->
             <div class="modal-body" style="background-color: #C9D7D0;">
@@ -27,8 +36,11 @@
                     <table class="table-borderless table-hover ">
                         <thead>
                             <tr style="background-color: #C9D7D0 !important;" class="trCor col-lg-12">
-                                <th class="text-left col-lg-8">
+                                <th class="text-left col-lg-5">
                                     <strong>Nome</strong>
+                                </th>
+                                <th class="text-left col-lg-3">
+                                    <strong>CPF</strong>
                                 </th>
                                 <th class="text-center col-lg-2">
                                     <strong style="margin-right: 3vw;">Contratação</strong>
@@ -44,8 +56,11 @@
                         <table class="table table-borderless table-hover ">
                             <tbody>
                                 <tr *ngFor="let pessoa of pessoas; index as index" class="trCor col-lg-12">
-                                    <td class="tdRadiusLeft col-lg-8 colorTd">
+                                    <td class="tdRadiusLeft col-lg-5 colorTd">
                                         {{ pessoa.nmPessoa }}
+                                    </td>
+                                    <td class=" col-lg-3 colorTd">
+                                        {{ pessoa.nrCPF }}
                                     </td>
                                     <td class="text-center  col-lg-2 colorTd">
                                         <p class="colorData">{{ pessoa.dtAdmissao | date: 'dd/MM/yyyy HH:mm' }}</p>

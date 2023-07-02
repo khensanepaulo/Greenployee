@@ -6,6 +6,7 @@ import { MetaService } from 'src/app/service/meta.service';
 import { PessoaService } from 'src/app/service/pessoa.service';
 import { cloneDeep } from 'lodash';
 import { UserDataService } from 'src/app/service/userDataService';
+import { MetaFilter } from 'src/app/filters/metaFilter';
 
 @Component({
   selector: 'app-modal-meta',
@@ -21,18 +22,22 @@ export class ModalMetaComponent {
   public pessoaMeta!: PessoaMeta;
   pessoas : Pessoa [] = [];
   metas: Meta[] = [];
+  public filtro!: MetaFilter;
+  public totalRegisters!: number;
 
   constructor(public metaService: MetaService,
     public pessoaService: PessoaService,
     public userDataService: UserDataService){}
 
   ngOnInit(): void {
-    this.listarMetas();
-    this.listarPessoas();
     this.pessoaMeta = new PessoaMeta();
     this.meta = new Meta();
     this.metaConcluida = new Meta();
     this.pessoa = new Pessoa();
+    this.filtro = new MetaFilter();
+    this.listarMetas();
+    this.listarPessoas();
+   
 
   }
 
@@ -69,24 +74,30 @@ public delete(index: number): void{
 }
 
 public listarMetas(): void {
-
   const userId = this.userDataService.userCredentials.userId;
   const parsedUserId = parseInt(userId, 10);
-
-  if(this.userDataService.userCredentials.permissions == 'Admin'){
-    this.metaService.findAll().then((metas: Meta[]) => {
-      this.metas = metas; // Armazena a lista completa de pessoas
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as pessoas:', error);
-    });
-  } else{
-    this.metaService.findByUserId(parsedUserId).then((metas: Meta[]) => {
-      this.metas = metas; // Armazena a lista completa de metas
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as metas:', error);
-    });
+  if (this.userDataService.userCredentials.permissions === 'Admin') {
+    this.filtro.idUsuario = 0;
+    this.metaService.getPaged(this.filtro).subscribe(
+      (response) => {
+        this.metas = response.data;
+        this.totalRegisters = response.totalRegisters;
+      },
+      (error) => {
+        console.error('Ocorreu um erro ao obter as metas:', error);
+      }
+    );
+  } else {
+    this.filtro.idUsuario = parsedUserId;
+    this.metaService.getPaged(this.filtro).subscribe(
+      (response) => {
+        this.metas = response.data;
+        this.totalRegisters = response.totalRegisters;
+      },
+      (error) => {
+        console.error('Ocorreu um erro ao obter as metas:', error);
+      }
+    );
   }
 }
 
