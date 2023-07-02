@@ -22,24 +22,23 @@ export class ModalNovaOrdemComponent implements OnInit{
 
   @Input("objeto") ordemServicoObtida!: any;
 
-  nrOrdemRecebida!: string;
-  pessoa!: Pessoa;
-  pessoas: Pessoa []=[];
-  flEntrega: boolean = false;
+  public nrOrdemRecebida!: string;
+  public pessoa!: Pessoa;
+  public pessoas: Pessoa []=[];
+  public flEntrega: boolean = false;
   public ordemServicoItem!: OrdemServicoItem;
   public ordemServico!: OrdemServico;
-  ordemServicos: OrdemServico[] = [];
+  public ordemServicos: OrdemServico[] = [];
 
   constructor(private ordemServicoService: OrdemServicoService,
     public pessoaService: PessoaService,
     public userDataService: UserDataService,
     private cdr: ChangeDetectorRef) { }
 
-
-
   ngOnInit(): void {
     this.ordemServico = new OrdemServico();
-    this.ordemServicoItem = new OrdemServicoItem();
+    this.ordemServicoItem = new OrdemServicoItem()
+
     this.listarPessoas();
     this.getPessoa();
   }

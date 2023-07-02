@@ -40,10 +40,7 @@ export class ModalRelatorioComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   ngOnInit(): void {
-
-
     this.listarMetas();
-    this.listarPessoas();
     this.listaComissoesPorMes();
     this.barChartData.labels = this.listaNomesMes;
 
@@ -257,8 +254,6 @@ export class ModalRelatorioComponent {
     this.quantidadeMetasConcluida = metasComData.length;
   }
 
-
-
   public verificarUser(): boolean {
 
     this.verificaUser = this.userDataService.userCredentials.permissions;
@@ -270,16 +265,6 @@ export class ModalRelatorioComponent {
     this.verificaUser = this.userDataService.userCredentials.permissions;
     return this.verificaUser != 'User';
 
-  }
-
-  public listarPessoas(): void {
-    this.pessoaService.findAll()
-      .then((pessoas: Pessoa[]) => {
-        this.pessoas = pessoas; // Armazena a lista completa de metas
-      })
-      .catch((error) => {
-        console.error('Erro ao obter as metas:', error);
-      });
   }
 
   public resetItem(): void {

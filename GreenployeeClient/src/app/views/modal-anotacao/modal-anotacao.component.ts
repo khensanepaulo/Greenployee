@@ -19,9 +19,14 @@ export class ModalAnotacaoComponent {
   public mensagemErro: string = "";
   public anotacao! : Anotacao;
   public pessoa! : Pessoa;
-  anotacoes: Anotacao[] = [];
+  public anotacoes: Anotacao[] = [];
   public filtro!: AnotacaoFilter;
+
   public totalRegisters!: number;
+  public paginaAtual: number = 1;
+  public totalPaginas: number = 1;
+  public paginas: number[] = [];
+  public page: number = 1;
 
   constructor(
     private anotacaoService: AnotacaoService,
@@ -44,7 +49,6 @@ export class ModalAnotacaoComponent {
       this.anotacaoService.cadastrar(this.anotacao).then(() => {
         this.resetItem();
         this.listarAnotacoes();
-        alert("Anotação cadastrada com sucesso.")
       }).catch((error) => {
         this.mensagemErro = error;
         this.showAndHideMessage(3000); // Exibe a mensagem de erro por 3 segundos (3000 ms)
@@ -66,15 +70,21 @@ export class ModalAnotacaoComponent {
   public getPessoa(): Promise<number> {
     return new Promise<number>((resolve, reject) => {
       const userId = this.userDataService.userCredentials.userId;
-
-      if (this.userDataService.userCredentials.permissions == 'Admin') {
+      const parsedUserId = parseInt(userId, 10);
+      if (this.userDataService.userCredentials.permissions == 'Admin' && userId) {
         const nomePessoaElement = document.getElementById('nomePessoa');
         if (nomePessoaElement) {
           nomePessoaElement.textContent = 'Administrador';
         }
-        resolve(0);
+        this.pessoaService.findByUserId(parsedUserId)
+          .then((pessoa: Pessoa) => {
+            const idPessoaRetornado = pessoa.id;
+            resolve(idPessoaRetornado);
+          }).catch((error) => {
+            console.error('Erro ao obter a pessoa:', error);
+            reject(error);
+          });
       } else if (userId) {
-        const parsedUserId = parseInt(userId, 10);
         this.pessoaService.findByUserId(parsedUserId)
           .then((pessoa: Pessoa) => {
             const idPessoaRetornado = pessoa.id;
@@ -95,26 +105,51 @@ export class ModalAnotacaoComponent {
     const parsedUserId = parseInt(userId, 10);
     if (this.userDataService.userCredentials.permissions === 'Admin') {
       this.filtro.idUsuario = 0;
+      this.filtro.page = this.paginaAtual;
       this.anotacaoService.getPaged(this.filtro).subscribe(
         (response) => {
           this.anotacoes = response.data;
           this.totalRegisters = response.totalRegisters;
+          this.totalPaginas = Math.ceil(this.totalRegisters / 10);
+          this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
         },
         (error) => {
-          console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
+          console.error('Ocorreu um erro ao obter as Anotações:', error);
         }
       );
     } else {
       this.filtro.idUsuario = parsedUserId;
+      this.filtro.page = this.paginaAtual;
       this.anotacaoService.getPaged(this.filtro).subscribe(
         (response) => {
           this.anotacoes = response.data;
           this.totalRegisters = response.totalRegisters;
+          this.totalPaginas = Math.ceil(this.totalRegisters / 10);
+          this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
         },
         (error) => {
-          console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
+          console.error('Ocorreu um erro ao obter as Anotações:', error);
         }
       );
+    }
+  }
+
+  public selecionarPagina(pagina: number): void {
+    this.paginaAtual = pagina;
+    this.listarAnotacoes();
+  }
+
+  public proximaPagina(): void {
+    if (this.paginaAtual < this.totalPaginas) {
+      this.paginaAtual++;
+      this.listarAnotacoes();
+    }
+  }
+
+  public paginaAnterior(): void {
+    if (this.paginaAtual > 1) {
+      this.paginaAtual--;
+      this.listarAnotacoes();
     }
   }
 

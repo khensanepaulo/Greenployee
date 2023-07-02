@@ -25,6 +25,7 @@ export class ModalPermissaoUsuarioComponent {
   constructor(public pessoaService: PessoaService,
               public permissaoUsuarioService: PermissaoUsuarioService,
               public usuarioService: UsuarioService,
+              public userDataService: UserDataService,
   ){}
 
   ngOnInit(): void {
@@ -45,13 +46,18 @@ export class ModalPermissaoUsuarioComponent {
   }
 
   public findAllPessoas(): void {
-    this.pessoaService.findAll()
+    if(this.userDataService.userCredentials.permissions === 'Admin'){
+      this.pessoaService.findAll()
       .then((pessoas: Pessoa[]) => {
         this.pessoas = pessoas.filter(item => item.usuario != null);
       })
       .catch((error) => {
         console.error('Erro ao obter as pessoas:', error);
       });
+    } else {
+      return;
+    }
+
   }
 
 }

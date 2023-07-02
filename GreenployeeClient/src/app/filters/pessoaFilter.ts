@@ -1,15 +1,15 @@
 export class PessoaFilter {
 
-    dtInicio!: Date  
-    dtFim !: Date 
+    dtInicio!: Date
+    dtFim !: Date
     nmPessoa!: string
-    nrCPF!: string 
-    nrRG !: string 
+    nrCPF!: string
+    nrRG !: string
     dsEmail!: string
-    nrTelefone!: string 
-    flSituacao !: string 
-    nrPIS !: string 
+    nrTelefone!: string
+    flSituacao !: string
+    nrPIS !: string
     idUsuario !: number
-
+    page!: number;
 }
 

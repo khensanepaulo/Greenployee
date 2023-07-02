@@ -7,4 +7,10 @@ export class OrdemServicoItem extends BaseClass {
     nrQuantidade!: number;
     vlTotal!: number;
     idOrdemServico!: number;
+
+    constructor() {
+      super();
+      this.nmProduto = "";
+      this.vlUnitario = 0;
+    }
 }

@@ -4,6 +4,7 @@ import { Pessoa } from 'src/app/model/pessoa';
 import { Usuario } from 'src/app/model/usuario';
 import { PessoaService } from 'src/app/service/pessoa.service';
 import { PermissaoService } from 'src/app/service/permissao.service';
+import { UserDataService } from 'src/app/service/userDataService';
 
 @Component({
   selector: 'app-modal-funcionario-cadastro',
@@ -15,21 +16,21 @@ export class ModalFuncionarioCadastroComponent {
   @Input("objeto") pessoaObtida!: any;
   public mensagem: string = '';
   public mensagemErro: string = "";
-  showPassword: boolean = false;
+  public showPassword: boolean = false;
   public pessoa! : Pessoa;
-  pessoas: Pessoa[] = [];
-  permissoes: Permissao[] = [];
-  
+  public pessoas: Pessoa[] = [];
+  public permissoes: Permissao[] = [];
+
   constructor(
     private pessoaService: PessoaService,
     public permissaoService: PermissaoService,
+    public userDataService: UserDataService,
     ){}
-  
+
   ngOnInit(): void {
     this.listarPessoas();
     this.pessoa = new Pessoa();
     this.pessoa.usuario = new Usuario();
-    
   }
 
   ngOnChanges(): void{
@@ -40,10 +41,10 @@ export class ModalFuncionarioCadastroComponent {
   public refresh(): void {
     this.listarPessoas();
   }
-  
+
   private showAndHideMessage(duration: number): void {
     setTimeout(() => {
-      this.mensagem = ''; 
+      this.mensagem = '';
       this.mensagemErro = '';// Limpa a mensagem após o tempo especificado
     }, duration);
   }
@@ -51,7 +52,7 @@ export class ModalFuncionarioCadastroComponent {
   public addPessoa(): void {
     this.pessoaService.cadastrar(this.pessoa).then(() => {
       this.mensagem = 'Funcionário cadastrado com sucesso!';
-      this.listarPessoas();
+      this.refresh();
       this.showAndHideMessage(3000); // Exibe a mensagem por 3 segundos (3000 ms)
       this.resetItem();
     }).catch((error) => {
@@ -68,16 +69,21 @@ export class ModalFuncionarioCadastroComponent {
   public resetItem(): void{
     this.pessoa = new Pessoa();
    }
-  
+
 
    listarPessoas(): void {
-  this.pessoaService.findAll()
-    .then((pessoas: Pessoa[]) => {
-      this.pessoas = pessoas; // Armazena a lista completa de pessoas
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as pessoas:', error);
-    });
+    if(this.userDataService.userCredentials.permissions === 'Admin'){
+      this.pessoaService.findAll()
+        .then((pessoas: Pessoa[]) => {
+          this.pessoas = pessoas; // Armazena a lista completa de pessoas
+        })
+        .catch((error) => {
+          console.error('Erro ao obter as pessoas:', error);
+        });
+    } else {
+      return;
+    }
+
 }
 
 togglePasswordVisibility(): void {

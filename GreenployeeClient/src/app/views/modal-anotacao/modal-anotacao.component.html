@@ -26,12 +26,18 @@
                         </style>
                     </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
+                      <div class="col-lg-12 d-flex">
                         <div class="col-lg-2">
                             <label class="textoPadrao text-left" style="margin-bottom: 5px;">Pesquisar</label>
                             <input name="cliente" type="text" class="form-control inputCinza" [(ngModel)]="this.filtro.dsMensagem" (ngModelChange)="listarAnotacoes()">
                         </div>
-                        <button (click)="addAnotacao()" type="button" class="btn gradiente"
-                            style="color:white">Salvar</button>
+                        <div class="col-lg-9"></div>
+                        <div class="col-lg-1">
+                          <button (click)="addAnotacao()" type="button" class="btn gradiente"style="color:white">
+                            Salvar
+                          </button>
+                        </div>
+                      </div>
                     </div>
                     <hr>
                     <table class="table-borderless table-hover ">
@@ -40,7 +46,7 @@
                             </tr>
                         </thead>
                     </table>
-                    
+
                     <div class="table-responsive d-flex justify-content-center mt3"
                         style="max-height: 380px; overflow-y: scroll;">
                         <table class="table table-borderless table-hover ">
@@ -67,28 +73,27 @@
                 </div>
                 <!-- Contador de página -->
                 <nav aria-label="Navegação de página exemplo">
-                    <ul class="pagination ">
-                        <li class="page-item">
-                            <a class="page-link" style="background-color: #a7afab; color: black;" href="#"
-                                aria-label="Anterior">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Anterior</span>
-                            </a>
-                        </li>
-                        <li class="page-item gradiente"><a class="page-link"
-                                style="background-color: #a7afab; color: black;" href="#">1</a></li>
-                        <li class="page-item gradiente"><a class="page-link"
-                                style="background-color: #a7afab; color: black;" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" style="background-color: #a7afab; color: black;"
-                                href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link " href="#" aria-label="Próximo"
-                                style="background-color: #a7afab; color: black;">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Próximo</span>
-                            </a>
-                        </li>
-                    </ul>
+                  <ul class="pagination">
+                      <li class="page-item">
+                          <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
+                              aria-label="Anterior" (click)="paginaAnterior()">
+                              <span aria-hidden="true">&laquo;</span>
+                              <span class="sr-only">Anterior</span>
+                          </button>
+                      </li>
+                      <li class="page-item gradiente" *ngFor="let pagina of paginas"
+                          [class.active]="pagina === paginaAtual">
+                          <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
+                              (click)="selecionarPagina(pagina)">{{ pagina }}</button>
+                      </li>
+                      <li class="page-item">
+                          <button class="page-link btn-sm" aria-label="Próximo"
+                              style="background-color: #a7afab; color: black;" (click)="proximaPagina()">
+                              <span aria-hidden="true">&raquo;</span>
+                              <span class="sr-only">Próximo</span>
+                          </button>
+                      </li>
+                  </ul>
                 </nav>
             </div>
         </div>

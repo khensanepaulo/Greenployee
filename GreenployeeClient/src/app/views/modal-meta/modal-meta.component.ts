@@ -15,15 +15,20 @@ import { MetaFilter } from 'src/app/filters/metaFilter';
 })
 export class ModalMetaComponent {
 
-  verificaUser!: string;
+  public verificaUser!: string;
   public pessoa!: Pessoa;
   public meta! : Meta;
   public metaConcluida! : Meta;
   public pessoaMeta!: PessoaMeta;
-  pessoas : Pessoa [] = [];
-  metas: Meta[] = [];
+  public pessoas : Pessoa [] = [];
+  public metas: Meta[] = [];
   public filtro!: MetaFilter;
+
   public totalRegisters!: number;
+  public paginaAtual: number = 1;
+  public totalPaginas: number = 1;
+  public paginas: number[] = [];
+  public page: number = 1;
 
   constructor(public metaService: MetaService,
     public pessoaService: PessoaService,
@@ -37,103 +42,127 @@ export class ModalMetaComponent {
     this.filtro = new MetaFilter();
     this.listarMetas();
     this.listarPessoas();
-   
-
   }
 
-public addItem(): void{
-  this.meta.pessoasMeta.push(cloneDeep(this.pessoaMeta));
-}
+  public addItem(): void{
+    this.meta.pessoasMeta.push(cloneDeep(this.pessoaMeta));
+  }
 
-public editMeta(index: number): void {
-  this.metaConcluida = this.metas[index];
-  this.metaService.update(this.metaConcluida);
-  this.resetMeta();
-  this.listarMetas();
-}
-
-public addMeta(): void {
-  this.metaService.cadastrar(this.meta)
-  .then(() => {
+  public editMeta(index: number): void {
+    this.metaConcluida = this.metas[index];
+    this.metaService.update(this.metaConcluida);
     this.resetMeta();
     this.listarMetas();
-  });
-}
+  }
 
-public resetMeta(): void {
-  this.meta = new Meta();
-  this.pessoaMeta = new PessoaMeta();
-}
+  public addMeta(): void {
+    this.metaService.cadastrar(this.meta)
+    .then(() => {
+      this.resetMeta();
+      this.listarMetas();
+    });
+  }
 
-public delete(index: number): void{
-  this.metaService.delete(this.metas[index].id).then(value => {
-    if(value){
+  public resetMeta(): void {
+    this.meta = new Meta();
+    this.pessoaMeta = new PessoaMeta();
+  }
+
+  public delete(index: number): void{
+    this.metaService.delete(this.metas[index].id).then(value => {
+      if(value){
+        this.listarMetas();
+      }
+    });
+  }
+
+  public listarMetas(): void {
+    const userId = this.userDataService.userCredentials.userId;
+    const parsedUserId = parseInt(userId, 10);
+    if (this.userDataService.userCredentials.permissions === 'Admin') {
+      this.filtro.idUsuario = 0;
+      this.filtro.page = this.paginaAtual;
+      this.metaService.getPaged(this.filtro).subscribe(
+        (response) => {
+          this.metas = response.data;
+          this.totalRegisters = response.totalRegisters;
+          this.totalPaginas = Math.ceil(this.totalRegisters / 10);
+          this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+        },
+        (error) => {
+          console.error('Ocorreu um erro ao obter as metas:', error);
+        }
+      );
+    } else {
+      this.filtro.idUsuario = parsedUserId;
+      this.filtro.page = this.paginaAtual;
+      this.metaService.getPaged(this.filtro).subscribe(
+        (response) => {
+          this.metas = response.data;
+          this.totalRegisters = response.totalRegisters;
+          this.totalPaginas = Math.ceil(this.totalRegisters / 10);
+          this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+        },
+        (error) => {
+          console.error('Ocorreu um erro ao obter as metas:', error);
+        }
+      );
+    }
+  }
+
+  public verificarUser(): boolean {
+    this.verificaUser = this.userDataService.userCredentials.permissions;
+    return this.verificaUser != 'Admin';
+  }
+
+  public verificarAdmin(): boolean {
+    this.verificaUser = this.userDataService.userCredentials.permissions;
+    return this.verificaUser != 'User';
+  }
+
+  public listarPessoas(): void {
+    if(this.userDataService.userCredentials.permissions === 'Admin'){
+      this.pessoaService.findAll()
+      .then((pessoas: Pessoa[]) => {
+        this.pessoas = pessoas; // Armazena a lista completa de metas
+      })
+      .catch((error) => {
+        console.error('Erro ao obter as metas:', error);
+      });
+    } else {
+      return;
+    }
+  }
+
+  public resetItem(): void{
+    this.pessoaMeta = new PessoaMeta();
+    this.meta = new Meta();
+  }
+
+  public removeItem( sinal: string, index: number): void{
+    if(sinal == '-'){
+      this.meta.pessoasMeta.splice(index,1);
+    }else{
+      return;
+    }
+  }
+
+  public selecionarPagina(pagina: number): void {
+    this.paginaAtual = pagina;
+    this.listarMetas();
+  }
+
+  public proximaPagina(): void {
+    if (this.paginaAtual < this.totalPaginas) {
+      this.paginaAtual++;
       this.listarMetas();
     }
-  });
-}
-
-public listarMetas(): void {
-  const userId = this.userDataService.userCredentials.userId;
-  const parsedUserId = parseInt(userId, 10);
-  if (this.userDataService.userCredentials.permissions === 'Admin') {
-    this.filtro.idUsuario = 0;
-    this.metaService.getPaged(this.filtro).subscribe(
-      (response) => {
-        this.metas = response.data;
-        this.totalRegisters = response.totalRegisters;
-      },
-      (error) => {
-        console.error('Ocorreu um erro ao obter as metas:', error);
-      }
-    );
-  } else {
-    this.filtro.idUsuario = parsedUserId;
-    this.metaService.getPaged(this.filtro).subscribe(
-      (response) => {
-        this.metas = response.data;
-        this.totalRegisters = response.totalRegisters;
-      },
-      (error) => {
-        console.error('Ocorreu um erro ao obter as metas:', error);
-      }
-    );
   }
-}
 
-public verificarUser(): boolean {
-
-  this.verificaUser = this.userDataService.userCredentials.permissions;
-  return this.verificaUser != 'Admin';
-
-}
-
-public verificarAdmin(): boolean {
-  this.verificaUser = this.userDataService.userCredentials.permissions;
-  return this.verificaUser != 'User';
-
-}
-
-public listarPessoas(): void {
-  this.pessoaService.findAll()
-    .then((pessoas: Pessoa[]) => {
-      this.pessoas = pessoas; // Armazena a lista completa de metas
-    })
-    .catch((error) => {
-      console.error('Erro ao obter as metas:', error);
-    });
-}
-
-public resetItem(): void{
-  this.pessoaMeta = new PessoaMeta();
-  this.meta = new Meta();
- }
-
- public removeItem( sinal: string, index: number): void{
-  if(sinal == '-'){
-    this.meta.pessoasMeta.splice(index,1);
-  }else{
-     return;
+  public paginaAnterior(): void {
+    if (this.paginaAtual > 1) {
+      this.paginaAtual--;
+      this.listarMetas();
+    }
   }
-}
 }

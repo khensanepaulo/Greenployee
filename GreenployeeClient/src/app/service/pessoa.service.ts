@@ -90,13 +90,15 @@ export class PessoaService {
       return Promise.reject(error.response);
     }
   }
-  
+
   public getPaged(filter: PessoaFilter): Observable<Pageable<Pessoa>> {
     return new Observable((observer) => {
       let url = '/paged';
       const params: any = {};
 
       if (filter) {
+        params.page = filter.page;
+
         if (filter.idUsuario || filter.idUsuario > 0) {
           params.idUsuario = filter.idUsuario;
           url = '/usuario/paged';

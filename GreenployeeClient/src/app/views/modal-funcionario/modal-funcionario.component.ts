@@ -17,11 +17,16 @@ export class ModalFuncionarioComponent {
   public quantidadeMetasConcluida!: number;
   public quantidadeMetasNaoConcluida!: number;
   public pessoa! : Pessoa;
- pessoas: Pessoa[] = [];
-  metas: Meta[] = [];
+  public pessoas: Pessoa[] = [];
+  public metas: Meta[] = [];
   public meta!: Meta;
   public filtro!: PessoaFilter;
+
   public totalRegisters!: number;
+  public paginaAtual: number = 1;
+  public totalPaginas: number = 1;
+  public paginas: number[] = [];
+  public page: number = 1;
 
   constructor(private pessoaService: PessoaService,
     public userDataService: UserDataService,
@@ -35,6 +40,7 @@ export class ModalFuncionarioComponent {
 
   public addPessoa(): void {
     this.pessoaService.cadastrar(this.pessoa);
+    this.refresh();
   }
 
   public openEditModal(index: number): void {
@@ -44,9 +50,13 @@ export class ModalFuncionarioComponent {
   public delete(index: number): void{
     this.pessoaService.delete(this.pessoas[index].id).then(value => {
       if(value){
-        this.listarPessoas();
+        this.refresh();
       }
     });
+  }
+
+  public refresh(): void {
+    this.listarPessoas();
   }
 
   public listarPessoas(): void {
@@ -54,28 +64,39 @@ export class ModalFuncionarioComponent {
     const parsedUserId = parseInt(userId, 10);
     if (this.userDataService.userCredentials.permissions === 'Admin') {
       this.filtro.idUsuario = 0;
+      this.filtro.page = this.paginaAtual;
       this.pessoaService.getPaged(this.filtro).subscribe(
         (response) => {
           this.pessoas = response.data;
           this.totalRegisters = response.totalRegisters;
+          this.totalPaginas = Math.ceil(this.totalRegisters / 10);
+          this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
         },
         (error) => {
-          console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
+          alert('Ocorreu um erro ao obter os Funcionários: ' + error);
         }
       );
     } else {
       return;
-      // this.filtro.idUsuario = parsedUserId;
-      // this.ordemServicoService.getPaged(this.filtro).subscribe(
-      //   (response) => {
-      //     this.ordemServicos = response.data;
-      //     this.totalRegisters = response.totalRegisters;
-      //   },
-      //   (error) => {
-      //     console.error('Ocorreu um erro ao obter as ordens de serviço:', error);
-      //   }
-      // );
     }
   }
 
+  public selecionarPagina(pagina: number): void {
+    this.paginaAtual = pagina;
+    this.listarPessoas();
+  }
+
+  public proximaPagina(): void {
+    if (this.paginaAtual < this.totalPaginas) {
+      this.paginaAtual++;
+      this.listarPessoas();
+    }
+  }
+
+  public paginaAnterior(): void {
+    if (this.paginaAtual > 1) {
+      this.paginaAtual--;
+      this.listarPessoas();
+    }
+  }
 }

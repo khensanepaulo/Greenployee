@@ -22,6 +22,7 @@ namespace Greenployee.MODELS.Model
         private void Validation(int idPessoa, string dsMensagem)
         {
             ModelValidationException.When(idPessoa == 0, "O id da pessoa deve ser informado");
+            ModelValidationException.When(string.IsNullOrEmpty(dsMensagem), "A mensagem da Anotação deve ser informada");
 
             this.idPessoa = idPessoa;
             this.dsMensagem = dsMensagem;

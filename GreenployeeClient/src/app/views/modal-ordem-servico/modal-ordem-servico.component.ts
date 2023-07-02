@@ -16,21 +16,18 @@ import { UserDataService } from 'src/app/service/userDataService';
 
 export class ModalOrdemServicoComponent {
 
-  ordemServicosState: OrdemServico[] = [];
-  verificaUser!: string;
+  public ordemServicosState: OrdemServico[] = [];
+  public verificaUser!: string;
   public ordemServico!: OrdemServico;
-  ordemServicos: OrdemServico[] = [];
-  OrdemServicoItem: OrdemServicoItem[] = [];
+  public ordemServicos: OrdemServico[] = [];
+  public OrdemServicoItem: OrdemServicoItem[] = [];
   public filtro!: OrdemServicoFilter;
-  public totalRegisters!: number;
-  // public dtInicio!: Date;
-  // public dtFim!: Date;
 
+  public totalRegisters!: number;
   public paginaAtual: number = 1;
   public totalPaginas: number = 1;
   public paginas: number[] = [];
-  public page!: number; // Adicione esta linha
-
+  public page!: number;
 
   constructor(public ordemServicoService: OrdemServicoService,
     public userDataService: UserDataService,
@@ -105,34 +102,12 @@ export class ModalOrdemServicoComponent {
     };
   }
 
-  // public listarOrdemServico(): void {
-  //   const userId = this.userDataService.userCredentials.userId;
-  //   const parsedUserId = parseInt(userId, 10);
-  //   if (this.userDataService.userCredentials.permissions === 'Admin') {
-  //     this.ordemServicoService.findAll().then((ordemServicos: any[]) => {
-  //       this.ordemServicos = ordemServicos;
-  //       this.ordemServicosState = cloneDeep(ordemServicos);
-  //       this.cdr.detectChanges();
-  //       console.log(this.ordemServicos);
-  //     }).catch((error) => {
-  //       console.error('Erro ao obter as ordens de serviço:', error);
-  //     });
-  //   } else {
-  //     this.ordemServicoService.findByUserId(parsedUserId).then((ordemServicos: any[]) => {
-  //       this.ordemServicos = ordemServicos;
-  //       this.ordemServicosState = cloneDeep(ordemServicos);
-  //     }).catch((error) => {
-  //       console.error('Erro ao obter as ordens de serviço:', error);
-  //     });
-  //   }
-  // }
-
   public listarOrdemServico(): void {
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
     if (this.userDataService.userCredentials.permissions === 'Admin') {
       this.filtro.idUsuario = 0;
-      this.filtro.page = this.page; // Adicione esta linha
+      this.filtro.page = this.paginaAtual;
       this.ordemServicoService.getPaged(this.filtro).subscribe(
         (response) => {
           this.ordemServicos = response.data;
@@ -146,6 +121,7 @@ export class ModalOrdemServicoComponent {
       );
     } else {
       this.filtro.idUsuario = parsedUserId;
+      this.filtro.page = this.paginaAtual;
       this.ordemServicoService.getPaged(this.filtro).subscribe(
         (response) => {
           this.ordemServicos = response.data;
@@ -162,13 +138,11 @@ export class ModalOrdemServicoComponent {
   //  Botoes de paginação //
 
   public selecionarPagina(pagina: number): void {
-
     this.paginaAtual = pagina;
     this.listarOrdemServico();
   }
 
   public proximaPagina(): void {
-    debugger;
     if (this.paginaAtual < this.totalPaginas) {
       this.paginaAtual++;
       this.listarOrdemServico();
@@ -176,7 +150,6 @@ export class ModalOrdemServicoComponent {
   }
 
   public paginaAnterior(): void {
-    debugger;
     if (this.paginaAtual > 1) {
       this.paginaAtual--;
       this.listarOrdemServico();
