@@ -132,7 +132,7 @@ export class ModalOrdemServicoComponent {
     const parsedUserId = parseInt(userId, 10);
     if (this.userDataService.userCredentials.permissions === 'Admin') {
       this.filtro.idUsuario = 0;
-      this.filtro.page = this.page; // Adicione esta linha
+      this.filtro.page = this.paginaAtual; // Adicione esta linha
       this.ordemServicoService.getPaged(this.filtro).subscribe(
         (response) => {
           this.ordemServicos = response.data;
