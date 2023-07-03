@@ -108,10 +108,10 @@ export class ModalOrdemServicoComponent {
       this.nrDeItens = "Mostrando " + this.ordemServicos.length + " de " + this.totalRegisters + " registros";
     }
 
-    if (this.paginaAtual * 10 >= this.totalRegisters && this.paginaAtual != 1) {
+    if (this.paginaAtual * 10 > this.totalRegisters && this.paginaAtual != 1) {
       this.nrDeItens = "Mostrando " + (this.paginaAtual - 1).toString() + this.ordemServicos.length + " de " + this.totalRegisters + " registros";
     }
-    if (this.paginaAtual * 10 < this.totalRegisters) {
+    if (this.paginaAtual * 10 <= this.totalRegisters) {
       this.nrDeItens = "Mostrando " + this.paginaAtual * 10 + " de " + this.totalRegisters + " registros";
     }
   }

@@ -65,10 +65,10 @@ export class ModalFuncionarioComponent {
       this.nrDeItens = "Mostrando " + this.pessoas.length + " de " + this.totalRegisters + " registros";
     }
 
-    if (this.paginaAtual * 10 >= this.totalRegisters && this.paginaAtual != 1) {
+    if (this.paginaAtual * 10 > this.totalRegisters && this.paginaAtual != 1) {
       this.nrDeItens = "Mostrando " + (this.paginaAtual - 1).toString() + this.pessoas.length + " de " + this.totalRegisters + " registros";
     }
-    if (this.paginaAtual * 10 < this.totalRegisters) {
+    if (this.paginaAtual * 10 <= this.totalRegisters) {
       this.nrDeItens = "Mostrando " + this.paginaAtual * 10 + " de " + this.totalRegisters + " registros";
     }
   }
