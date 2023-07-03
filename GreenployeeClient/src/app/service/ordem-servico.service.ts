@@ -138,6 +138,9 @@ export class OrdemServicoService {
         if (filter.nmFuncionario) {
           params.nmFuncionario = filter.nmFuncionario;
         }
+        if (filter.nrOrdem) {
+          params.nrOrdem = filter.nrOrdem;
+        }
       }
 
       url += '?' + new URLSearchParams(params).toString();
