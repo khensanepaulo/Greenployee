@@ -22,7 +22,7 @@
     <div class="row d-flex justify-content-center" style="width: 66%; margin: auto;">
         <div class="col-lg-3">
             <button type="button" data-bs-toggle="modal" data-bs-target="#myModal"
-                class="btn btn-primary nextButton gradiente">
+                class="btn btn-primary nextButton gradiente onhover">
                 <p class="textoButton mb0 m-1">Nova Ordem</p>
                 <div class="row justify-content-end">
                     <img src="../../../assets/images/icones/novaOrdemImg.png" alt="..."
@@ -32,7 +32,7 @@
         </div>
         <div class="col-lg-3">
             <button type="button" data-bs-toggle="modal" data-bs-target="#modalRelatorios"
-                class="btn btn-primary nextButton gradiente">
+                class="btn btn-primary nextButton gradiente onhover">
                 <p class="textoButton mb0 m-1" style="margin-right: 7vw;">Relatórios</p>
                 <div class="row justify-content-end">
                     <img src="../../../assets/images/icones/relatorios.png" alt="..." style="height: 62%; width: 41%;">
@@ -40,7 +40,8 @@
             </button>
         </div>
         <div class="col-lg-3">
-            <button class="btn btn-primary nextButton gradiente" data-bs-toggle="modal" data-bs-target="#anotacoes">
+            <button class="btn btn-primary nextButton gradiente onhover" data-bs-toggle="modal"
+                data-bs-target="#anotacoes">
                 <p class="textoButton mb0 m-1" style="margin-right: 7vw;">Anotações</p>
                 <div class="row justify-content-end">
                     <img src="../../../assets/images/icones/anotacoesIMG.png" alt="..."
@@ -49,7 +50,7 @@
             </button>
         </div>
         <div class="col-lg-3">
-            <button (click)="listarMetas(); resetItemMeta()" class="btn btn-primary nextButton gradiente"
+            <button (click)="listarMetas(); resetItemMeta()" class="btn btn-primary nextButton gradiente onhover"
                 data-bs-toggle="modal" data-bs-target="#metas">
                 <p class="textoButton mb0 m-1" style="margin-right: 9vw;">Metas</p>
                 <div class="row justify-content-end">
@@ -87,9 +88,18 @@
                     </table>
                 </div>
             </div>
+            <style>
+                .onhover {
+                    box-shadow: 1px 1px 7px black
+                }
+
+                .onhover:hover {
+                    box-shadow: 1px 1px 3px black
+                }
+            </style>
             <div class="row d-flex justify-content-start" style="margin-top: 5%">
                 <button (click)="listarOrdemServico()" type="button" data-bs-toggle="modal"
-                    data-bs-target="#ordemServico" class="btn btn-primary nextButton gradiente mr3">
+                    data-bs-target="#ordemServico" class="btn btn-primary nextButton gradiente mr3 onhover">
                     <p class="textoButton mb0 m-1">Ordens de Serviço</p>
                     <div class="row justify-content-end">
                         <img src="../../../assets/images/icones/ordensDeServicoIMG.png" alt="..."
@@ -97,7 +107,7 @@
                     </div>
                 </button>
                 <button *ngIf="!verificarUser()" type="button" data-bs-toggle="modal" data-bs-target="#funcionario"
-                    class="btn btn-primary nextButton gradiente ml3 mr3">
+                    class="btn btn-primary nextButton gradiente ml3 mr3 onhover">
                     <p class="textoButton mb0 m-1" style="margin-right: 7vw;">Funcionários</p>
                     <div class="row justify-content-end">
                         <img src="../../../assets/images/icones/funcionariosIMG.png" alt="..."
