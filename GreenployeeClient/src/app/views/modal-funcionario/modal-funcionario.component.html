@@ -12,27 +12,27 @@
             <div class="modal-header col-lg-12" style="background-color: #C9D7D0;">
                 <h4 class="modal-title textoPadrao">Funcionários</h4>
                 <div class="col-lg-6 d-flex justify-content-end">
-                  <div class="form-group col-lg-3 mr3">
-                      <label class="textoPadrao text-left" style="margin-bottom: 5px;">Cliente</label>
-                      <input name="cliente" type="text" class="form-control inputCinza" [(ngModel)]="this.filtro.nmPessoa"
-                          (ngModelChange)="listarPessoas()">
-                  </div>
-                  <div class="form-group col-lg-3">
-                      <label class="textoPadrao text-left" style="margin-bottom: 5px;">CPF</label>
-                      <input name="funcionario" type="text" class="form-control inputCinza"
-                          [(ngModel)]="this.filtro.nrCPF" (ngModelChange)="listarPessoas()">
-                  </div>
+                    <div class="form-group col-lg-3 mr3">
+                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">Cliente</label>
+                        <input name="cliente" type="text" class="form-control inputCinza"
+                            [(ngModel)]="this.filtro.nmPessoa" (ngModelChange)="listarPessoas()">
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label class="textoPadrao text-left" style="margin-bottom: 5px;">CPF</label>
+                        <input name="funcionario" type="text" class="form-control inputCinza"
+                            [(ngModel)]="this.filtro.nrCPF" (ngModelChange)="listarPessoas()">
+                    </div>
                 </div>
                 <div>
-                  <button (click)="listarPessoas()" class="btn refreshColor" type="button" style="color:white">
-                    ⟲
-                  </button>
-                  <button type="button" class="btn gradiente ml3" data-bs-toggle="modal"
-                    data-bs-target="#funcionarioCadastro" style="color:white">Cadastrar
-                  </button>
-                  <button (click)="listarPessoas()" type="button" class="btn ml3 secondButtonColor" data-bs-toggle="modal"
-                    data-bs-target="#funcionarioPermissao" style="color:white">Permissão
-                  </button>
+                    <button (click)="listarPessoas()" class="btn refreshColor" type="button" style="color:white">
+                        ⟲
+                    </button>
+                    <button type="button" class="btn gradiente ml3" data-bs-toggle="modal"
+                        data-bs-target="#funcionarioCadastro" style="color:white">Cadastrar
+                    </button>
+                    <button (click)="listarPessoas()" type="button" class="btn ml3 secondButtonColor"
+                        data-bs-toggle="modal" data-bs-target="#funcionarioPermissao" style="color:white">Permissão
+                    </button>
                 </div>
             </div>
             <!-- Modal body -->
@@ -87,29 +87,33 @@
                         </table>
                     </div>
                 </div>
+                <hr>
+                <div>
+                    <p>{{this.nrDeItens}}</p>
+                </div>
 
                 <nav aria-label="Navegação de página exemplo">
-                  <ul class="pagination">
-                      <li class="page-item">
-                          <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
-                              aria-label="Anterior" (click)="paginaAnterior()">
-                              <span aria-hidden="true">&laquo;</span>
-                              <span class="sr-only">Anterior</span>
-                          </button>
-                      </li>
-                      <li class="page-item gradiente" *ngFor="let pagina of paginas"
-                          [class.active]="pagina === paginaAtual">
-                          <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
-                              (click)="selecionarPagina(pagina)">{{ pagina }}</button>
-                      </li>
-                      <li class="page-item">
-                          <button class="page-link btn-sm" aria-label="Próximo"
-                              style="background-color: #a7afab; color: black;" (click)="proximaPagina()">
-                              <span aria-hidden="true">&raquo;</span>
-                              <span class="sr-only">Próximo</span>
-                          </button>
-                      </li>
-                  </ul>
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
+                                aria-label="Anterior" (click)="paginaAnterior()">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Anterior</span>
+                            </button>
+                        </li>
+                        <li class="page-item gradiente" *ngFor="let pagina of paginas"
+                            [class.active]="pagina === paginaAtual">
+                            <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
+                                (click)="selecionarPagina(pagina)">{{ pagina }}</button>
+                        </li>
+                        <li class="page-item">
+                            <button class="page-link btn-sm" aria-label="Próximo"
+                                style="background-color: #a7afab; color: black;" (click)="proximaPagina()">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Próximo</span>
+                            </button>
+                        </li>
+                    </ul>
                 </nav>
 
             </div>

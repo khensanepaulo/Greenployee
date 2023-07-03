@@ -23,6 +23,7 @@ export class ModalOrdemServicoComponent {
   public OrdemServicoItem: OrdemServicoItem[] = [];
   public filtro!: OrdemServicoFilter;
 
+  public nrDeItens: string = "";
   public totalRegisters!: number;
   public paginaAtual: number = 1;
   public totalPaginas: number = 1;
@@ -102,6 +103,19 @@ export class ModalOrdemServicoComponent {
     };
   }
 
+  public itensDaPagina(): void {
+    if (this.paginaAtual == 1) {
+      this.nrDeItens = "Mostrando " + this.ordemServicos.length + " de " + this.totalRegisters + " registros";
+    }
+
+    if (this.paginaAtual * 10 >= this.totalRegisters && this.paginaAtual != 1) {
+      this.nrDeItens = "Mostrando " + (this.paginaAtual - 1).toString() + this.ordemServicos.length + " de " + this.totalRegisters + " registros";
+    }
+    if (this.paginaAtual * 10 < this.totalRegisters) {
+      this.nrDeItens = "Mostrando " + this.paginaAtual * 10 + " de " + this.totalRegisters + " registros";
+    }
+  }
+
   public listarOrdemServico(): void {
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
@@ -114,6 +128,7 @@ export class ModalOrdemServicoComponent {
           this.totalRegisters = response.totalRegisters;
           this.totalPaginas = Math.ceil(this.totalRegisters / 10);
           this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+          this.itensDaPagina();
         },
         (error) => {
           console.error('Ocorreu um erro ao obter as ordens de serviço:', error);

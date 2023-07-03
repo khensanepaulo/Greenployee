@@ -17,13 +17,14 @@ export class ModalMetaComponent {
 
   public verificaUser!: string;
   public pessoa!: Pessoa;
-  public meta! : Meta;
-  public metaConcluida! : Meta;
+  public meta!: Meta;
+  public metaConcluida!: Meta;
   public pessoaMeta!: PessoaMeta;
-  public pessoas : Pessoa [] = [];
+  public pessoas: Pessoa[] = [];
   public metas: Meta[] = [];
   public filtro!: MetaFilter;
 
+  public nrDeItens: string = "";
   public totalRegisters!: number;
   public paginaAtual: number = 1;
   public totalPaginas: number = 1;
@@ -32,7 +33,7 @@ export class ModalMetaComponent {
 
   constructor(public metaService: MetaService,
     public pessoaService: PessoaService,
-    public userDataService: UserDataService){}
+    public userDataService: UserDataService) { }
 
   ngOnInit(): void {
     this.pessoaMeta = new PessoaMeta();
@@ -44,7 +45,7 @@ export class ModalMetaComponent {
     this.listarPessoas();
   }
 
-  public addItem(): void{
+  public addItem(): void {
     this.meta.pessoasMeta.push(cloneDeep(this.pessoaMeta));
   }
 
@@ -57,10 +58,10 @@ export class ModalMetaComponent {
 
   public addMeta(): void {
     this.metaService.cadastrar(this.meta)
-    .then(() => {
-      this.resetMeta();
-      this.listarMetas();
-    });
+      .then(() => {
+        this.resetMeta();
+        this.listarMetas();
+      });
   }
 
   public resetMeta(): void {
@@ -68,12 +69,25 @@ export class ModalMetaComponent {
     this.pessoaMeta = new PessoaMeta();
   }
 
-  public delete(index: number): void{
+  public delete(index: number): void {
     this.metaService.delete(this.metas[index].id).then(value => {
-      if(value){
+      if (value) {
         this.listarMetas();
       }
     });
+  }
+
+  public itensDaPagina(): void {
+    if (this.paginaAtual == 1) {
+      this.nrDeItens = "Mostrando " + this.metas.length + " de " + this.totalRegisters + " registros";
+    }
+
+    if (this.paginaAtual * 10 >= this.totalRegisters && this.paginaAtual != 1) {
+      this.nrDeItens = "Mostrando " + (this.paginaAtual - 1).toString() + this.metas.length + " de " + this.totalRegisters + " registros";
+    }
+    if (this.paginaAtual * 10 < this.totalRegisters) {
+      this.nrDeItens = "Mostrando " + this.paginaAtual * 10 + " de " + this.totalRegisters + " registros";
+    }
   }
 
   public listarMetas(): void {
@@ -88,6 +102,7 @@ export class ModalMetaComponent {
           this.totalRegisters = response.totalRegisters;
           this.totalPaginas = Math.ceil(this.totalRegisters / 10);
           this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+          this.itensDaPagina();
         },
         (error) => {
           console.error('Ocorreu um erro ao obter as metas:', error);
@@ -121,28 +136,28 @@ export class ModalMetaComponent {
   }
 
   public listarPessoas(): void {
-    if(this.userDataService.userCredentials.permissions === 'Admin'){
+    if (this.userDataService.userCredentials.permissions === 'Admin') {
       this.pessoaService.findAll()
-      .then((pessoas: Pessoa[]) => {
-        this.pessoas = pessoas; // Armazena a lista completa de metas
-      })
-      .catch((error) => {
-        console.error('Erro ao obter as metas:', error);
-      });
+        .then((pessoas: Pessoa[]) => {
+          this.pessoas = pessoas; // Armazena a lista completa de metas
+        })
+        .catch((error) => {
+          console.error('Erro ao obter as metas:', error);
+        });
     } else {
       return;
     }
   }
 
-  public resetItem(): void{
+  public resetItem(): void {
     this.pessoaMeta = new PessoaMeta();
     this.meta = new Meta();
   }
 
-  public removeItem( sinal: string, index: number): void{
-    if(sinal == '-'){
-      this.meta.pessoasMeta.splice(index,1);
-    }else{
+  public removeItem(sinal: string, index: number): void {
+    if (sinal == '-') {
+      this.meta.pessoasMeta.splice(index, 1);
+    } else {
       return;
     }
   }

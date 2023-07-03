@@ -17,10 +17,11 @@ export class ModalAnotacaoComponent {
 
   public mensagem: string = '';
   public mensagemErro: string = "";
-  public anotacao! : Anotacao;
-  public pessoa! : Pessoa;
+  public anotacao!: Anotacao;
+  public pessoa!: Pessoa;
   public anotacoes: Anotacao[] = [];
   public filtro!: AnotacaoFilter;
+  public nrDeItens: string = '';
 
   public totalRegisters!: number;
   public paginaAtual: number = 1;
@@ -34,7 +35,7 @@ export class ModalAnotacaoComponent {
     public inicioComponent: InicioComponent,
     public userDataService: UserDataService,
     public localStorageService: LocalStorageService,
-    ){}
+  ) { }
 
   ngOnInit(): void {
     this.anotacao = new Anotacao();
@@ -63,7 +64,7 @@ export class ModalAnotacaoComponent {
     }, duration);
   }
 
-  public resetItem(): void{
+  public resetItem(): void {
     this.anotacao = new Anotacao();
   }
 
@@ -100,6 +101,20 @@ export class ModalAnotacaoComponent {
     });
   }
 
+  public itensDaPagina(): void {
+    if (this.paginaAtual == 1) {
+      this.nrDeItens = "Mostrando " + this.anotacoes.length + " de " + this.totalRegisters + " registros";
+    }
+
+    if (this.paginaAtual * 10 >= this.totalRegisters && this.paginaAtual != 1) {
+      this.nrDeItens = "Mostrando " + (this.paginaAtual - 1).toString() + this.anotacoes.length + " de " + this.totalRegisters + " registros";
+    }
+    if (this.paginaAtual * 10 < this.totalRegisters) {
+      this.nrDeItens = "Mostrando " + this.paginaAtual * 10 + " de " + this.totalRegisters + " registros";
+    }
+  }
+
+
   public listarAnotacoes(): void {
     const userId = this.userDataService.userCredentials.userId;
     const parsedUserId = parseInt(userId, 10);
@@ -112,6 +127,7 @@ export class ModalAnotacaoComponent {
           this.totalRegisters = response.totalRegisters;
           this.totalPaginas = Math.ceil(this.totalRegisters / 10);
           this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+          this.itensDaPagina();
         },
         (error) => {
           console.error('Ocorreu um erro ao obter as Anotações:', error);

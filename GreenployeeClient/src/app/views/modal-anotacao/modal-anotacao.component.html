@@ -19,6 +19,7 @@
                     <div class="form-switch col-lg-2 mt3" style="margin-left: 1vw; margin-bottom: 2vh;">
                         <style>
                             .form-check-input {}
+
                             .form-check-input:checked {
                                 background: rgb(54, 130, 94);
                                 background: linear-gradient(209deg, rgba(54, 130, 94, 1) 0%, rgba(71, 145, 111, 0.705) 29%, rgba(54, 130, 94, 1) 100%);
@@ -26,18 +27,19 @@
                         </style>
                     </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
-                      <div class="col-lg-12 d-flex">
-                        <div class="col-lg-2">
-                            <label class="textoPadrao text-left" style="margin-bottom: 5px;">Pesquisar</label>
-                            <input name="cliente" type="text" class="form-control inputCinza" [(ngModel)]="this.filtro.dsMensagem" (ngModelChange)="listarAnotacoes()">
+                        <div class="col-lg-12 d-flex">
+                            <div class="col-lg-2">
+                                <label class="textoPadrao text-left" style="margin-bottom: 5px;">Pesquisar</label>
+                                <input name="cliente" type="text" class="form-control inputCinza"
+                                    [(ngModel)]="this.filtro.dsMensagem" (ngModelChange)="listarAnotacoes()">
+                            </div>
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-1">
+                                <button (click)="addAnotacao()" type="button" class="btn gradiente" style="color:white">
+                                    Salvar
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-lg-9"></div>
-                        <div class="col-lg-1">
-                          <button (click)="addAnotacao()" type="button" class="btn gradiente"style="color:white">
-                            Salvar
-                          </button>
-                        </div>
-                      </div>
                     </div>
                     <hr>
                     <table class="table-borderless table-hover ">
@@ -67,33 +69,36 @@
                             </tbody>
                         </table>
                     </div>
+                    <div>
+                        <p>{{this.nrDeItens}}</p>
+                    </div>
                     <div class="modal-footer" style="background-color: #C9D7D0;">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Sair</button>
                     </div>
                 </div>
                 <!-- Contador de página -->
-                <nav aria-label="Navegação de página exemplo">
-                  <ul class="pagination">
-                      <li class="page-item">
-                          <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
-                              aria-label="Anterior" (click)="paginaAnterior()">
-                              <span aria-hidden="true">&laquo;</span>
-                              <span class="sr-only">Anterior</span>
-                          </button>
-                      </li>
-                      <li class="page-item gradiente" *ngFor="let pagina of paginas"
-                          [class.active]="pagina === paginaAtual">
-                          <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
-                              (click)="selecionarPagina(pagina)">{{ pagina }}</button>
-                      </li>
-                      <li class="page-item">
-                          <button class="page-link btn-sm" aria-label="Próximo"
-                              style="background-color: #a7afab; color: black;" (click)="proximaPagina()">
-                              <span aria-hidden="true">&raquo;</span>
-                              <span class="sr-only">Próximo</span>
-                          </button>
-                      </li>
-                  </ul>
+                <nav aria-label="Navegação de página exemplo" *ngIf="anotacoes.length > 0">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
+                                aria-label="Anterior" (click)="paginaAnterior()">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Anterior</span>
+                            </button>
+                        </li>
+                        <li class="page-item gradiente" *ngFor="let pagina of paginas"
+                            [class.active]="pagina === paginaAtual">
+                            <button class="page-link btn-sm" style="background-color: #a7afab; color: black;"
+                                (click)="selecionarPagina(pagina)">{{ pagina }}</button>
+                        </li>
+                        <li class="page-item">
+                            <button class="page-link btn-sm" aria-label="Próximo"
+                                style="background-color: #a7afab; color: black;" (click)="proximaPagina()">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Próximo</span>
+                            </button>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </div>
